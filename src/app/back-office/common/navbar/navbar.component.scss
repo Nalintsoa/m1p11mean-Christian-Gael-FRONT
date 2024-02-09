@@ -1,0 +1,22 @@
+@import url(../../modules/modules.component.scss);
+
+$navbar-background: #F8F9FA;
+
+.offcanvas-custom {
+	width: 300px;
+	.offcanvas-header {
+		background-color: $navbar-background;
+	}
+}
+
+.sidenav {
+  height: 100%;
+  width: 50px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: $navbar-background;
+  overflow-x: hidden;
+  padding-top: 20px;
+}

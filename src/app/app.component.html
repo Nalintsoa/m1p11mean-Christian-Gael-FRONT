@@ -1,46 +1,5 @@
-<nav class="navbar navbar-expand-lg bg-light">
-  <div class="container-fluid">
-    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand" href="#">M1P11-MEAN</a>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a href="#" class="nav-link active" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample"><fa-icon [icon]="faBars"></fa-icon></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="#">Accueil</a>
-        </li>
-      </ul>
-      <div class="d-flex align-items-center">
-        <div>
-          <fa-icon [icon]="faUserCircle" [size]="'2x'"></fa-icon>
-        </div>
-        <div class="ms-2">Mon compte</div>
-      </div>
-    </div>
-  </div>
-</nav>
-
-<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-  <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="offcanvasExampleLabel">M1P11-MEAN</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-  </div>
-  <div class="offcanvas-body">
-    <div>
-      Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
-    </div>
-    <div class="dropdown mt-3">
-      <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-        Dropdown button
-      </button>
-      <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">Action</a></li>
-        <li><a class="dropdown-item" href="#">Another action</a></li>
-        <li><a class="dropdown-item" href="#">Something else here</a></li>
-      </ul>
-    </div>
-  </div>
-</div>
+<!-- <span>
+  <a routerLink="/front-office">Front-office</a>
+  <a routerLink="/back-office">Back-office</a>
+</span> -->
+<router-outlet></router-outlet>
