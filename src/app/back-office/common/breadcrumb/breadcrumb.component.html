@@ -1,0 +1,24 @@
+<nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item" [routerLink]="PATH_BACKOFFICE">
+      <span class="cursor-pointer hover-underline-animation"
+        ><fa-icon [icon]="faHome"></fa-icon
+        ><span class="ms-2">Accueil</span></span
+      >
+    </li>
+    <!-- <li class="breadcrumb-item active" aria-current="page">Library</li> -->
+    <li
+      *ngFor="let path of pathsArray; index as i"
+      [ngClass]="{ active: i === pathsArray.length - 1 }"
+      class="breadcrumb-item"
+      aria-current="page"
+      [routerLink]="path.path ? PATH_BACKOFFICE + path.path : undefined"
+    >
+      <span
+        class="cursor-pointer"
+        [ngClass]="{ 'hover-underline-animation': i !== pathsArray.length - 1 }"
+        >{{ path.label }}</span
+      >
+    </li>
+  </ol>
+</nav>

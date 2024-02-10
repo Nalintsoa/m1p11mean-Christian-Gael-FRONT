@@ -16,14 +16,19 @@ export const backOfficeRoutes: Route = {
     {
       path: 'staff',
       component: StaffListComponent,
+      title: "Personnel"
     },
     {
       path: 'service',
       component: ServiceListComponent,
+      title: "Service"
     },
     {
       path: 'statistic',
       component: StatisticListComponent,
+      title: "Statistique"
     },
   ],
 };
+
+export const PATH_BACKOFFICE = "/back-office";

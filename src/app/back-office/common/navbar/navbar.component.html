@@ -42,11 +42,12 @@
 
 <!-- fix sideNav -->
 <div *ngIf="screenWidth > 980" class="sidenav">
-  <ul class="list-group list-group-flush" style="margin-top: 40px">
+  <ul class="list-group list-group-flush" style="margin-top: 43px">
     <li
       *ngFor="let menuList of managerMenuList"
-      class="list-group-item py-3 border-0 hover-underline-animation cursor-pointer"
+      class="list-group-item py-3 border-0 cursor-pointer non-active-sidebar"
       [routerLink]="menuList.path"
+      routerLinkActive="active-sidebar"
     >
       <span>
         <fa-icon [icon]="menuList.icon"></fa-icon>
@@ -76,7 +77,8 @@
     <ul class="list-group list-group-flush">
       <li
         *ngFor="let menuList of managerMenuList"
-        class="list-group-item py-3 d-flex align-items-center hover-underline-animation cursor-pointer"
+        class="list-group-item py-3 d-flex align-items-center cursor-pointer non-active-sidebar"
+        routerLinkActive="menu-active"
         [routerLink]="menuList.path"
         data-bs-dismiss="offcanvas"
       >
