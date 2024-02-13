@@ -4,14 +4,44 @@
       <app-breadcrumb [pathsArray]="pathsArray"></app-breadcrumb>
     </div>
     <div>
-      <button class="btn btn-sm second-btn-class">
+      <button class="btn btn-sm second-btn-class" data-bs-toggle="modal" data-bs-target="#modalService">
         <fa-icon [icon]="faPlus"></fa-icon><span class="ms-2">Ajouter</span>
       </button>
     </div>
   </div>
 
-  <app-common-list
-    [arrayColumns]="arrayColumns"
-    [arrayData]="arrayData"
-  ></app-common-list>
+
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Nom</th>
+        <th scope="col">Prix</th>
+        <th scope="col">Durée</th>
+        <th scope="col">Commission</th>
+        <th scope="col">Options</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngIf="serviceService.isLoading">
+        <td colspan="5" class="text-center">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </td>
+      </tr>
+      <tr scope="row" *ngFor=" let service of services">
+        <td>{{service.name}}</td>
+        <td>{{service.price}}</td>
+        <td>{{service.duration}}</td>
+        <td>{{service.commission}}</td>
+        <td>
+          <button class="btn btn-transparent" title="Modifier"><fa-icon [icon]="faPencilAlt"></fa-icon></button>
+          <button class="btn btn-transparent" title="Supprimer"><fa-icon [icon]="faTrashAlt"></fa-icon></button>
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+  <app-service-create (reload)="getServices()"></app-service-create>
 </div>
