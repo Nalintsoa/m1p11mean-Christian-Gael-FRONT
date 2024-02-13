@@ -1,16 +1,19 @@
-import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, NgZone, ViewChild } from '@angular/core';
+import { CommonModule, formatDate } from '@angular/common';
+import { AfterViewChecked, AfterViewInit, Component, ElementRef, Input, NgZone, OnChanges, OnInit, TemplateRef, ViewChild, inject } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { StaffApiService } from '../../../../service/staff-api.service';
 import { HttpClientModule } from '@angular/common/http';
+import { IStaff } from '../../../../model/staff';
+import { CREATION_MODE, EDIT_MODE } from '../../../../constant/enum';
+import { ModalDismissReasons, NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-create-modal',
   standalone: true,
-  imports: [FontAwesomeModule, CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule],
+  imports: [FontAwesomeModule, CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule, NgbModule],
   templateUrl: './create-modal.component.html',
   styleUrl: './create-modal.component.scss'
 })
@@ -28,6 +31,12 @@ export class CreateModalComponent {
   @ViewChild('closeModal')
   closeModalButton!: ElementRef;
 
+  @ViewChild('openModal') openModalButton!: ElementRef;
+  @ViewChild('content') modalContent!: TemplateRef<any>;
+
+  @Input() mode: string = CREATION_MODE;
+  @Input() data: IStaff = {} as IStaff;
+
   staffForm = this.fb.group({
     name: ['', [Validators.required]],
     firstName: [''],
@@ -39,6 +48,7 @@ export class CreateModalComponent {
     endHour: ['', [Validators.required]],
     skills: ['', [Validators.required]],
     speciality: ['', [Validators.required]],
+    id: [''],
   });
 
   validationMessage = {
@@ -79,9 +89,10 @@ export class CreateModalComponent {
 
   // for the select
   items = [
-    { id: 'item1', label: 'Élément 1', control: new FormControl(false) },
-    { id: 'item2', label: 'Élément 2', control: new FormControl(false) },
-    { id: 'item3', label: 'Élément 3', control: new FormControl(false) },
+    { id: 'item1', label: 'Manucure', control: new FormControl(false) },
+    { id: 'item2', label: 'Pédicure', control: new FormControl(false) },
+    { id: 'item3', label: 'Soin du visage', control: new FormControl(false) },
+    { id: 'item4', label: 'Massothérapie', control: new FormControl(false) },
   ];
 
   result = '';
@@ -111,16 +122,76 @@ export class CreateModalComponent {
     if (!this.staffForm.valid){
       return;
     } else {
+      if (this.mode === EDIT_MODE && this.staffForm.get('id')?.value !== '') {
+        return this.staffService.updateStaff(this.staffForm.value).subscribe({
+          next: (res) => {
+            this.staffForm.reset();
+            this.submitted = false;
+            this.closeModal();
+          },
+          error: (e) => {
+            console.log(e);
+          },
+        })
+      }
       return this.staffService.createStaff(this.staffForm.value).subscribe({
         next: (res) => {
           this.staffForm.reset();
           this.submitted = false;
-          this.closeModalButton.nativeElement.click();
+          this.closeModal();
         },
         error: (e) => {
           console.log(e);
         },
       });
     }
+  }
+
+  private modalService = inject(NgbModal);
+	closeResult = '';
+  open(content: TemplateRef<any>) {
+		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false }).result.then(
+			(result) => {
+				this.closeResult = `Closed with: ${result}`;
+			},
+			(reason) => {
+				this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+			},
+		);
+	}
+
+  private getDismissReason(reason: any): string {
+		switch (reason) {
+			case ModalDismissReasons.ESC:
+				return 'by pressing ESC';
+			case ModalDismissReasons.BACKDROP_CLICK:
+				return 'by clicking on a backdrop';
+			default:
+				return `with: ${reason}`;
+		}
+	}
+
+  openModal = () => {
+    this.mode = CREATION_MODE;
+    this.open(this.modalContent);
+  }
+
+  closeModal = () => {
+    this.staffForm.reset();
+    this.mode = CREATION_MODE;
+    this.modalService.dismissAll();
+  }
+
+  handleDelete = () => {
+    return this.staffService.deleteStaff(this.staffForm.value).subscribe({
+      next: (res) => {
+        this.staffForm.reset();
+        this.submitted = false;
+        this.closeModal();
+      },
+      error: (e) => {
+        console.log(e);
+      },
+    });
   }
 }
