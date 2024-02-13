@@ -1,4 +1,4 @@
-<header class="header">
+<!-- <header class="header">
     <div class="container-fluid">
         <div class="row">
             <div class="col-xl-3 col-lg-2">
@@ -11,8 +11,8 @@
                     <ul>
                         <li *ngFor="let menu of menus" [class.active]=" menu.label === menuActivate  ">
                             <app-front-link [data]="menu" (newMenuEvent)="onClick($event)" />
-                        </li>
-                        <!-- <li><a href="#">Pages</a>
+                        </li> -->
+<!-- <li><a href="#">Pages</a>
                             <ul class="dropdown">
                                 <li><a href="./product-details.html">Product Details</a></li>
                                 <li><a href="./shop-cart.html">Shop Cart</a></li>
@@ -20,7 +20,7 @@
                                 <li><a href="./blog-details.html">Blog Details</a></li>
                             </ul>
                         </li> -->
-                        <li><a routerLink="/back-office">Contact</a></li>
+<!-- <li><a routerLink="/back-office">Contact</a></li>
                     </ul>
                 </nav>
             </div>
@@ -44,6 +44,41 @@
         </div>
         <div class="canvas__open">
             <i class="fa fa-bars"></i>
+        </div>
+    </div>
+</header> -->
+
+<header class="header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-3">
+                <div class="header_logo">
+                    LOGO
+                </div>
+            </div>
+            <div class="col-6">
+                <nav class="header_menu">
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a href="" class="nav-link hover-underline-animation">Link1</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link">Link2</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link">Link3</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link">Link4</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-3">
+                <div class="header_right">
+                    Les notifications et etc
+                </div>
+            </div>
         </div>
     </div>
 </header>
