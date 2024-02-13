@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { BreadcrumbComponent } from '../../../../common/breadcrumb/breadcrumb.component';
 import { INavigationItem } from '../../../../interfaces/breadCrumbInterfaces';
 import { PATH_BACKOFFICE } from '../../../../routes/back-office-route';
@@ -32,6 +32,11 @@ export class ServiceListComponent {
   faTrashAlt = faTrashAlt;
   faPlus = faPlus;
 
+  @ViewChild('openModal') openModal?: ElementRef;
+
+  mode = 'create';
+  dataToUpdate?: IService;
+
   pathsArray: INavigationItem[] = [
     {
       label: 'Service',
@@ -50,9 +55,18 @@ export class ServiceListComponent {
     this.getServices();
   }
 
+  onCloseModal() {
+    this.mode = "create";
+  }
 
   getServices() {
-    console.log('refresssshhh')
-    this.serviceService.getServices().subscribe(data => this.services = data)
+    this.services = [];
+    this.serviceService.getServices().subscribe(data => { this.services = data; this.mode = "create" });
+  };
+
+  getService(data: IService) {
+    this.mode = "update";
+    this.dataToUpdate = data;
+    this.openModal?.nativeElement.click();
   }
 }

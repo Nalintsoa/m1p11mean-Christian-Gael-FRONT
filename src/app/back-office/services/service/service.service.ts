@@ -21,5 +21,12 @@ export class ServiceService {
     return response;
   }
 
+  updateService(data: IService) {
+    const response = this.http.patch("http://localhost:8081/service/", data)
+    return response;
+  }
+
+
+
 
 }

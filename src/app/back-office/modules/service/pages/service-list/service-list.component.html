@@ -4,7 +4,7 @@
       <app-breadcrumb [pathsArray]="pathsArray"></app-breadcrumb>
     </div>
     <div>
-      <button class="btn btn-sm second-btn-class" data-bs-toggle="modal" data-bs-target="#modalService">
+      <button class="btn btn-sm second-btn-class" data-bs-toggle="modal" data-bs-target="#modalService" #openModal>
         <fa-icon [icon]="faPlus"></fa-icon><span class="ms-2">Ajouter</span>
       </button>
     </div>
@@ -36,12 +36,14 @@
         <td>{{service.duration}}</td>
         <td>{{service.commission}}</td>
         <td>
-          <button class="btn btn-transparent" title="Modifier"><fa-icon [icon]="faPencilAlt"></fa-icon></button>
+          <button class="btn btn-transparent" title="Modifier" (click)="getService(service)"><fa-icon
+              [icon]="faPencilAlt"></fa-icon></button>
           <button class="btn btn-transparent" title="Supprimer"><fa-icon [icon]="faTrashAlt"></fa-icon></button>
         </td>
       </tr>
     </tbody>
 
   </table>
-  <app-service-create (reload)="getServices()"></app-service-create>
+  <app-service-create (reload)="getServices()" (close)="onCloseModal()" [dataToUpdate]="dataToUpdate"
+    [mode]="mode"></app-service-create>
 </div>

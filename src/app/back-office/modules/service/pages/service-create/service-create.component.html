@@ -3,7 +3,9 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Service</h5>
+                <h5 class="modal-title" id="staticBackdropLabel">
+                    {{mode === 'create'? 'Ajouter': 'Modifier'}} une
+                    service</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -65,7 +67,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="onClose()"
+                    #closeModal>Annuler</button>
                 <button type="submit" class="btn btn-primary" (click)="onSubmit()">Confirmer</button>
             </div>
         </div>
