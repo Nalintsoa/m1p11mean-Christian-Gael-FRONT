@@ -4,8 +4,6 @@ import { BreadcrumbComponent } from '../../../../common/breadcrumb/breadcrumb.co
 import { INavigationItem } from '../../../../interfaces/breadCrumbInterfaces';
 import { PATH_BACKOFFICE } from '../../../../routes/back-office-route';
 import { CommonListComponent } from '../../../../common/common-list/common-list.component';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CreateModalComponent } from '../../components/create-modal/create-modal.component';
 import { StaffApiService } from '../../../../service/staff-api.service';
 import { CommonModule, formatDate } from '@angular/common';
@@ -30,6 +28,9 @@ export class StaffListComponent {
   modalMode = CREATION_MODE;
   modalData: any = {};
 
+  @ViewChild(CreateModalComponent)
+  private modalComponent!: CreateModalComponent;
+
   arrayColumns = [
     {
       title: 'Nom',
@@ -43,6 +44,16 @@ export class StaffListComponent {
       title: 'email',
       data: 'email',
     },
+  ];
+
+  pathsArray: INavigationItem[] = [
+    {
+      label: 'Gestion de personnel',
+      path: `${PATH_BACKOFFICE}/staff`
+    },
+    {
+      label: 'Liste',
+    }
   ];
 
   constructor(private staffApiService: StaffApiService){
@@ -60,16 +71,6 @@ export class StaffListComponent {
     this.loadData();
     })    
   };
-
-  pathsArray: INavigationItem[] = [
-    {
-      label: 'Gestion de personnel',
-      path: `${PATH_BACKOFFICE}/staff`
-    },
-    {
-      label: 'Liste',
-    }
-  ];
 
   // ACTION ON THE TABLE
   handleSearchChange = () => {
@@ -89,23 +90,6 @@ export class StaffListComponent {
     this.dataCount = this.arrayData.length;
     return tempArray;
   }
-
-  // handleClickNext = () => {
-  //   if (this.currentPage === (this.dataCount % this.perPage) + 1) {
-  //     return;
-  //   }
-  //   ++this.currentPage;
-  //   this.queriedList();
-  //   console.log(this.currentPage)
-  // }
-
-  // handleClickPrevious = () => {
-  //   if (this.currentPage > 0) {
-  //     --this.currentPage;
-  //   }
-  //   this.queriedList();
-  //   console.log(this.currentPage)
-  // }
 
   data = this.queriedList();
   totalPages = 0;
@@ -146,8 +130,6 @@ export class StaffListComponent {
     this.modalComponent.openModal();
     this.modalComponent.mode = EDIT_MODE;
 
-    console.log(row);
-
     this.modalComponent.staffForm.setValue({
       careerStart: formatDate(this.modalData.careerStart, 'yyyy-MM-dd', 'en-US'),
       cinNumber: `${this.modalData.cinNumber}`,
@@ -161,11 +143,5 @@ export class StaffListComponent {
       startHour: this.modalData.startHour,
       id: this.modalData._id,
     });
-
-    console.log(this.modalMode);
-    console.log(this.modalData);
   }
-
-  @ViewChild(CreateModalComponent)
-  private modalComponent!: CreateModalComponent;
 }

@@ -1,9 +1,8 @@
-import { CommonModule, formatDate } from '@angular/common';
-import { AfterViewChecked, AfterViewInit, Component, ElementRef, Input, NgZone, OnChanges, OnInit, TemplateRef, ViewChild, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, ElementRef, Input, TemplateRef, ViewChild, inject } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { StaffApiService } from '../../../../service/staff-api.service';
 import { HttpClientModule } from '@angular/common/http';
 import { IStaff } from '../../../../model/staff';
@@ -20,11 +19,10 @@ import { ModalDismissReasons, NgbModal, NgbModule } from '@ng-bootstrap/ng-boots
 export class CreateModalComponent {
   faPlus = faPlus;
   submitted: boolean = false;
+  private modalService = inject(NgbModal);
 
   constructor(
     public fb: FormBuilder,
-    private router: Router,
-    private ngZone: NgZone,
     private staffService: StaffApiService,
   ) {}
 
@@ -86,7 +84,6 @@ export class CreateModalComponent {
     },
   };
   
-
   // for the select
   items = [
     { id: 'item1', label: 'Manucure', control: new FormControl(false) },
@@ -147,7 +144,6 @@ export class CreateModalComponent {
     }
   }
 
-  private modalService = inject(NgbModal);
 	closeResult = '';
   open(content: TemplateRef<any>) {
 		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false }).result.then(
