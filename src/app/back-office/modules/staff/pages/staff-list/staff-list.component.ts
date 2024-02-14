@@ -3,7 +3,6 @@ import { NavbarComponent } from '../../../../common/navbar/navbar.component';
 import { BreadcrumbComponent } from '../../../../common/breadcrumb/breadcrumb.component';
 import { INavigationItem } from '../../../../interfaces/breadCrumbInterfaces';
 import { PATH_BACKOFFICE } from '../../../../routes/back-office-route';
-import { CommonListComponent } from '../../../../common/common-list/common-list.component';
 import { CreateModalComponent } from '../../components/create-modal/create-modal.component';
 import { StaffApiService } from '../../../../service/staff-api.service';
 import { CommonModule, formatDate } from '@angular/common';
@@ -13,7 +12,7 @@ import { CREATION_MODE, EDIT_MODE } from '../../../../constant/enum';
 @Component({
   selector: 'app-staff-list',
   standalone: true,
-  imports: [NavbarComponent, BreadcrumbComponent, CommonListComponent, CreateModalComponent, CommonModule, FormsModule],
+  imports: [NavbarComponent, BreadcrumbComponent, CreateModalComponent, CommonModule, FormsModule],
   templateUrl: './staff-list.component.html',
   styleUrl: './staff-list.component.scss'
 })
