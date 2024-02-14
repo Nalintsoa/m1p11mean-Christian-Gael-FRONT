@@ -44,7 +44,7 @@
 <div *ngIf="screenWidth > 980" class="sidenav">
   <ul class="list-group list-group-flush" style="margin-top: 43px">
     <li
-      *ngFor="let menuList of managerMenuList"
+      *ngFor="let menuList of managerMenuList.concat(employeeMenuList)"
       class="list-group-item py-3 border-0 cursor-pointer non-active-sidebar"
       [routerLink]="menuList.path"
       routerLinkActive="active-sidebar"
@@ -76,7 +76,7 @@
   <div class="offcanvas-body pt-0">
     <ul class="list-group list-group-flush">
       <li
-        *ngFor="let menuList of managerMenuList"
+        *ngFor="let menuList of managerMenuList.concat(employeeMenuList)"
         class="list-group-item py-3 d-flex align-items-center cursor-pointer non-active-sidebar"
         routerLinkActive="menu-active"
         [routerLink]="menuList.path"

@@ -3,6 +3,9 @@ import { HomePageComponent } from '../modules/home/pages/home-page/home-page.com
 import { ServiceListComponent } from '../modules/service/pages/service-list/service-list.component';
 import { StaffListComponent } from '../modules/staff/pages/staff-list/staff-list.component';
 import { StatisticListComponent } from '../modules/statistic/pages/statistic-list/statistic-list.component';
+import { EmployeeProfileComponent } from '../modules/employee-profile/employee-profile.component';
+import { PlanningComponent } from '../modules/planning/planning.component';
+import { TaskComponent } from '../modules/task/task.component';
 
 export const backOfficeRoutes: Route = {
   path: 'back-office',
@@ -27,6 +30,21 @@ export const backOfficeRoutes: Route = {
       path: 'statistic',
       component: StatisticListComponent,
       title: "Statistique"
+    },
+    {
+      path: 'profile',
+      component: EmployeeProfileComponent,
+      title: "Profil"
+    },
+    {
+      path: 'planning',
+      component: PlanningComponent,
+      title: "Rendez-vous"
+    },
+    {
+      path: 'task',
+      component: TaskComponent,
+      title: "Tâches"
     },
   ],
 };

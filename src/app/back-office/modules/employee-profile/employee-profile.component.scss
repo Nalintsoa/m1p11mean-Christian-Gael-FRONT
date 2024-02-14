@@ -1,0 +1,14 @@
+@import url(../../modules/modules.component.scss);
+$second-color: #202938;
+
+.user-img {
+	border-radius: 50%;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.card-custom {
+	background-color: #F0F0F0;
+  color: $second-color;
+}
