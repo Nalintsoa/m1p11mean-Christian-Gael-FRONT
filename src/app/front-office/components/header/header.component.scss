@@ -1,0 +1,21 @@
+.header {
+    border-bottom: #111111;
+}
+
+.header_logo,
+.header_menu,
+.header_right {
+    padding: 30px 0 27px;
+}
+
+.nav-link {
+    padding: 10px 15px;
+    font-size: 21px;
+    transition: .5s;
+    color: rgba(0, 0, 0, .55);
+}
+
+.violet-bar {
+    height: 60px;
+    background-color: violet;
+}

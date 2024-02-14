@@ -1,49 +1,62 @@
 <header class="header">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-xl-3 col-lg-2">
-                <div class="header__logo">
-                    <a href="./index.html"><img src="img/logo.png" alt=""></a>
-                </div>
-            </div>
-            <div class="col-xl-6 col-lg-7">
-                <nav class="header__menu">
-                    <ul>
-                        <li *ngFor="let menu of menus" [class.active]=" menu.label === menuActivate  ">
-                            <app-front-link [data]="menu" (newMenuEvent)="onClick($event)" />
-                        </li>
-                        <!-- <li><a href="#">Pages</a>
-                            <ul class="dropdown">
-                                <li><a href="./product-details.html">Product Details</a></li>
-                                <li><a href="./shop-cart.html">Shop Cart</a></li>
-                                <li><a href="./checkout.html">Checkout</a></li>
-                                <li><a href="./blog-details.html">Blog Details</a></li>
-                            </ul>
-                        </li> -->
-                        <li><a routerLink="/back-office">Contact</a></li>
-                    </ul>
-                </nav>
-            </div>
-            <div class="col-lg-3">
-                <div class="header__right">
-                    <div class="header__right__auth">
-                        <a href="#">Login</a>
-                        <a href="#">Register</a>
+    <div class="container-fluid topbar d-none d-lg-block violet-bar">
+        <div class="container px-0">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="d-flex flex-wrap">
+                        <a href="#" class="me-4 text-light"><i class="fas fa-map-marker-alt text-primary me-2"></i>Find
+                            A Location</a>
+                        <a href="#" class="me-4 text-light"><i
+                                class="fas fa-phone-alt text-primary me-2"></i>+01234567890</a>
+                        <a href="#" class="text-light"><i class="fas fa-envelope text-primary me-2"></i>Examp.com</a>
                     </div>
-                    <ul class="header__right__widget">
-                        <li><span class="icon_search search-switch"></span></li>
-                        <li><a href="#"><span class="icon_heart_alt"></span>
-                                <div class="tip">2</div>
-                            </a></li>
-                        <li><a href="#"><span class="icon_bag_alt"></span>
-                                <div class="tip">2</div>
-                            </a></li>
-                    </ul>
+
+                </div>
+                <div class="col-lg-4">
+                    <div class="d-flex align-items-center justify-content-end">
+                        <a href="#" class="me-3 btn-square border rounded-circle nav-fill"><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="me-3 btn-square border rounded-circle nav-fill"><i
+                                class="fab fa-twitter"></i></a>
+                        <a href="#" class="me-3 btn-square border rounded-circle nav-fill"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="#" class="btn-square border rounded-circle nav-fill"><i
+                                class="fab fa-linkedin-in"></i></a>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="canvas__open">
-            <i class="fa fa-bars"></i>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-3">
+                <div class="header_logo">
+                    LOGO
+                </div>
+            </div>
+            <div class="col-6">
+                <nav class="header_menu d-flex justify-content-center">
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a href="" class="nav-link">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link hover-underline-animation">Service</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link">Rendez-vous</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link">Preferences</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-3">
+                <div class="header_right">
+
+                </div>
+            </div>
         </div>
     </div>
 </header>
