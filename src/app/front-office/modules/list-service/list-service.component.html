@@ -1,13 +1,28 @@
 <app-breadcrumb [menu]="menuSelected"></app-breadcrumb>
-<section class="shop spad">
+<section class="section">
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-md-3">
                 <app-filter></app-filter>
             </div>
             <div class="col-lg-9 col-md-9">
-                <div class="row">
-                    <app-service></app-service>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-4 pt-3" *ngFor="let i of iterations  ">
+                            <app-service></app-service>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="d-flex py-3 justify-content-center">
+                            <div class="rounded-circle page-number border border-white px-2">1
+                            </div>
+                            <div class=" rounded-circle page-number  border border-white px-2">2
+                            </div>
+                            <div class=" rounded-circle  page-number border border-white px-2">3
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

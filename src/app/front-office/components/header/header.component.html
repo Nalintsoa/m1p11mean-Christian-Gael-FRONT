@@ -1,4 +1,4 @@
-<header class="header">
+<header class="header position-sticky  border-bottom border-2">
     <div class="container-fluid topbar d-none d-lg-block violet-bar">
         <div class="container px-0">
             <div class="row align-items-center">
@@ -14,7 +14,7 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="d-flex align-items-center justify-content-end">
-                        <a href="#" class="me-3 btn-square border rounded-circle nav-fill"><i
+                        <a href="#" class="me-3 btn-square border rounded-ciomrcle nav-fill"><i
                                 class="fab fa-facebook-f"></i></a>
                         <a href="#" class="me-3 btn-square border rounded-circle nav-fill"><i
                                 class="fab fa-twitter"></i></a>
@@ -30,31 +30,33 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-3">
-                <div class="header_logo">
-                    LOGO
+                <div class="header_logo ps-3">
+                    <h1 class="logo"> E-Beautiful </h1>
                 </div>
             </div>
             <div class="col-6">
                 <nav class="header_menu d-flex justify-content-center">
                     <ul class="nav">
                         <li class="nav-item">
-                            <a href="" class="nav-link">Home</a>
+                            <a href="" class="nav-link hover-underline-animation">Home</a>
                         </li>
                         <li class="nav-item">
                             <a href="" class="nav-link hover-underline-animation">Service</a>
                         </li>
                         <li class="nav-item">
-                            <a href="" class="nav-link">Rendez-vous</a>
+                            <a href="" class="nav-link hover-underline-animation">Rendez-vous</a>
                         </li>
                         <li class="nav-item">
-                            <a href="" class="nav-link">Preferences</a>
+                            <a href="" class="nav-link hover-underline-animation">Préférences</a>
                         </li>
                     </ul>
                 </nav>
             </div>
             <div class="col-3">
-                <div class="header_right">
-
+                <div class="header_right d-flex justify-content-end">
+                    <span><a class="nav-link"><fa-icon [icon]="faBell"></fa-icon></a></span>
+                    <span><a class="nav-link"><fa-icon [icon]="faHeart"></fa-icon></a></span>
+                    <span><a class="nav-link"><fa-icon [icon]="faUserCircle"></fa-icon></a></span>
                 </div>
             </div>
         </div>

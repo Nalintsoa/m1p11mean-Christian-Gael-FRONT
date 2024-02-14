@@ -1,0 +1,14 @@
+.section {
+    padding-top: 30px;
+}
+
+.page-number {
+    height: 40px;
+    width: 40px;
+}
+
+.page-number:hover {
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}

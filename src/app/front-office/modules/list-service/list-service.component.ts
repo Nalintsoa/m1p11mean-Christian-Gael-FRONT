@@ -14,5 +14,6 @@ import { BREADCRUMBS } from '../../constants/breadCrumbs';
 })
 export class ListServiceComponent {
   menuSelected = BREADCRUMBS[0];
+  iterations = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 }
