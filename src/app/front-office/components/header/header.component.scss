@@ -1,3 +1,7 @@
+.header {
+    border-bottom: #111111;
+}
+
 .header_logo,
 .header_menu,
 .header_right {
@@ -5,9 +9,13 @@
 }
 
 .nav-link {
-    font-size: 15px;
-    text-transform: uppercase;
-    color: #111111;
-    font-weight: 500;
+    padding: 10px 15px;
+    font-size: 21px;
+    transition: .5s;
+    color: rgba(0, 0, 0, .55);
+}
 
+.violet-bar {
+    height: 60px;
+    background-color: violet;
 }
