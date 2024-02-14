@@ -1,12 +1,10 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { BreadcrumbComponent } from '../../../../common/breadcrumb/breadcrumb.component';
 import { INavigationItem } from '../../../../interfaces/breadCrumbInterfaces';
 import { PATH_BACKOFFICE } from '../../../../routes/back-office-route';
 import { faPlus, faPencilAlt, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { DataTablesModule } from 'angular-datatables';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
-import { CommonListComponent } from '../../../../common/common-list/common-list.component';
 import { ServiceCreateComponent } from '../service-create/service-create.component';
 import { ServiceService } from '../../../../services/service/service.service';
 import { IService } from '../../../../interfaces/serviceInterface';
@@ -17,9 +15,7 @@ import { IService } from '../../../../interfaces/serviceInterface';
   imports: [
     BreadcrumbComponent,
     FontAwesomeModule,
-    DataTablesModule,
     CommonModule,
-    CommonListComponent,
     ServiceCreateComponent,
     NgFor,
     NgIf
