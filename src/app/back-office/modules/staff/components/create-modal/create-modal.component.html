@@ -1,0 +1,340 @@
+<button class="btn btn-sm second-btn-class" (click)="openModal()">
+  <fa-icon [icon]="faPlus"></fa-icon><span class="ms-2">Ajouter</span>
+</button>
+
+<ng-template #content let-modal>
+  <div class="modal-content">
+    <div class="modal-body">
+      <form [formGroup]="staffForm" (ngSubmit)="handleSubmit()">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <div *ngIf="mode === 'creation'" class="fs-5 fw-semibold">
+              Ajout de personnel
+            </div>
+            <div *ngIf="mode === 'edit'" class="fs-5 fw-semibold">
+              Modification de personnel
+            </div>
+            <div class="fw-light">
+              Veuillez remplir les informations suivantes
+            </div>
+          </div>
+          <button
+            type="button"
+            class="btn-close text-end"
+            aria-label="Close"
+            (click)="modal.dismiss('Cross click')"
+          ></button>
+        </div>
+        <div class="container p-0 mt-3">
+          <div class="row">
+            <div class="col-6">
+              <label for="nameInput" class="form-label">Nom</label>
+              <input
+                type="text"
+                class="form-control"
+                id="nameInput"
+                formControlName="name"
+              />
+              <div
+                *ngIf="
+                  staffForm.get('name')?.hasError('required') &&
+                  staffForm.status === 'INVALID' &&
+                  (submitted === true || staffForm.get('name')?.touched)
+                "
+                class="fw-light text-danger"
+              >
+                {{ validationMessage.name.required }}
+              </div>
+            </div>
+            <div class="col-6">
+              <label for="firstNameInput" class="form-label">Prénoms</label>
+              <input
+                type="text"
+                class="form-control"
+                id="firstNameInput"
+                formControlName="firstName"
+              />
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-6">
+              <label for="numberPhoneInput" class="form-label">Téléphone</label>
+              <input
+                type="text"
+                class="form-control"
+                id="numberPhoneInput"
+                placeholder="03xxxxxxxx"
+                formControlName="phoneNumber"
+              />
+              <div
+                *ngIf="
+                  staffForm.get('phoneNumber')?.hasError('required') &&
+                  staffForm.status === 'INVALID' &&
+                  (submitted === true || staffForm.get('phoneNumber')?.touched)
+                "
+                class="fw-light text-danger"
+              >
+                {{ validationMessage.phoneNumber.required }}
+              </div>
+              <div
+                *ngIf="
+                  staffForm.get('phoneNumber')?.hasError('pattern') &&
+                  staffForm.status === 'INVALID' &&
+                  (submitted === true || staffForm.get('phoneNumber')?.touched)
+                "
+                class="fw-light text-danger"
+              >
+                {{ validationMessage.phoneNumber.pattern }}
+              </div>
+              <div
+                *ngIf="
+                  staffForm.get('phoneNumber')?.hasError('minlength') &&
+                  staffForm.status === 'INVALID' &&
+                  (submitted === true || staffForm.get('phoneNumber')?.touched)
+                "
+                class="fw-light text-danger"
+              >
+                {{ validationMessage.phoneNumber.minLength }}
+              </div>
+              <div
+                *ngIf="
+                  staffForm.get('phoneNumber')?.hasError('maxlength') &&
+                  staffForm.status === 'INVALID' &&
+                  (submitted === true || staffForm.get('phoneNumber')?.touched)
+                "
+                class="fw-light text-danger"
+              >
+                {{ validationMessage.phoneNumber.maxLength }}
+              </div>
+            </div>
+            <div class="col-6">
+              <label for="mailInput" class="form-label">Adresse mail</label>
+              <input
+                type="email"
+                class="form-control"
+                id="mailInput"
+                placeholder="exemple@exemple.com"
+                formControlName="email"
+              />
+              <div
+                *ngIf="
+                  staffForm.get('email')?.hasError('required') &&
+                  staffForm.status === 'INVALID' &&
+                  (submitted === true || staffForm.get('email')?.touched)
+                "
+                class="fw-light text-danger"
+              >
+                {{ validationMessage.email.required }}
+              </div>
+              <div
+                *ngIf="
+                  staffForm.get('email')?.hasError('email') &&
+                  staffForm.status === 'INVALID' &&
+                  (submitted === true || staffForm.get('email')?.touched)
+                "
+                class="fw-light text-danger"
+              >
+                {{ validationMessage.email.email }}
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-6">
+              <label for="cinInput" class="form-label">CIN</label>
+              <input
+                type="text"
+                class="form-control"
+                id="cinInput"
+                formControlName="cinNumber"
+              />
+              <div
+                *ngIf="
+                  staffForm.get('cinNumber')?.hasError('required') &&
+                  staffForm.status === 'INVALID' &&
+                  (submitted === true || staffForm.get('cinNumber')?.touched)
+                "
+                class="fw-light text-danger"
+              >
+                {{ validationMessage.cinNumber.required }}
+              </div>
+              <div
+                *ngIf="
+                  staffForm.get('cinNumber')?.hasError('pattern') &&
+                  staffForm.status === 'INVALID' &&
+                  (submitted === true || staffForm.get('cinNumber')?.touched)
+                "
+                class="fw-light text-danger"
+              >
+                {{ validationMessage.cinNumber.pattern }}
+              </div>
+            </div>
+            <div class="col-6">
+              <label for="startInput" class="form-label"
+                >Début de carrière</label
+              >
+              <input
+                type="date"
+                class="form-control"
+                id="startInput"
+                formControlName="careerStart"
+              />
+              <div
+                *ngIf="
+                  staffForm.get('careerStart')?.hasError('required') &&
+                  staffForm.status === 'INVALID' &&
+                  (submitted === true || staffForm.get('careerStart')?.touched)
+                "
+                class="fw-light text-danger"
+              >
+                {{ validationMessage.careerStart.required }}
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <label class="form-label">Horaires de travail par jour</label>
+            <div class="col-6">
+              <input
+                type="time"
+                class="form-control"
+                id="startHourInput"
+                formControlName="startHour"
+              />
+              <div
+                *ngIf="
+                  staffForm.get('startHour')?.hasError('required') &&
+                  staffForm.status === 'INVALID' &&
+                  (submitted === true || staffForm.get('startHour')?.touched)
+                "
+                class="fw-light text-danger"
+              >
+                {{ validationMessage.startHour.required }}
+              </div>
+            </div>
+            <div class="col-6">
+              <input
+                type="time"
+                class="form-control"
+                id="endHour"
+                formControlName="endHour"
+              />
+              <div
+                *ngIf="
+                  staffForm.get('endHour')?.hasError('required') &&
+                  staffForm.status === 'INVALID' &&
+                  (submitted === true || staffForm.get('endHour')?.touched)
+                "
+                class="fw-light text-danger"
+              >
+                {{ validationMessage.endHour.required }}
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <label class="form-label">Compétences</label>
+            <div class="col-9">
+              <input
+                type="text"
+                class="form-control"
+                id="resultInput"
+                [value]="result"
+                readonly
+                formControlName="skills"
+              />
+              <div
+                *ngIf="
+                  staffForm.get('skills')?.hasError('required') &&
+                  staffForm.status === 'INVALID' &&
+                  submitted === true
+                "
+                class="fw-light text-danger"
+              >
+                {{ validationMessage.skills.required }}
+              </div>
+            </div>
+            <div class="col-2">
+              <div class="dropdown">
+                <button
+                  class="btn btn-secondary dropdown-toggle"
+                  type="button"
+                  id="exampleDropdown"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  (click)="toggleDropdown()"
+                >
+                  Choisir
+                </button>
+                <div
+                  class="dropdown-menu"
+                  [ngClass]="{ show: dropdownOpen }"
+                  aria-labelledby="exampleDropdown"
+                >
+                  <div *ngFor="let item of items">
+                    <input
+                      type="checkbox"
+                      [id]="item.id"
+                      [formControl]="item.control"
+                      (change)="updateSelection()"
+                      class="mx-2"
+                    />
+                    <label [for]="item.id">{{ item.label }}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-12">
+              <label for="specialityInput" class="form-label">Spécialité</label>
+              <select
+                class="form-select"
+                id="specialityInput"
+                formControlName="speciality"
+              >
+                <option *ngFor="let item of result.split(',')" [value]="item">
+                  {{ item }}
+                </option>
+              </select>
+              <div
+                *ngIf="
+                  staffForm.get('speciality')?.hasError('required') &&
+                  staffForm.status === 'INVALID' &&
+                  submitted === true
+                "
+                class="fw-light text-danger"
+              >
+                {{ validationMessage.speciality.required }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-end mt-3">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="closeModal()"
+          >
+            Annuler
+          </button>
+          <button
+            *ngIf="mode === 'edit'"
+            class="btn btn-danger ms-3"
+            (click)="handleDelete()"
+          >
+            Supprimer
+          </button>
+          <button type="submit" class="btn btn-primary ms-3">
+            Enregistrer
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>
+<!-- </div> -->
