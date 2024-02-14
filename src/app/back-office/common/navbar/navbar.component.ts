@@ -4,6 +4,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IconDefinition, faBars, faCalendarDay, faChartLine, faHandshake, faList, faUserCheck, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { PATH_BACKOFFICE } from '../../routes/back-office-route';
+import { INavigationItem } from '../../interfaces/breadCrumbInterfaces';
 
 @Component({
   selector: 'app-navbar',
@@ -18,10 +19,10 @@ export class NavbarComponent implements OnInit {
   faUserCircle = faUserCircle;
   screenWidth = 0;
 
-  employeeMenuList: { label: string, icon: IconDefinition }[] = [
-    {label: 'Mon profil', icon: faUserCircle},
-    {label: 'Rendez-vous', icon: faCalendarDay},
-    {label: 'Tâches', icon: faList},
+  employeeMenuList: { label: string, icon: IconDefinition, path: string }[] = [
+    {label: 'Mon profil', icon: faUserCircle, path: `${PATH_BACKOFFICE}/profile`},
+    {label: 'Rendez-vous', icon: faCalendarDay, path: `${PATH_BACKOFFICE}/planning`},
+    {label: 'Tâches', icon: faList, path:`${PATH_BACKOFFICE}/task`},
   ];
 
   managerMenuList: { label: string, icon: IconDefinition, path: string }[] = [
