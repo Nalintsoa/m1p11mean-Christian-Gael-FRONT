@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { FrontLinkComponent } from '../front-link/front-link.component';
 import { HEADERMENUS } from '../../constants/links';
 import { NgFor } from '@angular/common';
@@ -9,7 +9,13 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink, NgFor, FrontLinkComponent, FaIconComponent],
+  imports: [
+    RouterLink,
+    NgFor,
+    FrontLinkComponent,
+    FaIconComponent,
+    RouterLinkActive
+  ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
