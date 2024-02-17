@@ -2,14 +2,14 @@ import { Component, ElementRef, EventEmitter, Input, Output, SimpleChanges, View
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServiceService } from '../../../../services/service/service.service';
 import { IService } from '../../../../interfaces/serviceInterface';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { EventBlockerDirective } from '../../../../../directives/event-blocker.directive';
 import { UploadService } from '../../../../services/upload/upload.service';
 
 @Component({
   selector: 'app-service-create',
   standalone: true,
-  imports: [ReactiveFormsModule, NgIf, NgClass, EventBlockerDirective],
+  imports: [ReactiveFormsModule, NgIf, NgFor, NgClass, EventBlockerDirective],
   templateUrl: './service-create.component.html',
   styleUrl: './service-create.component.scss'
 })
@@ -28,20 +28,30 @@ export class ServiceCreateComponent {
     duration: '',
     commission: '',
     description: '',
-    path: ''
+    path: '',
+    category: 'Manucure'
   }
 
   serviceForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
     price: new FormControl('', [Validators.required, Validators.min(1)]),
-    duration: new FormControl('', [Validators.required, Validators.min(15), Validators.max(120)]),
+    duration: new FormControl('', [Validators.required, Validators.min(1), Validators.max(5)]),
     commission: new FormControl('', [Validators.required, Validators.min(1)]),
     description: new FormControl(''),
-    path: new FormControl('', [Validators.required])
+    path: new FormControl('', [Validators.required]),
+    category: new FormControl('Manucure')
   });
 
   file: File | null = null;
   imageURL: string | ArrayBuffer | null = null;
+
+  categories = [
+    'Manucure',
+    'Pédicure',
+    'Soin du visage',
+    'Massothérapie'
+  ];
+
 
   constructor(public serviceService: ServiceService, private uploadService: UploadService) { }
 
@@ -56,7 +66,7 @@ export class ServiceCreateComponent {
         delete this.dataToUpdate.__v;
         delete this.dataToUpdate._id;
         this.serviceForm.setValue(this.dataToUpdate);
-        this.imageURL = `http://localhost:8081/${this.dataToUpdate.path}`
+        this.imageURL = `http://localhost:8000/${this.dataToUpdate.path}`
       }
     }
   }

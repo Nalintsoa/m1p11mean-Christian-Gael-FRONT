@@ -38,9 +38,9 @@
                                 <label for="" class="form-label">Duree</label>
                                 <input formControlName="duration"
                                     [ngClass]="submitted && serviceForm.get('duration')?.errors ? 'form-control is-invalid' : 'form-control'"
-                                    type="number" placeholder="En minute" />
+                                    type="number" placeholder="En heures" />
                                 <p *ngIf="submitted && serviceForm.get('duration')?.errors" class="invalid-feedback">
-                                    La durée doit entre 15 à 120 minutes
+                                    La durée doit-être entre 1 à 5 heures
                                 </p>
                             </div>
                             <div class="col">
@@ -54,6 +54,12 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="mb-1">
+                        <label for="" class="form-label">Catégorie</label>
+                        <select class="form-select">
+                            <option *ngFor="let categorie of categories" [value]="categorie">{{categorie}}</option>
+                        </select>
                     </div>
                     <div class="mb-1">
                         <label for="" class="form-label">Description</label>

@@ -1,8 +1,10 @@
 <div class="card" style="width: 18rem;">
-    <img src="../../../../../../assets/img/03.jpg" class="card-img-top" alt="...">
     <div class="card-body">
-        <h5 class="text-center">Nom du service</h5>
-        <p class="d-flex justify-content-center"><b>Durée : </b> 50 min <b> &nbsp; Prix :</b> $60</p>
+        <img style="height: 150px; width: 100%;" [src]="'http://localhost:8000/'+service?.path" class="card-img-top">
+        <h5 class="text-center mt-1">{{service?.name}}</h5>
+        <p class="d-flex justify-content-center"><b>Catégorie : </b>{{service?.category}}</p>
+        <p class="d-flex justify-content-center"><b>Durée : </b> {{service?.duration}}h <b> &nbsp; Prix :</b>
+            {{service?.price}}Ar</p>
         <div class="d-flex justify-content-center">
             <button class="btn btn-outline-primary">
                 Prendre un Rendez-vous

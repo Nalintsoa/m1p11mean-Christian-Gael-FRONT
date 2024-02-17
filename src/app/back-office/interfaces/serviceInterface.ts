@@ -5,5 +5,12 @@ export interface IService {
     duration: string,
     commission: number,
     description?: string,
-    picturePath?: string,
+    category: string,
+    path?: string,
+}
+
+export interface IFilterService {
+    keyword: string,
+    price?: string,
+    category?: string
 }
