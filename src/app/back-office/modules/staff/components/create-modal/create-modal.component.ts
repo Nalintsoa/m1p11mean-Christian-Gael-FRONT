@@ -20,6 +20,7 @@ export class CreateModalComponent {
   faPlus = faPlus;
   submitted: boolean = false;
   private modalService = inject(NgbModal);
+  changePassword = false;
 
   constructor(
     public fb: FormBuilder,
@@ -47,6 +48,7 @@ export class CreateModalComponent {
     skills: ['', [Validators.required]],
     speciality: ['', [Validators.required]],
     id: [''],
+    password: [''],
   });
 
   validationMessage = {
@@ -112,6 +114,7 @@ export class CreateModalComponent {
   handleClickAddButton = () => {
     this.staffForm.reset();
     this.submitted = false;
+    this.openModal();
   }
 
   handleSubmit = () => {

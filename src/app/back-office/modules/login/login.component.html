@@ -1,0 +1,51 @@
+<div class="main">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-5">
+        <div class="login-wrap p-4 p-md-5">
+          <div class="icon d-flex align-items-center justify-content-center">
+            <fa-icon [icon]="faUser" [size]="'2x'" />
+          </div>
+          <h3 class="text-center mb-4">M1P11-MEAN</h3>
+          <form
+            [formGroup]="loginForm"
+            (ngSubmit)="handleSubmit()"
+            class="login-form"
+          >
+            <div class="form-group">
+              <input
+                type="email"
+                class="form-control rounded-left"
+                placeholder="E-mail"
+                required=""
+                formControlName="email"
+              />
+            </div>
+            <div class="form-group d-flex">
+              <input
+                type="password"
+                class="form-control rounded-left"
+                placeholder="Mot de passe"
+                required=""
+                formControlName="password"
+              />
+            </div>
+            <div class="form-group d-flex justify-content-end">
+              <div class="">
+                <span>Mot de passe oublié ?</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <button
+                type="submit"
+                class="btn btn-primary rounded submit p-3 px-5 w-100"
+              >
+                Se connecter
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
