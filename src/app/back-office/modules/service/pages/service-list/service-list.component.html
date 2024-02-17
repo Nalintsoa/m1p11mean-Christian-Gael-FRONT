@@ -16,6 +16,7 @@
     <thead>
       <tr>
         <th scope="col">Nom</th>
+        <th scope="col">Catégorie</th>
         <th scope="col">Prix</th>
         <th scope="col">Durée</th>
         <th scope="col">Commission</th>
@@ -32,6 +33,7 @@
       </tr>
       <tr scope="row" *ngFor=" let service of services">
         <td>{{service.name}}</td>
+        <td>{{service.category}}</td>
         <td>{{service.price}}</td>
         <td>{{service.duration}}</td>
         <td>{{service.commission}}</td>

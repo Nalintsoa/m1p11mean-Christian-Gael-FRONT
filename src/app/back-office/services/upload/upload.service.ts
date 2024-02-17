@@ -9,7 +9,7 @@ export class UploadService {
   constructor(private http: HttpClient) { }
 
   uploadFile(data: FormData) {
-    const response = this.http.post("http://localhost:8081/upload", data);
+    const response = this.http.post("http://localhost:8000/upload", data);
     return response;
   }
 }

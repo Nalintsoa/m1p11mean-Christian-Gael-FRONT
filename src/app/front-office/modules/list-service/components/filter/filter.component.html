@@ -1,7 +1,8 @@
 <div class="sidebar">
     <div class="sidebar__categories">
         <div class="input-group mt-3 mb-3">
-            <input type="text" class="form-control" placeholder="Rechercher..." aria-describedby="button-addon2">
+            <input type="text" class="form-control" placeholder="Rechercher..." (change)="onSearch($event)"
+                aria-describedby="button-addon2">
             <button class="btn btn-outline-secondary" type="button" id="button-addon2"><fa-icon
                     [icon]="faSearch"></fa-icon></button>
         </div>

@@ -1,5 +1,6 @@
 import { NgFor } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { IService } from '../../../../../back-office/interfaces/serviceInterface';
 
 @Component({
   selector: 'app-service',
@@ -9,5 +10,5 @@ import { Component } from '@angular/core';
   styleUrl: './service.component.scss'
 })
 export class ServiceComponent {
-
+  @Input() service?: IService;
 }

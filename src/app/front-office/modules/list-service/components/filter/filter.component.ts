@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
@@ -11,5 +11,10 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 })
 export class FilterComponent {
   faSearch = faSearch;
+  @Output() keySearch = new EventEmitter<string>();
+
+  onSearch(event: any) {
+    this.keySearch.emit(event.target.value)
+  }
 
 }
