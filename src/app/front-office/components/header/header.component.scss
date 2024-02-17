@@ -5,7 +5,12 @@
 .header_logo,
 .header_menu,
 .header_right {
-    padding: 30px 0 27px;
+    padding: 15px 0 13px;
+}
+
+.logo {
+    color: #ff4f9d;
+    font-family: "Raleway", sans-serif;
 }
 
 .nav-link {
@@ -15,7 +20,17 @@
     color: rgba(0, 0, 0, .55);
 }
 
+.active,
+.nav-link:hover {
+    cursor: pointer;
+    color: #ff4f9d;
+}
+
 .violet-bar {
-    height: 60px;
+    height: 50px;
     background-color: violet;
+}
+
+fa-icon {
+    font-weight: 900;
 }

@@ -1,6 +1,6 @@
 <div class="modal fade hide" [ngClass]="'hide'" id="modalService" data-bs-backdrop="static" data-bs-keyboard="false"
     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel">
@@ -60,8 +60,15 @@
                         <textarea formControlName="description" class="form-control"></textarea>
                     </div>
                     <div class="mb-1">
-                        <label for="formFile" class="form-label">Default file input example</label>
-                        <input class="form-control" type="file" id="formFile">
+                        <div app-event-blocker (drop)="onDrop($event)" class="img border border-1 border-primary">
+                            <img *ngIf="imageURL" [src]="imageURL" class=" img img-thumbnail" />
+                        </div>
+                        <input formControlName="path"
+                            [ngClass]="submitted && serviceForm.get('path')?.errors ? 'form-control is-invalid' : 'form-control'"
+                            hidden />
+                        <p *ngIf="submitted && serviceForm.get('path')?.errors" class="invalid-feedback">
+                            Veuillez uploader une image
+                        </p>
                     </div>
 
                 </form>
