@@ -4,6 +4,7 @@ import { MainComponent } from "../modules/main/main.component";
 import { NotificationsComponent } from "../modules/notifications/notifications.component";
 import { HistoriqueRdvComponent } from "../modules/historique-rdv/historique-rdv.component";
 import { PreferencesComponent } from "../modules/preferences/preferences.component";
+import { OneServiceComponent } from "../modules/one-service/one-service.component";
 
 export const frontOfficeRoutes: Route[] = [
 
@@ -23,8 +24,10 @@ export const frontOfficeRoutes: Route[] = [
             },
             {
                 path: 'preferences', component: PreferencesComponent
+            },
+            {
+                path: 'one-service', component: OneServiceComponent
             }
-
         ]
     },
 
