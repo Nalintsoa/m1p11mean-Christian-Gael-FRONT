@@ -1,4 +1,4 @@
-<button class="btn btn-sm second-btn-class" (click)="openModal()">
+<button class="btn btn-sm second-btn-class" (click)="handleClickAddButton()">
   <fa-icon [icon]="faPlus"></fa-icon><span class="ms-2">Ajouter</span>
 </button>
 
@@ -261,29 +261,31 @@
                   class="btn btn-secondary dropdown-toggle"
                   type="button"
                   id="exampleDropdown"
-                  data-toggle="dropdown"
+                  data-bs-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false"
-                  (click)="toggleDropdown()"
+                  data-bs-auto-close="outside"
                 >
                   Choisir
                 </button>
-                <div
+                <ul
                   class="dropdown-menu"
                   [ngClass]="{ show: dropdownOpen }"
                   aria-labelledby="exampleDropdown"
                 >
-                  <div *ngFor="let item of items">
-                    <input
-                      type="checkbox"
-                      [id]="item.id"
-                      [formControl]="item.control"
-                      (change)="updateSelection()"
-                      class="mx-2"
-                    />
-                    <label [for]="item.id">{{ item.label }}</label>
-                  </div>
-                </div>
+                  <li *ngFor="let item of items">
+                    <span class="dropdown-item" (click)="updateSelection()">
+                      <input
+                        type="checkbox"
+                        [id]="item.id"
+                        [formControl]="item.control"
+                        (change)="updateSelection()"
+                        class="mx-2"
+                      />
+                      <label [for]="item.id">{{ item.label }}</label>
+                    </span>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
@@ -310,6 +312,30 @@
               >
                 {{ validationMessage.speciality.required }}
               </div>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-12">
+              <input
+                *ngIf="
+                  mode === 'creation' ||
+                  (mode === 'edit' && changePassword === true)
+                "
+                type="password"
+                placeholder="Mot de passe ..."
+                formControlName="password"
+                class="form-control"
+              />
+
+              <button
+                class="btn btn-success text-center form-control"
+                type="button"
+                *ngIf="mode === 'edit' && changePassword === false"
+                (click)="changePassword = true"
+              >
+                Modifier mot de passe
+              </button>
             </div>
           </div>
         </div>

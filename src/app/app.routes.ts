@@ -4,5 +4,5 @@ import { backOfficeRoutes } from './back-office/routes/back-office-route';
 
 export const routes: Routes = [
     ...frontOfficeRoutes,
-  backOfficeRoutes
+  ...backOfficeRoutes
 ];

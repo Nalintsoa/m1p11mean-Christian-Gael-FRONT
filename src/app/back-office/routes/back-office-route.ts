@@ -6,47 +6,63 @@ import { StatisticListComponent } from '../modules/statistic/pages/statistic-lis
 import { EmployeeProfileComponent } from '../modules/employee-profile/employee-profile.component';
 import { PlanningComponent } from '../modules/planning/planning.component';
 import { TaskComponent } from '../modules/task/task.component';
+import { LoginComponent } from '../modules/login/login.component';
+import { AuthGuardService } from './authGuard';
 
-export const backOfficeRoutes: Route = {
-  path: 'back-office',
-  component: HomePageComponent,
-  children: [
-    {
-      path: '',
-      redirectTo: 'staff',
-      pathMatch: 'full',
-    },
-    {
-      path: 'staff',
-      component: StaffListComponent,
-      title: "Personnel"
-    },
-    {
-      path: 'service',
-      component: ServiceListComponent,
-      title: "Service"
-    },
-    {
-      path: 'statistic',
-      component: StatisticListComponent,
-      title: "Statistique"
-    },
-    {
-      path: 'profile',
-      component: EmployeeProfileComponent,
-      title: "Profil"
-    },
-    {
-      path: 'planning',
-      component: PlanningComponent,
-      title: "Rendez-vous"
-    },
-    {
-      path: 'task',
-      component: TaskComponent,
-      title: "Tâches"
-    },
-  ],
-};
+export const backOfficeRoutes: Route[] = [
+  {
+    path: 'back-office',
+    component: HomePageComponent,
+    canActivate: [AuthGuardService],
+    children: [
+      {
+        path: '',
+        redirectTo: 'staff',
+        pathMatch: 'full',
+      },
+      {
+        path: 'staff',
+        component: StaffListComponent,
+        title: 'Personnel',
+        canActivate: [AuthGuardService]
+      },
+      {
+        path: 'service',
+        component: ServiceListComponent,
+        title: 'Service',
+        canActivate: [AuthGuardService]
+      },
+      {
+        path: 'statistic',
+        component: StatisticListComponent,
+        title: 'Statistique',
+        canActivate: [AuthGuardService]
+      },
+      {
+        path: 'profile',
+        component: EmployeeProfileComponent,
+        title: 'Profil',
+        canActivate: [AuthGuardService]
+      },
+      {
+        path: 'planning',
+        component: PlanningComponent,
+        title: 'Rendez-vous',
+        canActivate: [AuthGuardService]
+      },
+      {
+        path: 'task',
+        component: TaskComponent,
+        title: 'Tâches',
+        canActivate: [AuthGuardService]
+      },
+    ],
+  },
+  {
+    path: 'backoffice',
+    component: LoginComponent,
+    title: 'Login',
+  },
+];
 
-export const PATH_BACKOFFICE = "/back-office";
+export const PATH_BACKOFFICE = '/back-office';

@@ -128,6 +128,7 @@ export class StaffListComponent {
     
     this.modalComponent.openModal();
     this.modalComponent.mode = EDIT_MODE;
+    this.modalComponent.changePassword = false;
 
     this.modalComponent.staffForm.setValue({
       careerStart: formatDate(this.modalData.careerStart, 'yyyy-MM-dd', 'en-US'),
@@ -141,6 +142,7 @@ export class StaffListComponent {
       speciality: this.modalData.speciality,
       startHour: this.modalData.startHour,
       id: this.modalData._id,
+      password: null
     });
   }
 }
