@@ -36,7 +36,6 @@
           <th class="text-nowrap">Début de carrière</th>
           <th class="text-nowrap">Heure de début</th>
           <th class="text-nowrap">Heure fin service</th>
-          <th>Compétences</th>
           <th>Spécialité</th>
         </tr>
       </thead>
@@ -54,7 +53,6 @@
           <td>{{ user.careerStart | date : "dd-MM-YYYY" }}</td>
           <td>{{ user.startHour }}</td>
           <td>{{ user.endHour }}</td>
-          <td>{{ user.skills.join(", ") }}</td>
           <td>{{ user.speciality }}</td>
         </tr>
       </tbody>

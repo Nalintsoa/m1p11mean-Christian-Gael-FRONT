@@ -5,10 +5,10 @@ import { NotificationsComponent } from "../modules/notifications/notifications.c
 import { HistoriqueRdvComponent } from "../modules/historique-rdv/historique-rdv.component";
 import { PreferencesComponent } from "../modules/preferences/preferences.component";
 import { OneServiceComponent } from "../modules/one-service/one-service.component";
+import { LoginFrontComponent } from "../modules/login-front/login-front.component";
 import { CreateRdvComponent } from "../modules/create-rdv/create-rdv.component";
 
 export const frontOfficeRoutes: Route[] = [
-
     {
         path: 'front-office', component: MainComponent, children: [
             {
@@ -36,5 +36,7 @@ export const frontOfficeRoutes: Route[] = [
             },
         ]
     },
-
+    {
+        path: 'frontoffice', component: LoginFrontComponent
+    }
 ]

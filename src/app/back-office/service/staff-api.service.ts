@@ -43,4 +43,8 @@ export class StaffApiService {
       })
     );
   }
+
+  getStaff(id: any): Observable<any> {
+    return this.http.get(`${this.baseUri}/${id}`);
+  }
 }
