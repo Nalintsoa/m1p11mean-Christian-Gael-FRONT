@@ -7,8 +7,8 @@ export const BREADCRUMBS: IBreadCrumb[] = [
         class: "fa fa-list"
     },
     {
-        label: "Historique",
-        path: "histo-rdv",
+        label: "Rendez-vous",
+        path: "create-rdv",
         class: "fa fa-history"
     },
     {
@@ -20,6 +20,11 @@ export const BREADCRUMBS: IBreadCrumb[] = [
         label: "Notifications",
         path: "notifications",
         class: "fa fa-bell-o"
-    }
+    },
+    {
+        label: "Historique",
+        path: "histo-rdv",
+        class: "fa fa-history"
+    },
 
 ] 
