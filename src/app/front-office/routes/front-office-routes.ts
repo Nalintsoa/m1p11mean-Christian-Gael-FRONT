@@ -15,17 +15,17 @@ export const frontOfficeRoutes: Route[] = [
                 path: '', redirectTo: 'services', pathMatch: 'full'
             },
             {
-                path: 'services', component: ListServiceComponent
+                path: 'services', component: ListServiceComponent, title: "Services"
             },
             {
-                path: 'notifications', component: NotificationsComponent
+                path: 'notifications', component: NotificationsComponent, title: "Notifications"
             },
 
             {
-                path: 'histo-rdv', component: HistoriqueRdvComponent
+                path: 'histo-rdv', component: HistoriqueRdvComponent, title: "Rendez-vous"
             },
             {
-                path: 'preferences', component: PreferencesComponent
+                path: 'preferences', component: PreferencesComponent, title: "Préférences"
             },
             // {
             //     path: 'one-service', component: OneServiceComponent

@@ -49,7 +49,10 @@ export class AuthApiService {
   }
 
   public getTokenInSession(): string | null {
-    return sessionStorage.getItem(this.TOKEN_KEY);
+    if (typeof sessionStorage !== 'undefined') {
+      return sessionStorage.getItem(this.TOKEN_KEY);
+    }
+    return null;
   }
 
 }
