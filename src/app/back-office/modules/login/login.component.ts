@@ -31,6 +31,7 @@ export class LoginComponent {
       this.authService.staffLogin(this.loginForm.value).subscribe({
         next: (res) => {
           console.log(res);
+          this.authService.saveToken(res.token);
           this.router.navigate(['/back-office']);
         },
         error: (res) => {
