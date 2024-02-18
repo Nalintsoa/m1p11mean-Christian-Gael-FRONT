@@ -1,0 +1,83 @@
+<app-breadcrumb [menu]="menu"></app-breadcrumb>
+
+<div class="container">
+    <div class="container-fluid pt-3">
+        <div class="row mb-3">
+            <div class="col-4">
+                <label class="form-label">Choisir un date</label>
+                <input class="form-control" type="date" name="date" (change)="onCheckDispo($event)">
+            </div>
+            <div class="col-4">
+                <label class="form-label">Choisir un service</label>
+                <select class="form-select" name="service" (change)="onCheckDispo($event)">
+                    <option value="" [defaultSelected]="true" disabled> </option>
+                    <option *ngFor="let service of services" [value]="service?._id">
+                        {{service?.name}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-4">
+                <label class="form-label">Durée</label>
+                <input class="form-control" type="text" disabled [value]="serviceSelected?.duration">
+            </div>
+            <div class="col-4">
+                <label class="form-label">Prix</label>
+                <input class="form-control" type="text" disabled
+                    [value]="serviceSelected?.price? serviceSelected?.price + 'Ar' : '' ">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-4">
+                <button class="btn btn-outline-primary" (click)="onCreateRdv()">
+                    <div *ngIf="!rdvService.isLoading">Enregistrer</div>
+                    <div *ngIf="rdvService.isLoading" class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </button>
+                <p *ngIf="errorMessage" [ngClass]=" { 'text-danger': errorMessage}">
+                    {{errorMessage}}
+                </p>
+                <p *ngIf="successMessage" [ngClass]=" { 'text-danger': successMessage}">
+                    {{successMessage}}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered" [cellPadding]="0">
+            <thead class="text-center">
+                <tr>
+                    <th>Employé</th>
+                    <th>8h - 9h</th>
+                    <th>9h - 10h</th>
+                    <th>10h - 11h</th>
+                    <th>11h - 12h</th>
+                    <th>12h - 13h</th>
+                    <th>13h - 14h</th>
+                    <th>14h - 15h</th>
+                    <th>15h - 16h</th>
+                    <th>16h - 17h</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let employee of formattedArray; index as i0">
+                    <td *ngFor="let item of getCells(employee); index as i1" style="padding: 0">
+                        <div *ngIf="i1 === 0">
+                            {{item.firstName}}
+                        </div>
+                        <div *ngIf="i1 >0">
+                            <button [disabled]="!item?.dispo" style="width: 100%; border-width: 0" class="btn btn-white"
+                                [ngClass]="{'stripe-2': !item?.dispo, 'stripe-1': item?.statusTemp  }"
+                                (click)="onClickCell(i0,i1 , item)">
+                                <div style="width: 100%; height: 50px">{{ " " }}</div>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
