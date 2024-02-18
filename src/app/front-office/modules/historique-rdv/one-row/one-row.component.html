@@ -1,0 +1,30 @@
+<div class="row-histo border border-2 mb-1">
+    <div class="row">
+        <div class="col-2 py-3 ps-5">
+            <div class="date ps-3 ">
+                <h3>Feb</h3>
+                <h1>24</h1>
+            </div>
+        </div>
+        <div class="col-2 py-2 ">
+            <div class="p-2 py-3">
+                <p><fa-icon [icon]="faCalendar"></fa-icon>&nbsp; {{rdv?.date}}</p>
+                <p><fa-icon [icon]="faClock"></fa-icon>&nbsp; {{ transformNumbreToHour(rdv?.startHour) +" - "+
+                    transformNumbreToHour(rdv?.endHour)}}
+                </p>
+            </div>
+        </div>
+        <div class="col-6 py-2 ">
+            <div class="p-2 py-3">
+                <p>Vous avez pris un rendez-vous pour le service : <b>{{rdv?.service?.name}}</b> </p>
+                <p>Vous allez être recevoir par <b>{{rdv?.employee?.firstName}}</b></p>
+            </div>
+        </div>
+        <div class="col-2 py-2 ">
+            <div class="p-2 py-3">
+                <p><fa-icon [icon]="faMoneyBill"></fa-icon>&nbsp; {{rdv?.service?.price+"Ar"}}</p>
+                <p>Non-payé</p>
+            </div>
+        </div>
+    </div>
+</div>

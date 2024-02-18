@@ -1,10 +1,12 @@
 <div class="card" style="width: 18rem;">
+    <div>
+        <img style="height: 160px; width: 100%;" [src]="'http://localhost:8000/'+service?.path" class="card-img-top">
+    </div>
     <div class="card-body">
-        <img style="height: 150px; width: 100%;" [src]="'http://localhost:8000/'+service?.path" class="card-img-top">
         <h5 class="text-center mt-1">{{service?.name}}</h5>
-        <p class="d-flex justify-content-center"><b>Catégorie : </b>{{service?.category}}</p>
-        <p class="d-flex justify-content-center"><b>Durée : </b> {{service?.duration}}h <b> &nbsp; Prix :</b>
-            {{service?.price}}Ar</p>
+        <p class="d-flex justify-content-center"><b>Catégorie : </b>&nbsp;{{service?.category}}</p>
+        <p class="d-flex justify-content-center"><b>Durée : </b>&nbsp;{{service?.duration}}h <b> &nbsp; Prix :</b>
+            &nbsp;{{service?.price}}Ar</p>
         <div class="d-flex justify-content-center">
             <button class="btn btn-outline-primary">
                 Prendre un Rendez-vous

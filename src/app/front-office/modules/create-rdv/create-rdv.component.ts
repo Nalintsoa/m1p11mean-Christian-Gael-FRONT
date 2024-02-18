@@ -121,7 +121,7 @@ export class CreateRdvComponent {
           this.successMessage = "Rendez-vous créé avec succès";
           this.rdvService.isLoading = false;
           this.successMessage = undefined;
-          this.router.navigate(['front-office/services'])
+          this.router.navigate(['front-office/histo-rdv'])
         }, 5000);
 
 

@@ -19,7 +19,12 @@ export class RdvService {
 
   addRdv(data: any) {
     this.isLoading = true;
-    const response = this.http.post(this.basUri, data)
+    const response = this.http.post(this.basUri, data);
+    return response;
+  }
+
+  getHistory() {
+    const response = this.http.get(`${this.basUri}getHisto`);
     return response;
   }
 }
