@@ -23,3 +23,11 @@
             blue);
     cursor: not-allowed;
 }
+
+.calendar {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: auto;
+    position: relative;
+}

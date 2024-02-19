@@ -5,15 +5,16 @@ import { BREADCRUMBS } from '../../constants/breadCrumbs';
 import { IService } from '../../../back-office/interfaces/serviceInterface';
 import { ServiceService } from '../../../back-office/services/service/service.service';
 import { RdvService } from '../../services/rdv/rdv.service';
-import { data } from 'jquery';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CardServiceComponent } from './card-service/card-service.component';
 
 @Component({
   selector: 'app-create-rdv',
   standalone: true,
   imports: [
     CommonModule,
-    BreadcrumbComponent
+    BreadcrumbComponent,
+    CardServiceComponent
   ],
   templateUrl: './create-rdv.component.html',
   styleUrl: './create-rdv.component.scss'
@@ -36,10 +37,12 @@ export class CreateRdvComponent {
 
   dataToSend = {};
 
-  constructor(private serviceService: ServiceService, public rdvService: RdvService, private router: Router) { }
+  constructor(private serviceService: ServiceService, public rdvService: RdvService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.getServices();
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id)
+      this.getOneService(id);
   }
 
   getCells(row: any): any[] {
@@ -53,9 +56,10 @@ export class CreateRdvComponent {
     const startHour = item.value;
     const endHour = startHour + duration;
     this.errorMessage = undefined;
+    const tempColor = [];
 
     for (let i = columnNumber; i < columnNumber + duration; i++) {
-      this.columnToColor.push(i);
+      tempColor.push({ row: rowNumber, column: i });
       if (row[i].dispo === false) {
         this.columnToColor = [];
         this.errorMessage = "Impossible de réserver";
@@ -64,6 +68,9 @@ export class CreateRdvComponent {
     }
 
     this.reinitColorCell(rowNumber);
+
+    this.columnToColor = tempColor;
+
     this.onColorCell(rowNumber);
 
     this.dataToSend = {
@@ -72,46 +79,39 @@ export class CreateRdvComponent {
       endHour,
       employee: item?._id,
       date: this.filterData.date,
-      customer: 'test123'
     }
 
   }
 
   onColorCell(row: number) {
     for (let j = 0; j < this.columnToColor.length; j++) {
-      this.formattedArray[row][this.columnToColor[j] + 7] = { ...this.formattedArray[row][this.columnToColor[j] + 7], statusTemp: true }
+      this.formattedArray[this.columnToColor[j].row][this.columnToColor[j].column + 7] = { ...this.formattedArray[row][this.columnToColor[j] + 7], statusTemp: true }
     }
   }
 
   reinitColorCell(row: number) {
     for (let j = 0; j < this.columnToColor.length; j++) {
-      this.formattedArray[row][this.columnToColor[j] + 7] = { ...this.formattedArray[row][this.columnToColor[j] + 7], statusTemp: false }
-    }
-  }
+      delete this.formattedArray[this.columnToColor[j].row][this.columnToColor[j].column + 7].statusTemp
 
-  getServices() {
-    this.serviceService.getServices().subscribe(data => this.services = data);
+    }
+
+    this.columnToColor = [];
   }
 
   onCheckDispo(event: any) {
 
     const { name, value } = event.target;
 
-    if (name === "service") {
-      const service = this.services.find(service => service._id === value);
-      this.serviceSelected = service;
-      this.filterData = { ...this.filterData, category: service?.category ?? '' }
-    } else {
-      this.filterData = { ...this.filterData, [name]: value }
-    }
+    this.filterData = { ...this.filterData, [name]: value }
 
-    if (this.filterData.category !== "" && this.filterData.date !== "")
-      this.rdvService.checkDisponibility(this.filterData).subscribe((data) => this.formattedArray = data)
+
+    if (this.filterData.date !== "" && this.serviceSelected)
+      this.rdvService.checkDisponibility({ ...this.filterData, category: this.serviceSelected?.category }).subscribe((data) => this.formattedArray = data)
 
   }
 
   onCreateRdv() {
-    if (this.dataToSend) {
+    if (Object.values(this.dataToSend).length) {
       this.errorMessage = undefined;
       this.rdvService.addRdv(this.dataToSend).subscribe((data) => {
 
@@ -129,6 +129,10 @@ export class CreateRdvComponent {
     } else {
       this.errorMessage = "Veuillez remplir tous remplir"
     }
+  }
+
+  getOneService(id: string) {
+    this.serviceService.getOneService(id).subscribe((data) => this.serviceSelected = data)
   }
 }
 

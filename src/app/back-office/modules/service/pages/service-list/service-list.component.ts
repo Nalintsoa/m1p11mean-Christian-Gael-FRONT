@@ -65,4 +65,6 @@ export class ServiceListComponent {
     this.dataToUpdate = data;
     this.openModal?.nativeElement.click();
   }
+
+  // TODO: Delete service
 }
