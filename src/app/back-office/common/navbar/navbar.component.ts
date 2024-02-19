@@ -1,10 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, DoCheck, HostListener, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IconDefinition, faBars, faCalendarDay, faChartLine, faHandshake, faList, faUserCheck, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { PATH_BACKOFFICE } from '../../routes/back-office-route';
-import { INavigationItem } from '../../interfaces/breadCrumbInterfaces';
 import { AuthApiService } from '../../service/auth-api.service';
 
 @Component({
@@ -50,6 +49,9 @@ export class NavbarComponent implements OnInit {
   private checkTokenExpiration() {
     if (this.authService.isTokenExpired()) {
       this.router.navigate(['/backoffice']);
+    } else {
+      const token = this.authService.getToken();
+      this.authService.saveToken(token);
     }
   }
 

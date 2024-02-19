@@ -26,6 +26,28 @@
                 placeholder="Adresse mail"
                 formControlName="identifier"
               />
+              <div
+                *ngIf="
+                  loginForm.get('identifier')?.hasError('required') &&
+                  loginForm.status === 'INVALID' &&
+                  (isLoginFormSubmitted === true ||
+                    loginForm.get('identifier')?.touched)
+                "
+                class="fw-light text-danger"
+              >
+                {{ "Veuillez remplir ce champ" }}
+              </div>
+              <div
+                *ngIf="
+                  loginForm.get('identifier')?.hasError('email') &&
+                  loginForm.status === 'INVALID' &&
+                  (isLoginFormSubmitted === true ||
+                    loginForm.get('identifier')?.touched)
+                "
+                class="fw-light text-danger"
+              >
+                {{ "Adresse mail invalide" }}
+              </div>
             </div>
             <div class="row">
               <input
@@ -36,6 +58,17 @@
                 placeholder="Mot de passe"
                 formControlName="password"
               />
+              <div
+                *ngIf="
+                  loginForm.get('password')?.hasError('required') &&
+                  loginForm.status === 'INVALID' &&
+                  (isLoginFormSubmitted === true ||
+                    loginForm.get('password')?.touched)
+                "
+                class="fw-light text-danger"
+              >
+                {{ "Veuillez remplir ce champ" }}
+              </div>
             </div>
             <div class="row justify-content-center">
               <input type="submit" value="Se connecter" class="btn" />
@@ -87,6 +120,16 @@
                 placeholder="Nom d'utilisateur"
                 formControlName="pseudo"
               />
+              <div
+                *ngIf="
+                  registerForm.get('pseudo')?.hasError('required') &&
+                  registerForm.status === 'INVALID' &&
+                  registerForm.get('pseudo')?.touched
+                "
+                class="fw-light text-danger"
+              >
+                {{ validationMessage.pseudo.required }}
+              </div>
             </div>
             <div class="row" *ngIf="firstRegisterForm">
               <input
@@ -97,6 +140,26 @@
                 placeholder="Adresse mail"
                 formControlName="email"
               />
+              <div
+                *ngIf="
+                  registerForm.get('email')?.hasError('required') &&
+                  registerForm.status === 'INVALID' &&
+                  registerForm.get('email')?.touched
+                "
+                class="fw-light text-danger"
+              >
+                {{ validationMessage.email.required }}
+              </div>
+              <div
+                *ngIf="
+                  registerForm.get('email')?.hasError('email') &&
+                  registerForm.status === 'INVALID' &&
+                  registerForm.get('email')?.touched
+                "
+                class="fw-light text-danger"
+              >
+                {{ validationMessage.email.email }}
+              </div>
             </div>
             <div class="row" *ngIf="firstRegisterForm">
               <input
@@ -107,6 +170,16 @@
                 placeholder="Adresse"
                 formControlName="address"
               />
+              <div
+                *ngIf="
+                  registerForm.get('address')?.hasError('required') &&
+                  registerForm.status === 'INVALID' &&
+                  registerForm.get('address')?.touched
+                "
+                class="fw-light text-danger"
+              >
+                {{ validationMessage.address.required }}
+              </div>
             </div>
             <div class="row" *ngIf="firstRegisterForm">
               <input
@@ -117,6 +190,46 @@
                 placeholder="Téléphone"
                 formControlName="phoneNumber"
               />
+              <div
+                *ngIf="
+                  registerForm.get('phoneNumber')?.hasError('required') &&
+                  registerForm.status === 'INVALID' &&
+                  registerForm.get('phoneNumber')?.touched
+                "
+                class="fw-light text-danger"
+              >
+                {{ validationMessage.phoneNumber.required }}
+              </div>
+              <div
+                *ngIf="
+                  registerForm.get('phoneNumber')?.hasError('pattern') &&
+                  registerForm.status === 'INVALID' &&
+                  registerForm.get('phoneNumber')?.touched
+                "
+                class="fw-light text-danger"
+              >
+                {{ validationMessage.phoneNumber.pattern }}
+              </div>
+              <div
+                *ngIf="
+                  registerForm.get('phoneNumber')?.hasError('minlength') &&
+                  registerForm.status === 'INVALID' &&
+                  registerForm.get('phoneNumber')?.touched
+                "
+                class="fw-light text-danger"
+              >
+                {{ validationMessage.phoneNumber.minLength }}
+              </div>
+              <div
+                *ngIf="
+                  registerForm.get('phoneNumber')?.hasError('maxlength') &&
+                  registerForm.status === 'INVALID' &&
+                  registerForm.get('phoneNumber')?.touched
+                "
+                class="fw-light text-danger"
+              >
+                {{ validationMessage.phoneNumber.maxLength }}
+              </div>
             </div>
             <div class="row" *ngIf="!firstRegisterForm">
               <input

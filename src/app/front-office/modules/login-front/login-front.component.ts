@@ -8,6 +8,8 @@ import {
 } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowLeft, faBackspace } from '@fortawesome/free-solid-svg-icons';
+import { CustomerServiceService } from '../../services/customer/customer-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-front',
@@ -21,7 +23,9 @@ export class LoginFrontComponent {
   isLoginForm = true;
   firstRegisterForm = true;
 
-  constructor(public fb: FormBuilder) {}
+  isLoginFormSubmitted = false;
+
+  constructor(public fb: FormBuilder, private customerService: CustomerServiceService, private router: Router) {}
 
   registerForm = this.fb.group({
     pseudo: ['', [Validators.required]],
@@ -40,8 +44,27 @@ export class LoginFrontComponent {
     password: ['', [Validators.required]],
   });
 
+  validationMessage = {
+    pseudo: {
+      required: 'Veuillez remplir ce champ',
+    },
+    phoneNumber: {
+      required: 'Veuillez remplir ce champ',
+      pattern: 'Le numéro de téléphone doit être composé de chiffres uniquement.',
+      minLength: 'Le numéro de téléphone doit avoir au moins 10 chiffres.',
+      maxLength: 'Le numéro de téléphone ne doit pas dépasser 10 chiffres.',
+    },
+    email: {
+      required: 'Veuillez remplir ce champ',
+      email: 'Veuillez entrer une adresse e-mail valide.',
+    },
+    address: {
+      required: 'Veuillez remplir ce champ',
+    },
+  };
+
   loginForm = this.fb.group({
-    identifier: ['', [Validators.required]],
+    identifier: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required]],
   });
 
@@ -61,6 +84,9 @@ export class LoginFrontComponent {
   toggleLoginOrRegister() {
     this.isLoginForm = !this.isLoginForm;
     this.firstRegisterForm = true;
+    this.registerForm.reset();
+    this.loginForm.reset();
+    this.isLoginFormSubmitted = false;
   }
 
   handleClickReturn() {
@@ -77,10 +103,37 @@ export class LoginFrontComponent {
   };
 
   handleLoginSubmit = () => {
-    console.log(this.loginForm.value);
+    this.isLoginFormSubmitted = true;
+    if (this.loginForm.valid) {
+      const data = {
+        email: this.loginForm.get('identifier')?.value,
+        password: this.loginForm.get('password')?.value
+      }
+      this.customerService.customerLogin(data).subscribe({
+        next: (res) => {
+          this.customerService.saveToken(res.token);
+          this.router.navigate(['/front-office']);
+          this.isLoginFormSubmitted = true;
+        }
+      })
+    }
   };
 
   handleRegisterSubmit = () => {
-    console.log(this.registerForm.value);
+    if (this.registerForm.valid) {
+      if (this.registerForm.get('tempPassword')?.value === this.registerForm.get("password")?.value){
+        this.customerService.register(this.registerForm.value).subscribe({
+          next: (res) => {
+            console.log(res);
+            this.loginForm.reset();
+            this.isLoginForm = true;
+            this.firstRegisterForm = true;
+          },
+          error(err) {
+            console.log(err);
+          },
+        })
+      }
+    }
   };
 }

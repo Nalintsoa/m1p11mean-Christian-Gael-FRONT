@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { FrontLinkComponent } from '../front-link/front-link.component';
 import { HEADERMENUS } from '../../constants/links';
 import { NgFor } from '@angular/common';
 import { faBell, faUserCircle, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { CustomerServiceService } from '../../services/customer/customer-service.service';
 
 @Component({
   selector: 'app-header',
@@ -19,10 +20,16 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   faBell = faBell;
   faUserCircle = faUserCircle;
   faHeart = faHeart;
+
+  constructor(private customerService: CustomerServiceService, private router: Router){}
+
+  ngOnInit(): void {
+    this.checkTokenExpiration();
+  }
 
   menuActivate: string = 'Services';
   menus = HEADERMENUS;
@@ -31,5 +38,20 @@ export class HeaderComponent {
     this.menuActivate = data;
   }
 
+  private checkTokenExpiration() {
+    if (this.customerService.isTokenExpired()) {
+      this.router.navigate(['/frontoffice']);
+    } else {
+      const token = this.customerService.getToken();
+      this.customerService.saveToken(token);
+    }
+  }
 
+  handleLogout = () => {
+    this.customerService.logout().subscribe({
+      next: (res) => {
+        this.router.navigate(['/frontoffice']);
+      }
+    })
+  }
 }
