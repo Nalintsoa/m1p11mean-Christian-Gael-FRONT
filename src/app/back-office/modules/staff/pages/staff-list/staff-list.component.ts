@@ -138,7 +138,6 @@ export class StaffListComponent {
       firstName: this.modalData.firstName,
       name: this.modalData.name,
       phoneNumber: this.modalData.phoneNumber ? `${this.modalData.phoneNumber}` : '',
-      skills: `${this.modalData.skills.join(", ")}`,
       speciality: this.modalData.speciality,
       startHour: this.modalData.startHour,
       id: this.modalData._id,

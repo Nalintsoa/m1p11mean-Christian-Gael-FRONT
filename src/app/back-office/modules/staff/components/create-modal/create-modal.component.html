@@ -200,7 +200,9 @@
                 type="time"
                 class="form-control"
                 id="startHourInput"
+                name="startHour"
                 formControlName="startHour"
+                (change)="handleChangeHour($event)"
               />
               <div
                 *ngIf="
@@ -219,6 +221,8 @@
                 class="form-control"
                 id="endHour"
                 formControlName="endHour"
+                name="endHour"
+                (change)="handleChangeHour($event)"
               />
               <div
                 *ngIf="
@@ -233,7 +237,7 @@
             </div>
           </div>
 
-          <div class="row mt-3">
+          <!-- <div class="row mt-3">
             <label class="form-label">Compétences</label>
             <div class="col-9">
               <input
@@ -288,7 +292,7 @@
                 </ul>
               </div>
             </div>
-          </div>
+          </div> -->
 
           <div class="row mt-3">
             <div class="col-12">
@@ -298,8 +302,8 @@
                 id="specialityInput"
                 formControlName="speciality"
               >
-                <option *ngFor="let item of result.split(',')" [value]="item">
-                  {{ item }}
+                <option *ngFor="let item of items" [value]="item.label">
+                  {{ item.label }}
                 </option>
               </select>
               <div

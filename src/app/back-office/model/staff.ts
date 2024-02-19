@@ -7,6 +7,6 @@ export interface IStaff {
 	careerStart: Date;
 	startHour: string;
 	endHour: string;
-	skills: string[];
+	skills?: string[];
 	speciality: string;
 }

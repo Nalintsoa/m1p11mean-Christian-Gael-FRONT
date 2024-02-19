@@ -45,7 +45,6 @@ export class CreateModalComponent {
     careerStart: ['', [Validators.required]],
     startHour: ['', [Validators.required]],
     endHour: ['', [Validators.required]],
-    skills: ['', [Validators.required]],
     speciality: ['', [Validators.required]],
     id: [''],
     password: [''],
@@ -78,9 +77,6 @@ export class CreateModalComponent {
     endHour: {
       required: 'Veuillez remplir ce champ',
     },
-    skills: {
-      required: 'Veuillez remplir ce champ',
-    },
     speciality: {
       required: 'Veuillez remplir ce champ',
     },
@@ -97,19 +93,25 @@ export class CreateModalComponent {
   result = '';
   dropdownOpen = false;
 
-  toggleDropdown() {
-    this.dropdownOpen = !this.dropdownOpen;
-  }
+  // toggleDropdown() {
+  //   this.dropdownOpen = !this.dropdownOpen;
+  // }
 
-  updateSelection() {
-    this.result = this.items
-      .filter((item) => item.control.value)
-      .map((item) => item.label)
-      .join(', ');
+  // updateSelection() {
+  //   this.result = this.items
+  //     .filter((item) => item.control.value)
+  //     .map((item) => item.label)
+  //     .join(', ');
 
-    this.staffForm.patchValue({ skills: this.result });
-  }
+  //   this.staffForm.patchValue({ skills: this.result });
+  // }
   // select
+
+  handleChangeHour = (e: any) => {
+    const { name, value } = e.target;
+    const hours = value.split(":");
+    this.staffForm.patchValue({ [name]: `${hours[0]}:00` });
+  }
 
   handleClickAddButton = () => {
     this.staffForm.reset();
