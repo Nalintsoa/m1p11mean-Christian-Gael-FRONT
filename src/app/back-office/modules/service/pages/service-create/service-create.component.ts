@@ -5,6 +5,7 @@ import { IService } from '../../../../interfaces/serviceInterface';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { EventBlockerDirective } from '../../../../../directives/event-blocker.directive';
 import { UploadService } from '../../../../services/upload/upload.service';
+import { WebsocketService } from '../../../../../common-service/websocket.service';
 
 @Component({
   selector: 'app-service-create',
@@ -21,13 +22,13 @@ export class ServiceCreateComponent {
   @ViewChild('closeModal') closeModal?: ElementRef;
   submitted: boolean = false;
   _id?: string;
+  oldPrice?: number;
 
   defautValue: IService | any = {
     name: '',
     price: '',
     duration: '',
     commission: '',
-    description: '',
     path: '',
     category: 'Manucure'
   }
@@ -37,8 +38,10 @@ export class ServiceCreateComponent {
     price: new FormControl('', [Validators.required, Validators.min(1)]),
     duration: new FormControl('', [Validators.required, Validators.min(1), Validators.max(5)]),
     commission: new FormControl('', [Validators.required, Validators.min(1)]),
-    description: new FormControl(''),
     path: new FormControl('', [Validators.required]),
+    specialOffer: new FormControl(false),
+    startOffer: new FormControl(),
+    endOffer: new FormControl(),
     category: new FormControl('Manucure')
   });
 
@@ -53,7 +56,21 @@ export class ServiceCreateComponent {
   ];
 
 
-  constructor(public serviceService: ServiceService, private uploadService: UploadService) { }
+  constructor(public serviceService: ServiceService, private uploadService: UploadService, private socketService: WebsocketService) { }
+
+  ngOnInit() {
+    this.serviceForm.get('specialOffer')?.valueChanges.subscribe((value) => {
+      if (value) {
+        this.serviceForm.get('startOffer')?.setValidators(Validators.required);
+        this.serviceForm.get('endOffer')?.setValidators(Validators.required);
+      } else {
+        this.serviceForm.get('startOffer')?.clearValidators();
+        this.serviceForm.get('endOffer')?.clearValidators();
+      }
+      this.serviceForm.get('startOffer')?.updateValueAndValidity();
+      this.serviceForm.get('endOffer')?.updateValueAndValidity();
+    });
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes?.['mode']) {
@@ -63,6 +80,7 @@ export class ServiceCreateComponent {
 
       } else {
         this._id = this.dataToUpdate._id;
+        this.oldPrice = this.dataToUpdate.price;
         delete this.dataToUpdate.__v;
         delete this.dataToUpdate._id;
         this.serviceForm.setValue(this.dataToUpdate);
@@ -73,11 +91,17 @@ export class ServiceCreateComponent {
 
   onSubmit() {
     this.submitted = true;
+    console.log(this.serviceForm.value)
     if (this.serviceForm.valid) {
       if (this.mode === "create") {
         this.onCreate();
       } else {
         this.onUpdate();
+      }
+
+      if (this.serviceForm.get("specialOffer")?.value) {
+
+        this.socketService.emit("specialOffer", { _id: this._id, oldPrice: this.oldPrice })
       }
     }
 
@@ -123,11 +147,14 @@ export class ServiceCreateComponent {
       };
       reader.readAsDataURL(fileToRender);
 
-
       this.uploadService.uploadFile(formData).subscribe((data: any) => this.serviceForm.get('path')?.setValue(data?.path))
     }
 
 
+  }
+
+  testSwitch(e: any) {
+    console.log(e)
   }
 
 

@@ -10,7 +10,7 @@
             </div>
             <div class="modal-body">
                 <form [formGroup]="serviceForm">
-                    <div class="mb-3">
+                    <div class="mb-2">
                         <div class="row">
                             <div class="col">
                                 <label for="" class="form-label">Nom</label>
@@ -32,7 +32,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-2">
                         <div class="row">
                             <div class="col">
                                 <label for="" class="form-label">Duree</label>
@@ -55,15 +55,41 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mb-1">
+                    <div class="mb-2">
                         <label for="" class="form-label">Catégorie</label>
                         <select class="form-select">
                             <option *ngFor="let categorie of categories" [value]="categorie">{{categorie}}</option>
                         </select>
                     </div>
-                    <div class="mb-1">
-                        <label for="" class="form-label">Description</label>
-                        <textarea formControlName="description" class="form-control"></textarea>
+                    <div class="mb-2">
+                        <div class="row">
+                            <div class="col-3">
+                                <label for="" class="form-label">Offre Special</label>
+                                <div class="form-check form-switch mt-1">
+                                    <input formControlName="specialOffer" style="width: 50px; height: 20px;"
+                                        class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                </div>
+                            </div>
+                            <div *ngIf=" serviceForm.get('specialOffer')?.value" class="col-4">
+                                <label for="" class="form-label">Début de l'offre</label>
+                                <input formControlName="startOffer" type="date"
+                                    [ngClass]="submitted && serviceForm.get('startOffer')?.errors ? 'form-control is-invalid' : 'form-control'">
+                                <p *ngIf="submitted && serviceForm.get('startOffer')?.errors" class="invalid-feedback">
+                                    La début de l'offre et obligatoire
+                                </p>
+                            </div>
+                            <div *ngIf=" serviceForm.get('specialOffer')?.value" class="col-4">
+                                <label for="" class="form-label">Fin de l'offre</label>
+                                <input formControlName="endOffer" type="date" class="form-control"
+                                    [ngClass]="submitted && serviceForm.get('endOffer')?.errors ? 'form-control is-invalid' : 'form-control'">
+
+
+                                <p *ngIf="submitted && serviceForm.get('endOffer')?.errors" class="invalid-feedback">
+                                    La fin de l'offre et obligatoire
+                                </p>
+
+                            </div>
+                        </div>
                     </div>
                     <div class="mb-1">
                         <div app-event-blocker (drop)="onDrop($event)" class="img border border-1 border-primary">

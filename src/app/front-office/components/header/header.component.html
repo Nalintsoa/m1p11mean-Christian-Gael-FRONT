@@ -1,38 +1,21 @@
-<header
-  class="header position-sticky border-bottom border-2 sticky-top bg-white"
-  style="z-index: 100"
->
+<header class="header position-sticky border-bottom border-2 sticky-top bg-white" style="z-index: 100">
   <div class="container-fluid topbar d-none d-lg-block violet-bar">
     <div class="container px-0">
       <div class="row align-items-center">
         <div class="col-lg-8">
           <div class="d-flex flex-wrap">
-            <a href="#" class="me-4 text-light"
-              ><i class="fas fa-map-marker-alt text-primary me-2"></i>Find A
-              Location</a
-            >
-            <a href="#" class="me-4 text-light"
-              ><i class="fas fa-phone-alt text-primary me-2"></i>+01234567890</a
-            >
-            <a href="#" class="text-light"
-              ><i class="fas fa-envelope text-primary me-2"></i>Examp.com</a
-            >
+            <a href="#" class="me-4 text-light"><i class="fas fa-map-marker-alt text-primary me-2"></i>Find A
+              Location</a>
+            <a href="#" class="me-4 text-light"><i class="fas fa-phone-alt text-primary me-2"></i>+01234567890</a>
+            <a href="#" class="text-light"><i class="fas fa-envelope text-primary me-2"></i>Examp.com</a>
           </div>
         </div>
         <div class="col-lg-4">
           <div class="d-flex align-items-center justify-content-end">
-            <a href="#" class="me-3 btn-square border rounded-ciomrcle nav-fill"
-              ><i class="fab fa-facebook-f"></i
-            ></a>
-            <a href="#" class="me-3 btn-square border rounded-circle nav-fill"
-              ><i class="fab fa-twitter"></i
-            ></a>
-            <a href="#" class="me-3 btn-square border rounded-circle nav-fill"
-              ><i class="fab fa-instagram"></i
-            ></a>
-            <a href="#" class="btn-square border rounded-circle nav-fill"
-              ><i class="fab fa-linkedin-in"></i
-            ></a>
+            <a href="#" class="me-3 btn-square border rounded-ciomrcle nav-fill"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="me-3 btn-square border rounded-circle nav-fill"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="me-3 btn-square border rounded-circle nav-fill"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="btn-square border rounded-circle nav-fill"><i class="fab fa-linkedin-in"></i></a>
           </div>
         </div>
       </div>
@@ -52,60 +35,26 @@
               <a href="" class="nav-link" routerLinkActive="active">Home</a>
             </li>
             <li class="nav-item">
-              <a
-                href=""
-                class="nav-link"
-                routerLink="/front-office/services"
-                routerLinkActive="active"
-                >Service</a
-              >
+              <a href="" class="nav-link" routerLink="/front-office/services" routerLinkActive="active">Service</a>
             </li>
             <li class="nav-item">
-              <a
-                href=""
-                class="nav-link"
-                routerLink="/front-office/prise-rdv"
-                routerLinkActive="active"
-                >Rendez-vous</a
-              >
+              <a href="" class="nav-link" routerLink="/front-office/prise-rdv" routerLinkActive="active">Rendez-vous</a>
             </li>
             <li class="nav-item">
-              <a
-                href=""
-                class="nav-link"
-                routerLink="/front-office/preferences"
-                routerLinkActive="active"
-                >Employés</a
-              >
+              <a href="" class="nav-link" routerLink="/front-office/preferences" routerLinkActive="active">Employés</a>
             </li>
             <li class="nav-item">
-              <a
-                routerLink="/front-office/histo-rdv"
-                class="nav-link"
-                routerLinkActive="active"
-                >Historique</a
-              >
+              <a routerLink="/front-office/histo-rdv" class="nav-link" routerLinkActive="active">Historique</a>
             </li>
           </ul>
         </nav>
       </div>
       <div class="col-3">
         <div class="header_right d-flex justify-content-end">
-          <span
-            ><a class="nav-link"
-              ><fa-icon
-                [icon]="faBell"
-                routerLink="/front-office/notifications"
-                routerLinkActive="active"
-              ></fa-icon></a
-          ></span>
-          <span
-            ><a class="nav-link"><fa-icon [icon]="faHeart"></fa-icon></a
-          ></span>
-          <span
-            ><a class="nav-link" (click)="handleLogout()"
-              ><fa-icon [icon]="faUserCircle"></fa-icon></a
-          ></span>
+          <span><a class="nav-link"><fa-icon [icon]="faBell" routerLink="/front-office/notifications"
+                routerLinkActive="active"></fa-icon></a></span>
+          <span><a class="nav-link"><fa-icon [icon]="faHeart"></fa-icon></a></span>
+          <span><a class="nav-link" (click)="handleLogout()"><fa-icon [icon]="faUserCircle"></fa-icon></a></span>
         </div>
       </div>
     </div>
