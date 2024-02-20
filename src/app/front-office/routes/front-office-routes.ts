@@ -9,51 +9,51 @@ import { CreateRdvComponent } from '../modules/create-rdv/create-rdv.component';
 import { AuthGuardService } from './authGuard';
 
 export const frontOfficeRoutes: Route[] = [
-  {
-    path: 'front-office',
-    component: MainComponent,
-    canActivate: [AuthGuardService],
-    children: [
-      {
-        path: '',
-        redirectTo: 'services',
-        pathMatch: 'full',
-      },
-      {
-        path: 'services',
-        component: ListServiceComponent,
+    {
+        path: 'front-office',
+        component: MainComponent,
         canActivate: [AuthGuardService],
-        title: 'Services',
-      },
-      {
-        path: 'notifications',
-        component: NotificationsComponent,
-        canActivate: [AuthGuardService],
-        title: 'Notifications',
-      },
+        children: [
+            {
+                path: '',
+                redirectTo: 'services',
+                pathMatch: 'full',
+            },
+            {
+                path: 'services',
+                component: ListServiceComponent,
+                canActivate: [AuthGuardService],
+                title: 'Services',
+            },
+            {
+                path: 'notifications',
+                component: NotificationsComponent,
+                canActivate: [AuthGuardService],
+                title: 'Notifications',
+            },
 
-      {
-        path: 'histo-rdv',
-        component: HistoriqueRdvComponent,
-        canActivate: [AuthGuardService],
-        title: 'Rendez-vous',
-      },
-      {
-        path: 'preferences',
-        component: PreferencesComponent,
-        canActivate: [AuthGuardService],
-        title: 'Préférences',
-      },
-      {
-        path: 'prise-rdv',
-        canActivate: [AuthGuardService],
-        component: CreateRdvComponent,
-        title: 'Rendez-vous',
-      },
-    ],
-  },
-  {
-    path: 'frontoffice',
-    component: LoginFrontComponent,
-  },
+            {
+                path: 'histo-rdv',
+                component: HistoriqueRdvComponent,
+                canActivate: [AuthGuardService],
+                title: 'Rendez-vous',
+            },
+            {
+                path: 'preferences',
+                component: PreferencesComponent,
+                canActivate: [AuthGuardService],
+                title: 'Préférences',
+            },
+            {
+                path: 'prise-rdv/:id',
+                canActivate: [AuthGuardService],
+                component: CreateRdvComponent,
+                title: 'Rendez-vous',
+            },
+        ],
+    },
+    {
+        path: 'frontoffice',
+        component: LoginFrontComponent,
+    },
 ];

@@ -28,6 +28,12 @@ export class ServiceService {
     return response;
   }
 
+  getOneService(data: string) {
+    const response = this.http.get<IService>(`${this.baseUri}${data}`);
+    return response;
+  }
+
+
 
 
 

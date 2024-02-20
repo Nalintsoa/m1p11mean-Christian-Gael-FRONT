@@ -1,4 +1,4 @@
-<div class="card" style="width: 18rem;">
+<div class="card" style="width: 100%;">
     <div>
         <img style="height: 160px; width: 100%;" [src]="'http://localhost:8000/'+service?.path" class="card-img-top">
     </div>
@@ -8,9 +8,8 @@
         <p class="d-flex justify-content-center"><b>Durée : </b>&nbsp;{{service?.duration}}h <b> &nbsp; Prix :</b>
             &nbsp;{{service?.price}}Ar</p>
         <div class="d-flex justify-content-center">
-            <a class="btn btn-outline-primary" [routerLink]="'/front-office/prise-rdv/'+service?._id">
-                Prendre un Rendez-vous
-            </a>
+
+
         </div>
     </div>
 </div>

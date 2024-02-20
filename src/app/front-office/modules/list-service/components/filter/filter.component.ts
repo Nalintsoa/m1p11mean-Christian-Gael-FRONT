@@ -13,6 +13,7 @@ export class FilterComponent {
   faSearch = faSearch;
   @Output() keySearch = new EventEmitter<string>();
 
+  // TODO: filter services front-office
   onSearch(event: any) {
     this.keySearch.emit(event.target.value)
   }
