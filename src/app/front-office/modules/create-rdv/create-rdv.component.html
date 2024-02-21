@@ -1,72 +1,144 @@
 <app-breadcrumb [menu]="menu"></app-breadcrumb>
 
 <div class="container">
-    <div class="container-fluid pt-3">
-        <div class="row mb-3">
-            <div class="col-3">
-                <div class="mb-3">
-                    <label class="form-label">Choisir un date</label>
-                    <input class="form-control calendar" type="date" name="date" (change)="onCheckDispo($event)">
-                </div>
-                <div class="mb-3">
-                    <app-card-service [service]="serviceSelected"></app-card-service>
-                </div>
-                <div>
-                    <button style="width: 100%;" class="btn btn-outline-primary" (click)="onCreateRdv()">
-                        <div *ngIf="!rdvService.isLoading">Confirmer votre rendez-vous</div>
-                        <div *ngIf="rdvService.isLoading" class="spinner-border" role="status">
-                            <span class="visually-hidden">Loading...</span>
-                        </div>
-                    </button>
-                    <p *ngIf="errorMessage" [ngClass]=" { 'text-danger': errorMessage}">
-                        {{errorMessage}}
-                    </p>
-                    <p *ngIf="successMessage" [ngClass]=" { 'text-danger': successMessage}">
-                        {{successMessage}}
-                    </p>
-                </div>
-
+  <div class="container-fluid pt-3">
+    <div class="row mb-3">
+      <div class="col-lg-4 col-md-5">
+        <div class="row mb-3 justify-content-between">
+          <div class="col-xl-6 col-lg-12">
+            <label class="form-label">Choisissez une date</label>
+            <input
+              class="form-control calendar"
+              type="date"
+              name="date"
+              (change)="onCheckDispo($event)"
+            />
+          </div>
+          <div class="col-xl-6 col-lg-12">
+            <br *ngIf="!addRappel" />
+            <button
+              class="btn btn-white border mt-2 text-nowrap"
+              *ngIf="!addRappel"
+              (click)="handleAddRappel()"
+            >
+              <fa-icon [icon]="faBell" class="me-2" /> Ajouter un rappel
+            </button>
+            <label class="form-label" *ngIf="addRappel">Rappel</label>
+            <div class="d-flex">
+              <input
+                type="datetime-local"
+                class="form-control calendar"
+                name="rappel"
+                *ngIf="addRappel"
+                (change)="handleChangeRappel($event)"
+              />
             </div>
-            <div class="col">
-                <div class="table-responsive">
-                    <table class="table table-bordered" [cellPadding]="0">
-                        <thead class="text-center">
-                            <tr>
-                                <th>Employé</th>
-                                <th>8h - 9h</th>
-                                <th>9h - 10h</th>
-                                <th>10h - 11h</th>
-                                <th>11h - 12h</th>
-                                <th>12h - 13h</th>
-                                <th>13h - 14h</th>
-                                <th>14h - 15h</th>
-                                <th>15h - 16h</th>
-                                <th>16h - 17h</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let employee of formattedArray; index as i0">
-                                <td *ngFor="let item of getCells(employee); index as i1" style="padding: 0">
-                                    <div *ngIf="i1 === 0">
-                                        {{item.firstName}}
-                                    </div>
-                                    <div *ngIf="i1 >0">
-                                        <button [disabled]="item?.dispo === false" style="width: 100%; border-width: 0"
-                                            class="btn btn-white"
-                                            [ngClass]="{'stripe-2': item?.dispo === false , 'stripe-1': item?.statusTemp === true  }"
-                                            (click)="onClickCell(i0,i1 , item)">
-                                            <div style="width: 100%; height: 50px">{{ " " }}</div>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+          </div>
         </div>
-
+        <div class="mb-3">
+          <app-card-service [service]="serviceSelected"></app-card-service>
+        </div>
+        <div>
+          <button
+            style="width: 100%"
+            class="btn btn-outline-primary"
+            (click)="onCreateRdv()"
+          >
+            <div *ngIf="!rdvService.isLoading">Confirmer votre rendez-vous</div>
+            <div
+              *ngIf="rdvService.isLoading"
+              class="spinner-border"
+              role="status"
+            >
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </button>
+          <p *ngIf="errorMessage" [ngClass]="{ 'text-danger': errorMessage }">
+            {{ errorMessage }}
+          </p>
+          <p
+            *ngIf="successMessage"
+            [ngClass]="{ 'text-danger': successMessage }"
+          >
+            {{ successMessage }}
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-8 col-md-7">
+        <div class="mb-3">
+          <br />
+          <div class="row justify-content-end">
+            <div class="col align-items-middle text-end">
+              <span class="text-nowrap me-2 align-baseline"
+                >Votre sélection</span
+              >
+              <button class="btn btn-sm border stripe-1 legend-rect">
+                {{ " " }}
+              </button>
+            </div>
+          </div>
+          <div class="row justify-content-end">
+            <div class="col text-end">
+              <span class="text-nowrap me-2 align-baseline"
+                >Heure disponible</span
+              >
+              <button class="btn btn-sm border legend-rect">
+                {{ " " }}
+              </button>
+              <span class="text-nowrap ms-3 me-2 align-baseline">
+                Heure non disponible
+              </span>
+              <button class="btn btn-sm border stripe-2 legend-rect">
+                {{ " " }}
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-bordered" [cellPadding]="0">
+            <thead class="text-center">
+              <tr>
+                <th>Employé</th>
+                <th>8h - 9h</th>
+                <th>9h - 10h</th>
+                <th>10h - 11h</th>
+                <th>11h - 12h</th>
+                <th>12h - 13h</th>
+                <th>13h - 14h</th>
+                <th>14h - 15h</th>
+                <th>15h - 16h</th>
+                <th>16h - 17h</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let employee of formattedArray; index as i0">
+                <td
+                  *ngFor="let item of getCells(employee); index as i1"
+                  style="padding: 0"
+                >
+                  <div *ngIf="i1 === 0">
+                    {{ item.firstName }}
+                  </div>
+                  <div *ngIf="i1 > 0">
+                    <button
+                      [disabled]="item?.dispo === false"
+                      style="width: 100%; border-width: 0"
+                      class="btn btn-white"
+                      [ngClass]="{
+                        'stripe-2': item?.dispo === false,
+                        'stripe-1': item?.statusTemp === true
+                      }"
+                      (click)="onClickCell(i0, i1, item)"
+                    >
+                      <div style="width: 100%; height: 50px">{{ " " }}</div>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
-
-
+  </div>
 </div>

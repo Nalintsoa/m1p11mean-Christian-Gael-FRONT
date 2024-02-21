@@ -7,6 +7,8 @@ import { ServiceService } from '../../../back-office/services/service/service.se
 import { RdvService } from '../../services/rdv/rdv.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CardServiceComponent } from './card-service/card-service.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faBell, faBellSlash, faClock, faDumbbell } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-create-rdv',
@@ -14,12 +16,14 @@ import { CardServiceComponent } from './card-service/card-service.component';
   imports: [
     CommonModule,
     BreadcrumbComponent,
-    CardServiceComponent
+    CardServiceComponent,
+    FontAwesomeModule
   ],
   templateUrl: './create-rdv.component.html',
   styleUrl: './create-rdv.component.scss'
 })
 export class CreateRdvComponent {
+  faBell = faBell;
   menu = BREADCRUMBS[1];
 
   filterData: { date: string, category: string } = { date: '', category: '' };
@@ -36,6 +40,8 @@ export class CreateRdvComponent {
   columnToColor: any = [];
 
   dataToSend = {};
+
+  addRappel = false;
 
   constructor(private serviceService: ServiceService, public rdvService: RdvService, private router: Router, private route: ActivatedRoute) { }
 
@@ -74,6 +80,7 @@ export class CreateRdvComponent {
     this.onColorCell(rowNumber);
 
     this.dataToSend = {
+      ...this.dataToSend,
       service: this.serviceSelected?._id,
       startHour,
       endHour,
@@ -127,12 +134,23 @@ export class CreateRdvComponent {
 
       })
     } else {
-      this.errorMessage = "Veuillez remplir tous remplir"
+      this.errorMessage = "Veuillez remplir tous les champs"
     }
   }
 
   getOneService(id: string) {
     this.serviceService.getOneService(id).subscribe((data) => this.serviceSelected = data)
+  }
+
+  handleAddRappel() {
+    this.addRappel = true;
+  }
+
+  handleChangeRappel(event: any) {
+    this.dataToSend = {
+      ...this.dataToSend,
+      rappel: event.target.value
+    }
   }
 }
 
