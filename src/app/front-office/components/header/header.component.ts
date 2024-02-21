@@ -6,6 +6,7 @@ import { NgFor } from '@angular/common';
 import { faBell, faUserCircle, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { CustomerServiceService } from '../../services/customer/customer-service.service';
+import { SocketIoService } from '../../../services/socket-io.service';
 
 @Component({
   selector: 'app-header',
@@ -25,7 +26,11 @@ export class HeaderComponent implements OnInit {
   faUserCircle = faUserCircle;
   faHeart = faHeart;
 
-  constructor(private customerService: CustomerServiceService, private router: Router){}
+  constructor(private customerService: CustomerServiceService, private router: Router, private socketService: SocketIoService){
+    this.socketService.listen("logged_in").subscribe((change) => {
+      alert(`${change}`);
+    })
+  }
 
   ngOnInit(): void {
     this.checkTokenExpiration();
