@@ -2,7 +2,7 @@ import { Component, ElementRef, EventEmitter, Input, Output, SimpleChanges, View
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServiceService } from '../../../../services/service/service.service';
 import { IService } from '../../../../interfaces/serviceInterface';
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { EventBlockerDirective } from '../../../../../directives/event-blocker.directive';
 import { UploadService } from '../../../../services/upload/upload.service';
 import { SocketIoService } from '../../../../../services/socket-io.service';
@@ -10,9 +10,10 @@ import { SocketIoService } from '../../../../../services/socket-io.service';
 @Component({
   selector: 'app-service-create',
   standalone: true,
-  imports: [ReactiveFormsModule, NgIf, NgFor, NgClass, EventBlockerDirective],
+  imports: [ReactiveFormsModule, CommonModule, EventBlockerDirective],
   templateUrl: './service-create.component.html',
-  styleUrl: './service-create.component.scss'
+  styleUrl: './service-create.component.scss',
+  providers: [DatePipe]
 })
 export class ServiceCreateComponent {
   @Input() mode?: string;
@@ -33,7 +34,8 @@ export class ServiceCreateComponent {
     category: 'Manucure',
     specialOffer: false,
     startOffer: '',
-    endOffer: ''
+    endOffer: '',
+    priceOffer: ''
   }
 
   serviceForm = new FormGroup({
@@ -45,7 +47,8 @@ export class ServiceCreateComponent {
     specialOffer: new FormControl(false),
     startOffer: new FormControl(),
     endOffer: new FormControl(),
-    category: new FormControl('Manucure')
+    category: new FormControl('Manucure'),
+    priceOffer: new FormControl(''),
   });
 
   file: File | null = null;
@@ -59,19 +62,22 @@ export class ServiceCreateComponent {
   ];
 
 
-  constructor(public serviceService: ServiceService, private uploadService: UploadService, private socketService: SocketIoService) { }
+  constructor(public serviceService: ServiceService, private uploadService: UploadService, private socketService: SocketIoService, private datePipe: DatePipe) { }
 
   ngOnInit() {
     this.serviceForm.get('specialOffer')?.valueChanges.subscribe((value) => {
       if (value) {
         this.serviceForm.get('startOffer')?.setValidators(Validators.required);
         this.serviceForm.get('endOffer')?.setValidators(Validators.required);
+        this.serviceForm.get('priceOffer')?.setValidators([Validators.required, Validators.min(1)]);
       } else {
         this.serviceForm.get('startOffer')?.clearValidators();
         this.serviceForm.get('endOffer')?.clearValidators();
+        this.serviceForm.get('priceOffer')?.clearValidators();
       }
       this.serviceForm.get('startOffer')?.updateValueAndValidity();
       this.serviceForm.get('endOffer')?.updateValueAndValidity();
+      this.serviceForm.get('priceOffer')?.updateValueAndValidity();
     });
   }
 
@@ -83,10 +89,12 @@ export class ServiceCreateComponent {
 
       } else {
         this._id = this.dataToUpdate._id;
-        this.oldPrice = this.dataToUpdate.price;
         delete this.dataToUpdate.__v;
         delete this.dataToUpdate._id;
-        delete this.dataToUpdate.oldPrice;
+        if (!!this.dataToUpdate.startOffer && !!this.dataToUpdate.endOffer) {
+          this.dataToUpdate.startOffer = this.datePipe.transform(this.dataToUpdate.startOffer, "yyyy-MM-dd");
+          this.dataToUpdate.endOffer = this.datePipe.transform(this.dataToUpdate.endOffer, "yyyy-MM-dd");
+        }
         this.serviceForm.setValue(this.dataToUpdate);
         this.imageURL = `http://localhost:8000/${this.dataToUpdate.path}`
       }
@@ -116,7 +124,7 @@ export class ServiceCreateComponent {
 
   onUpdate() {
     const data: IService | any = this.serviceForm.value;
-    this.serviceService.updateService({ ...data, _id: this._id, oldPrice: this.oldPrice }).subscribe(() => {
+    this.serviceService.updateService({ ...data, _id: this._id }).subscribe(() => {
       this.refresh();
     });
 

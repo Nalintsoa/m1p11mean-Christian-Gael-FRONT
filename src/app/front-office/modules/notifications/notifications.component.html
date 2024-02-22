@@ -3,27 +3,18 @@
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Notifications</h5>
-            <div *ngIf="service" class="card border border-0 one-notif">
+            <div *ngFor="let service of services" class="card border border-0 one-notif">
                 <div class="card-body">
-                    <span> <b>Offre spéciale:</b> le prix service {{service.name}} est
-                        {{service.oldPrice}} à
-                        {{service.price}} du {{ service.startOffer | date: "d MMM y" }}
+                    <span> <b>Offre spéciale:</b> Le prix service {{service.name}} est désormais
+                        {{service.priceOffer}}Ar du {{ service.startOffer | date: "d MMM y" }}
                         au {{ service.endOffer | date: "d MMM y"}} <br>
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalNotif"> Voir
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalNotif"
+                            (click)="onSelectService(service)"> Voir
                         </button>
                     </span>
-
-
-                    <!-- <span *ngIf="!service.update">
-                        <b>Offre spéciale:</b> 
-                        un nouveau prix service {{service.name}} est
-                        {{service.price}} du {{ service.startOffer | date: "d MMM y" }}
-                        au {{ service.endOffer | date: "d MMM y"}}
-                    </span> -->
-
                 </div>
             </div>
-            <div *ngIf="!service">
+            <div *ngIf="!services.length">
                 <p>Aucune notification ajoutée</p>
             </div>
 
@@ -34,7 +25,27 @@
 <div class="modal" tabindex="-1" id="modalNotif">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <app-card-service [service]="service"></app-card-service>
+            <div class="card" style="width: 100%;">
+                <div>
+                    <img style="height: 160px; width: 100%;" [src]="'http://localhost:8000/'+selectedService?.path"
+                        class="card-img-top">
+                </div>
+                <div class="card-body">
+                    <h5 class="text-center mt-1">{{selectedService?.name}}</h5>
+                    <p class="d-flex justify-content-center"><b>Catégorie : </b>&nbsp;{{selectedService?.category}}</p>
+                    <p class="d-flex justify-content-center"><b>Durée : </b>&nbsp;{{selectedService?.duration}}h <b>
+                            &nbsp; Prix
+                            :</b>
+                        <span></span>
+                        <del>&nbsp;{{selectedService?.price}}Ar</del>&nbsp;{{selectedService?.priceOffer}}Ar
+                    </p>
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-outline-primary"
+                            [routerLink]="'/front-office/prise-rdv/'+selectedService?._id"> Prendre un Rendez-vous
+                        </button>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>

@@ -51,12 +51,13 @@
       </div>
       <div class="col-3">
         <div class="header_right d-flex justify-content-end">
-          <span><a class="nav-link" (click)="onShowNotifications()"><fa-icon [icon]="faBell"></fa-icon></a></span>
-          <span><a class="nav-link"><fa-icon [icon]="faHeart"></fa-icon></a></span>
+          <span><a class="nav-link" [ngClass]="{'active':activeNotif  }" (click)="onShowNotifications()"><fa-icon
+                [icon]="faBell"></fa-icon></a></span>
+          <span><a class="nav-link" style="display: block;"><fa-icon [icon]="faHeart"></fa-icon></a></span>
           <span><a class="nav-link" (click)="handleLogout()"><fa-icon [icon]="faUserCircle"></fa-icon></a></span>
         </div>
       </div>
     </div>
   </div>
 </header>
-<app-notifications [show]="show" [service]="service"></app-notifications>
+<app-notifications (document:click)="onClickOutside($event)" [show]="show" [services]="services"></app-notifications>
