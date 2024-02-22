@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { FrontLinkComponent } from '../front-link/front-link.component';
 import { HEADERMENUS } from '../../constants/links';
-import { NgFor } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 import { faBell, faUserCircle, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { CustomerServiceService } from '../../services/customer/customer-service.service';
@@ -14,7 +14,7 @@ import { SocketIoService } from '../../../services/socket-io.service';
   standalone: true,
   imports: [
     RouterLink,
-    NgFor,
+    CommonModule,
     FrontLinkComponent,
     FaIconComponent,
     RouterLinkActive,
@@ -27,16 +27,27 @@ export class HeaderComponent implements OnInit {
   faBell = faBell;
   faUserCircle = faUserCircle;
   faHeart = faHeart;
+  activeNotif = false;
 
   show = false;
-  service?: any;
+  services?: any = [];
 
 
-  constructor(private customerService: CustomerServiceService, private router: Router, private socketService: SocketIoService) {
+  menuActivate: string = 'Services';
+  menus = HEADERMENUS;
+
+
+  constructor(
+    private customerService: CustomerServiceService,
+    private router: Router,
+    private socketService: SocketIoService,
+    private elementRef: ElementRef
+  ) {
     this.socketService.listen("logged_in").subscribe((change) => {
       alert(`${change}`);
     })
-    this.socketService.listen("notifySpecialOffer").subscribe((data) => { console.log('okk', data); this.show = true; this.service = data })
+    this.socketService.emit("getNotifications", true);
+    this.socketService.listen("notifySpecialOffer").subscribe((data) => { this.show = true; this.services = data; this.activeNotif = true; })
 
   }
 
@@ -45,10 +56,18 @@ export class HeaderComponent implements OnInit {
     this.checkTokenExpiration();
   }
 
-  menuActivate: string = 'Services';
-  menus = HEADERMENUS;
+  @HostListener('document:click', ['$event.target'])
+  onClickOutside(event: MouseEvent) {
+    const targetElement = event.target as HTMLElement;
+
+    if (!this.elementRef.nativeElement.contains(targetElement)) {
+      this.show = false;
+      this.activeNotif = false;
+    }
+  }
 
   onShowNotifications() {
+    this.activeNotif = !this.activeNotif;
     this.show = !this.show;
   }
 
