@@ -61,7 +61,7 @@
                             <option *ngFor="let categorie of categories" [value]="categorie">{{categorie}}</option>
                         </select>
                     </div>
-                    <div class="mb-2">
+                    <div *ngIf="mode!=='create'" class="mb-2">
                         <div class="row">
                             <div class="col-3">
                                 <label for="" class="form-label">Offre Special</label>

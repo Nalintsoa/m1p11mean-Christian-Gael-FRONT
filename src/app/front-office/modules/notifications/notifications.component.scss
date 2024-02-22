@@ -1,7 +1,12 @@
-.card-overlay {
+.bar-notif {
     position: absolute;
+    right: 0;
+    margin-top: -20px;
+    margin-right: 30px;
+
 }
 
-.container {
-    position: relative;
+.one-notif:hover {
+    cursor: pointer;
+    background-color: fade-in($color: azure, $amount: 0);
 }

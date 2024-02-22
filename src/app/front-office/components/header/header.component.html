@@ -51,8 +51,7 @@
       </div>
       <div class="col-3">
         <div class="header_right d-flex justify-content-end">
-          <span><a class="nav-link"><fa-icon [icon]="faBell" routerLink="/front-office/notifications"
-                routerLinkActive="active"></fa-icon></a></span>
+          <span><a class="nav-link" (click)="onShowNotifications()"><fa-icon [icon]="faBell"></fa-icon></a></span>
           <span><a class="nav-link"><fa-icon [icon]="faHeart"></fa-icon></a></span>
           <span><a class="nav-link" (click)="handleLogout()"><fa-icon [icon]="faUserCircle"></fa-icon></a></span>
         </div>
@@ -60,3 +59,4 @@
     </div>
   </div>
 </header>
+<app-notifications [show]="show" [service]="service"></app-notifications>
