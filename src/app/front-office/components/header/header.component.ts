@@ -7,7 +7,6 @@ import { faBell, faUserCircle, faHeart } from '@fortawesome/free-solid-svg-icons
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { CustomerServiceService } from '../../services/customer/customer-service.service';
 import { NotificationsComponent } from '../../modules/notifications/notifications.component';
-import { IService } from '../../../back-office/interfaces/serviceInterface';
 import { SocketIoService } from '../../../services/socket-io.service';
 
 @Component({
@@ -37,12 +36,13 @@ export class HeaderComponent implements OnInit {
     this.socketService.listen("logged_in").subscribe((change) => {
       alert(`${change}`);
     })
+    this.socketService.listen("notifySpecialOffer").subscribe((data) => { console.log('okk', data); this.show = true; this.service = data })
+
   }
 
 
   ngOnInit(): void {
     this.checkTokenExpiration();
-    this.socketService.listen("notifySpecialOffer").subscribe((data) => { console.log('okk', data); this.show = true; this.service = data })
   }
 
   menuActivate: string = 'Services';
