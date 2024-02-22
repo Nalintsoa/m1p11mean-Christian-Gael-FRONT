@@ -1,16 +1,39 @@
-<div class="card" style="width: 18rem;">
-    <div>
-        <img style="height: 160px; width: 100%;" [src]="'http://localhost:8000/'+service?.path" class="card-img-top">
+<div class="card" style="width: 18rem">
+  <div>
+    <img
+      style="height: 160px; width: 100%"
+      [src]="'http://localhost:8000/' + service?.path"
+      class="card-img-top"
+    />
+  </div>
+  <div class="card-body">
+    <h5 class="text-center mt-1">{{ service?.name }}</h5>
+    <p class="d-flex justify-content-center">
+      <b>Catégorie : </b>&nbsp;{{ service?.category }}
+    </p>
+    <p class="d-flex justify-content-center">
+      <b>Durée : </b>&nbsp;{{ service?.duration }}h
+      <b> &nbsp; Prix :</b> &nbsp;{{ service?.price }}Ar
+    </p>
+    <div class="d-flex justify-content-center align-middle">
+      <a
+        class="btn btn-outline-primary"
+        [routerLink]="'/front-office/prise-rdv/' + service?._id"
+      >
+        Prendre un Rendez-vous
+      </a>
+      <div (click)="addOrRemoveServiceToPreferences(service?._id)">
+        <fa-icon
+          [icon]="faHeart"
+          class="ms-2 cursor-pointer"
+          [size]="'2x'"
+          title="Ajouter comme favori"
+          [ngClass]="{
+            'icon-red': preferences.includes(service?._id),
+            'icon-uncolored': !preferences.includes(service?._id)
+          }"
+        />
+      </div>
     </div>
-    <div class="card-body">
-        <h5 class="text-center mt-1">{{service?.name}}</h5>
-        <p class="d-flex justify-content-center"><b>Catégorie : </b>&nbsp;{{service?.category}}</p>
-        <p class="d-flex justify-content-center"><b>Durée : </b>&nbsp;{{service?.duration}}h <b> &nbsp; Prix :</b>
-            &nbsp;{{service?.price}}Ar</p>
-        <div class="d-flex justify-content-center">
-            <a class="btn btn-outline-primary" [routerLink]="'/front-office/prise-rdv/'+service?._id">
-                Prendre un Rendez-vous
-            </a>
-        </div>
-    </div>
+  </div>
 </div>

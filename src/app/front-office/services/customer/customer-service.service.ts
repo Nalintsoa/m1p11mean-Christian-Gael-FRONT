@@ -22,6 +22,10 @@ export class CustomerServiceService {
     return this.http.post(`${this.baseUri}/login`, data, {withCredentials: true, headers: this.headers});
   }
 
+  getCustomer(id: string): Observable<any> {
+    return this.http.get(`${this.baseUri}/${id}`);
+  }
+
   public saveToken(token: string): void {
     window.sessionStorage.removeItem(this.TOKEN_KEY);
     window.sessionStorage.setItem(this.TOKEN_KEY, token);
@@ -49,5 +53,9 @@ export class CustomerServiceService {
   logout(): Observable<any> {
     this.signOut();
     return this.http.post(`${this.baseUri}/logout`, {}, { withCredentials: true, headers: this.headers });
+  }
+
+  addOrRemoveServiceToPreferences(customer: string, service: string): Observable<any>{
+    return this.http.post(`${this.baseUri}/addOrRemoveServiceToPreferences`, { customer, service });
   }
 }
