@@ -1,0 +1,17 @@
+.icon-red {
+    color: red;
+}
+
+.icon-uncolored {
+    color: transparent;
+    stroke: black;
+  stroke-width: 10;;
+}
+
+.icon-uncolored:hover {
+    color: red;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}

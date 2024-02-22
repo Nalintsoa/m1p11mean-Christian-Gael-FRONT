@@ -120,7 +120,6 @@ export class EmployeeProfileComponent {
     const jwt_token = this.authApiService.getToken();
     if (jwt_token) {
       const decodedToken: any = jwtDecode(jwt_token);
-      console.log(decodedToken._id);
       if (decodedToken._id) {
         this.staffApiService.getStaff(decodedToken._id).subscribe({
           next: (res) => {

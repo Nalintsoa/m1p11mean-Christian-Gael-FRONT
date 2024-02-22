@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { BreadcrumbComponent } from '../../components/breadcrumb/breadcrumb.component';
 import { BREADCRUMBS } from '../../constants/breadCrumbs';
@@ -43,7 +43,11 @@ export class CreateRdvComponent {
 
   addRappel = false;
 
-  constructor(private serviceService: ServiceService, public rdvService: RdvService, private router: Router, private route: ActivatedRoute) { }
+  todayDate = formatDate(new Date(), 'yyyy-MM-dd', 'en-US');
+
+  constructor(private serviceService: ServiceService, public rdvService: RdvService, private router: Router, private route: ActivatedRoute) {
+    console.log(this.todayDate)
+  }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -62,7 +66,7 @@ export class CreateRdvComponent {
     const startHour = item.value;
     const endHour = startHour + duration;
     this.errorMessage = undefined;
-    const tempColor = [];
+    const tempColor = [];;
 
     for (let i = columnNumber; i < columnNumber + duration; i++) {
       tempColor.push({ row: rowNumber, column: i });
