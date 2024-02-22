@@ -30,7 +30,10 @@ export class ServiceCreateComponent {
     duration: '',
     commission: '',
     path: '',
-    category: 'Manucure'
+    category: 'Manucure',
+    specialOffer: false,
+    startOffer: '',
+    endOffer: ''
   }
 
   serviceForm = new FormGroup({

@@ -1,18 +1,41 @@
-<div class="container">
-    <div class="row">
-        <div class="col-md-6 position-relative">
-            <div class="card card-overlay" style="z-index: 1;">
+<div *ngIf="show" class="bar-notif" style="height: 200px; width: 300px;">
+    <!-- Element parent avec position relative -->
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Notifications</h5>
+            <div *ngIf="service" class="card border border-0 one-notif">
                 <div class="card-body">
-                    <h5 class="card-title">Card 1</h5>
-                    <p class="card-text">Contenu de la carte 1.</p>
+                    <span> <b>Offre spéciale:</b> le prix service {{service.name}} est
+                        {{service.oldPrice}} à
+                        {{service.price}} du {{ service.startOffer | date: "d MMM y" }}
+                        au {{ service.endOffer | date: "d MMM y"}} <br>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalNotif"> Voir
+                        </button>
+                    </span>
+
+
+                    <!-- <span *ngIf="!service.update">
+                        <b>Offre spéciale:</b> 
+                        un nouveau prix service {{service.name}} est
+                        {{service.price}} du {{ service.startOffer | date: "d MMM y" }}
+                        au {{ service.endOffer | date: "d MMM y"}}
+                    </span> -->
+
                 </div>
             </div>
-            <div class="card card-overlay" style="z-index: 2; top: 50px; left: 50px;">
-                <div class="card-body">
-                    <h5 class="card-title">Card 2</h5>
-                    <p class="card-text">Contenu de la carte 2.</p>
-                </div>
+            <div *ngIf="!service">
+                <p>Aucune notification ajoutée</p>
             </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" id="modalNotif">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <app-card-service [service]="service"></app-card-service>
+
         </div>
     </div>
 </div>
