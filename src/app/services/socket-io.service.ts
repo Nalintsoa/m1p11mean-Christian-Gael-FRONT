@@ -6,7 +6,7 @@ import * as socketIo from 'socket.io-client';
   providedIn: 'root'
 })
 export class SocketIoService {
-  baseUri = "http://localhost:8000";
+  baseUri = "ws://localhost:8000";
   private clientSocket: any;
   constructor() {
     // this.clientSocket = socketIo.connect(this.baseUri);
@@ -18,5 +18,11 @@ export class SocketIoService {
         subscribe.next(data);
       })
     })
+  }
+
+  emit(event: string, data: any) {
+
+    this.clientSocket.emit(event, data)
+
   }
 }

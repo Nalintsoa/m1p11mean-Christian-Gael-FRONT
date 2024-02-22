@@ -5,7 +5,7 @@ import { IService } from '../../../../interfaces/serviceInterface';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { EventBlockerDirective } from '../../../../../directives/event-blocker.directive';
 import { UploadService } from '../../../../services/upload/upload.service';
-import { WebsocketService } from '../../../../../common-service/websocket.service';
+import { SocketIoService } from '../../../../../services/socket-io.service';
 
 @Component({
   selector: 'app-service-create',
@@ -59,7 +59,7 @@ export class ServiceCreateComponent {
   ];
 
 
-  constructor(public serviceService: ServiceService, private uploadService: UploadService, private socketService: WebsocketService) { }
+  constructor(public serviceService: ServiceService, private uploadService: UploadService, private socketService: SocketIoService) { }
 
   ngOnInit() {
     this.serviceForm.get('specialOffer')?.valueChanges.subscribe((value) => {
@@ -86,6 +86,7 @@ export class ServiceCreateComponent {
         this.oldPrice = this.dataToUpdate.price;
         delete this.dataToUpdate.__v;
         delete this.dataToUpdate._id;
+        delete this.dataToUpdate.oldPrice;
         this.serviceForm.setValue(this.dataToUpdate);
         this.imageURL = `http://localhost:8000/${this.dataToUpdate.path}`
       }
@@ -101,11 +102,6 @@ export class ServiceCreateComponent {
       } else {
         this.onUpdate();
       }
-
-      if (this.serviceForm.get("specialOffer")?.value) {
-
-        this.socketService.emit("specialOffer", { _id: this._id, oldPrice: this.oldPrice })
-      }
     }
 
   };
@@ -120,7 +116,7 @@ export class ServiceCreateComponent {
 
   onUpdate() {
     const data: IService | any = this.serviceForm.value;
-    this.serviceService.updateService({ ...data, _id: this._id }).subscribe(() => {
+    this.serviceService.updateService({ ...data, _id: this._id, oldPrice: this.oldPrice }).subscribe(() => {
       this.refresh();
     });
 
