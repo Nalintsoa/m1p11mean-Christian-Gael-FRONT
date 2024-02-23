@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, NgZone, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServiceService } from '../../../../services/service/service.service';
 import { IService } from '../../../../interfaces/serviceInterface';
@@ -62,7 +62,12 @@ export class ServiceCreateComponent {
   ];
 
 
-  constructor(public serviceService: ServiceService, private uploadService: UploadService, private socketService: SocketIoService, private datePipe: DatePipe) { }
+  constructor(
+    public serviceService: ServiceService,
+    private uploadService: UploadService,
+    private datePipe: DatePipe,
+    private zone: NgZone
+  ) { }
 
   ngOnInit() {
     this.serviceForm.get('specialOffer')?.valueChanges.subscribe((value) => {
@@ -124,10 +129,10 @@ export class ServiceCreateComponent {
 
   onUpdate() {
     const data: IService | any = this.serviceForm.value;
-    this.serviceService.updateService({ ...data, _id: this._id }).subscribe(() => {
-      this.refresh();
-    });
-
+    this.zone.run(() =>
+      this.serviceService.updateService({ ...data, _id: this._id }).subscribe(() => {
+        this.refresh();
+      }));
   }
 
   onClose() {

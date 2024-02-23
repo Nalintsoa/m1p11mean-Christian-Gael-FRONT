@@ -56,7 +56,6 @@ export class ServiceListComponent {
   }
 
   getServices() {
-    console.log('getServicesss')
     this.services = [];
     this.serviceService.getServices().subscribe(data => { this.services = data; this.mode = "create" });
   };

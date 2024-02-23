@@ -16,10 +16,14 @@ export class SocketIoService {
     return new Observable((subscribe) => {
       this.clientSocket.on(connection, (data: any) => {
         subscribe.next(data);
-      })
+      });
+
     })
   }
 
+  disconnect() {
+    return this.clientSocket.disconnect();
+  }
   emit(event: string, data: any) {
 
     this.clientSocket.emit(event, data)
