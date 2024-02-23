@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, NgZone, OnInit, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { FrontLinkComponent } from '../front-link/front-link.component';
 import { HEADERMENUS } from '../../constants/links';
@@ -41,30 +41,42 @@ export class HeaderComponent implements OnInit {
     private customerService: CustomerServiceService,
     private router: Router,
     private socketService: SocketIoService,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private zone: NgZone
   ) {
-    this.socketService.listen("logged_in").subscribe((change) => {
-      alert(`${change}`);
+    this.zone.run(() => {
+      // this.socketService.listen("logged_in").subscribe((change) => {
+      //   alert(`${change}`);
+      // })
+
+      this.socketService.listen("notifySpecialOffer").subscribe((data) => {
+        console.log('5200155858')
+        this.show = true;
+        this.services = data;
+        this.activeNotif = true;
+        this.socketService.disconnect();
+        this.socketService = new SocketIoService();
+      });
+
+
     })
-    this.socketService.emit("getNotifications", true);
-    this.socketService.listen("notifySpecialOffer").subscribe((data) => { this.show = true; this.services = data; this.activeNotif = true; })
-
   }
-
 
   ngOnInit(): void {
     this.checkTokenExpiration();
   }
 
-  @HostListener('document:click', ['$event.target'])
-  onClickOutside(event: MouseEvent) {
-    const targetElement = event.target as HTMLElement;
-
-    if (!this.elementRef.nativeElement.contains(targetElement)) {
-      this.show = false;
-      this.activeNotif = false;
-    }
-  }
+  // @HostListener('document:click', ['$event.target'])
+  // onClickOutside(event: MouseEvent) {
+  //   if (this.show) {
+  //     const targetElement = event.target as HTMLElement;
+  //     console.log("this.elementRef.nativeElement", this.elementRef.nativeElement)
+  //     if (!this.elementRef.nativeElement.contains(targetElement)) {
+  //       this.show = false;
+  //       this.activeNotif = false;
+  //     }
+  //   }
+  // }
 
   onShowNotifications() {
     this.activeNotif = !this.activeNotif;
