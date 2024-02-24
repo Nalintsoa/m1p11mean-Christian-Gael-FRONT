@@ -12,7 +12,7 @@ export const BREADCRUMBS: IBreadCrumb[] = [
         class: "fa fa-history"
     },
     {
-        label: "Preferences",
+        label: "Employés",
         path: "preferences",
         class: "fa fa-heart-o"
     },

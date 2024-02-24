@@ -15,18 +15,24 @@
       <b>Durée : </b>&nbsp;{{ service?.duration }}h
       <b> &nbsp; Prix :</b> &nbsp;{{ service?.price }}Ar
     </p>
-    <div class="d-flex justify-content-center align-middle">
+    <div
+      class="d-flex justify-content-center align-middle"
+      title="Prendre un Rendez-vous"
+    >
       <a
-        class="btn btn-outline-primary"
+        class="btn btn-outline-secondary"
         [routerLink]="'/front-office/prise-rdv/' + service?._id"
       >
-        Prendre un Rendez-vous
+        <!-- Prendre un Rendez-vous -->
+        <fa-icon [icon]="faCalendarPlus" />
       </a>
-      <div (click)="addOrRemoveServiceToPreferences(service?._id)">
+      <div
+        (click)="addOrRemoveServiceToPreferences(service?._id)"
+        class="ms-2 btn btn-outline-secondary"
+      >
         <fa-icon
           [icon]="faHeart"
-          class="ms-2 cursor-pointer"
-          [size]="'2x'"
+          class="cursor-pointer"
           title="Ajouter comme favori"
           [ngClass]="{
             'icon-red': preferences.includes(service?._id),

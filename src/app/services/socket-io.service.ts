@@ -9,7 +9,7 @@ export class SocketIoService {
   baseUri = "http://localhost:8000";
   private clientSocket: any;
   constructor() {
-    this.clientSocket = socketIo.connect(this.baseUri);
+    // this.clientSocket = socketIo.connect(this.baseUri);
   }
 
   listen(connection: string): Observable<any> {
