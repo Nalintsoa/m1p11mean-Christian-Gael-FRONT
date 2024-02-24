@@ -7,6 +7,9 @@ export interface IService {
     description?: string,
     category: string,
     path?: string,
+    priceOffer?: number;
+    startOffer?: string;
+    endOffer?: string;
 }
 
 export interface IFilterService {

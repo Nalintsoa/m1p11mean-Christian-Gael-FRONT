@@ -1,1 +1,58 @@
-<p>notifications works!</p>
+<div *ngIf="show" class="bar-notif" style="height: 200px; width: 300px;">
+    <!-- Element parent avec position relative -->
+    <div class="card">
+        <div class="card-body" style=" max-height: 75vh;overflow-y: scroll;">
+            <h5 class="card-title">Notifications</h5>
+            <div *ngFor="let service of services; index as i" class="card border border-0 one-notif"
+                [ngClass]="{'active': activeFirstRow && i === 0 }">
+                <div class="card-body">
+                    <span> <b>Offre spéciale:</b> Le prix service {{service.name}} est désormais
+                        {{service.priceOffer}}Ar du {{ service.startOffer | date: "d MMM y" }}
+                        au {{ service.endOffer | date: "d MMM y"}} <br>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalNotif"
+                            (click)="onSelectService(service)"> Voir
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <div *ngIf="!services?.length">
+                <p>Aucune notification ajoutée</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" id="modalNotif">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="card" style="width: 100%;">
+                <div>
+                    <img style="height: 160px; width: 100%;" [src]="'http://localhost:8000/'+selectedService?.path"
+                        class="card-img-top">
+                </div>
+                <div class="card-body">
+                    <h5 class="text-center mt-1">{{selectedService?.name}}</h5>
+                    <p class="d-flex justify-content-center"><b>Catégorie : </b>&nbsp;{{selectedService?.category}}</p>
+                    <p class="d-flex justify-content-center"><b>Durée : </b>&nbsp;{{selectedService?.duration}}h <b>
+                            &nbsp; Prix
+                            :</b>
+                        <span></span>
+                        <del>&nbsp;{{selectedService?.price}}Ar</del>&nbsp;{{selectedService?.priceOffer}}Ar
+                    </p>
+                    <p> <span>
+                            <b>Offre spéciale : </b>&nbsp; {{selectedService?.startOffer | date: "d MMM y"}} -
+                            {{selectedService?.endOffer |
+                            date: "d MMM y"}}
+                        </span></p>
+                    <div class="d-flex justify-content-center">
+                        <button data-bs-dismiss="modal" class="btn btn-outline-primary"
+                            [routerLink]="'/front-office/prise-rdv/'+selectedService?._id"> Prendre un Rendez-vous
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

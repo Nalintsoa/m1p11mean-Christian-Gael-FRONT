@@ -1,17 +1,19 @@
-import { Component, ElementRef, EventEmitter, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, NgZone, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServiceService } from '../../../../services/service/service.service';
 import { IService } from '../../../../interfaces/serviceInterface';
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { EventBlockerDirective } from '../../../../../directives/event-blocker.directive';
 import { UploadService } from '../../../../services/upload/upload.service';
+import { SocketIoService } from '../../../../../services/socket-io.service';
 
 @Component({
   selector: 'app-service-create',
   standalone: true,
-  imports: [ReactiveFormsModule, NgIf, NgFor, NgClass, EventBlockerDirective],
+  imports: [ReactiveFormsModule, CommonModule, EventBlockerDirective],
   templateUrl: './service-create.component.html',
-  styleUrl: './service-create.component.scss'
+  styleUrl: './service-create.component.scss',
+  providers: [DatePipe]
 })
 export class ServiceCreateComponent {
   @Input() mode?: string;
@@ -21,15 +23,19 @@ export class ServiceCreateComponent {
   @ViewChild('closeModal') closeModal?: ElementRef;
   submitted: boolean = false;
   _id?: string;
+  oldPrice?: number;
 
   defautValue: IService | any = {
     name: '',
     price: '',
     duration: '',
     commission: '',
-    description: '',
     path: '',
-    category: 'Manucure'
+    category: 'Manucure',
+    specialOffer: false,
+    startOffer: '',
+    endOffer: '',
+    priceOffer: ''
   }
 
   serviceForm = new FormGroup({
@@ -37,9 +43,12 @@ export class ServiceCreateComponent {
     price: new FormControl('', [Validators.required, Validators.min(1)]),
     duration: new FormControl('', [Validators.required, Validators.min(1), Validators.max(5)]),
     commission: new FormControl('', [Validators.required, Validators.min(1)]),
-    description: new FormControl(''),
     path: new FormControl('', [Validators.required]),
-    category: new FormControl('Manucure')
+    specialOffer: new FormControl(false),
+    startOffer: new FormControl(),
+    endOffer: new FormControl(),
+    category: new FormControl('Manucure'),
+    priceOffer: new FormControl(''),
   });
 
   file: File | null = null;
@@ -53,7 +62,29 @@ export class ServiceCreateComponent {
   ];
 
 
-  constructor(public serviceService: ServiceService, private uploadService: UploadService) { }
+  constructor(
+    public serviceService: ServiceService,
+    private uploadService: UploadService,
+    private datePipe: DatePipe,
+    private zone: NgZone
+  ) { }
+
+  ngOnInit() {
+    this.serviceForm.get('specialOffer')?.valueChanges.subscribe((value) => {
+      if (value) {
+        this.serviceForm.get('startOffer')?.setValidators(Validators.required);
+        this.serviceForm.get('endOffer')?.setValidators(Validators.required);
+        this.serviceForm.get('priceOffer')?.setValidators([Validators.required, Validators.min(1)]);
+      } else {
+        this.serviceForm.get('startOffer')?.clearValidators();
+        this.serviceForm.get('endOffer')?.clearValidators();
+        this.serviceForm.get('priceOffer')?.clearValidators();
+      }
+      this.serviceForm.get('startOffer')?.updateValueAndValidity();
+      this.serviceForm.get('endOffer')?.updateValueAndValidity();
+      this.serviceForm.get('priceOffer')?.updateValueAndValidity();
+    });
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes?.['mode']) {
@@ -65,6 +96,10 @@ export class ServiceCreateComponent {
         this._id = this.dataToUpdate._id;
         delete this.dataToUpdate.__v;
         delete this.dataToUpdate._id;
+        if (!!this.dataToUpdate.startOffer && !!this.dataToUpdate.endOffer) {
+          this.dataToUpdate.startOffer = this.datePipe.transform(this.dataToUpdate.startOffer, "yyyy-MM-dd");
+          this.dataToUpdate.endOffer = this.datePipe.transform(this.dataToUpdate.endOffer, "yyyy-MM-dd");
+        }
         this.serviceForm.setValue(this.dataToUpdate);
         this.imageURL = `http://localhost:8000/${this.dataToUpdate.path}`
       }
@@ -73,6 +108,7 @@ export class ServiceCreateComponent {
 
   onSubmit() {
     this.submitted = true;
+    console.log(this.serviceForm.value)
     if (this.serviceForm.valid) {
       if (this.mode === "create") {
         this.onCreate();
@@ -93,10 +129,10 @@ export class ServiceCreateComponent {
 
   onUpdate() {
     const data: IService | any = this.serviceForm.value;
-    this.serviceService.updateService({ ...data, _id: this._id }).subscribe(() => {
-      this.refresh();
-    });
-
+    this.zone.run(() =>
+      this.serviceService.updateService({ ...data, _id: this._id }).subscribe(() => {
+        this.refresh();
+      }));
   }
 
   onClose() {
@@ -123,11 +159,14 @@ export class ServiceCreateComponent {
       };
       reader.readAsDataURL(fileToRender);
 
-
       this.uploadService.uploadFile(formData).subscribe((data: any) => this.serviceForm.get('path')?.setValue(data?.path))
     }
 
 
+  }
+
+  testSwitch(e: any) {
+    console.log(e)
   }
 
 

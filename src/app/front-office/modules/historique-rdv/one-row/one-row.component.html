@@ -22,8 +22,8 @@
         </div>
         <div class="col-2 py-2 ">
             <div class="p-2 py-3">
-                <p><fa-icon [icon]="faMoneyBill"></fa-icon>&nbsp; {{rdv?.service?.price+"Ar"}}</p>
-                <p>Non-payé</p>
+                <p><fa-icon [icon]="faMoneyBill"></fa-icon>&nbsp; {{rdv?.price+"Ar"}}</p>
+                <p *ngIf="rdv?.specialOffer">Offre spéciale</p>
             </div>
         </div>
     </div>

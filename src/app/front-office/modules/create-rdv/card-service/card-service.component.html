@@ -6,10 +6,16 @@
         <h5 class="text-center mt-1">{{service?.name}}</h5>
         <p class="d-flex justify-content-center"><b>Catégorie : </b>&nbsp;{{service?.category}}</p>
         <p class="d-flex justify-content-center"><b>Durée : </b>&nbsp;{{service?.duration}}h <b> &nbsp; Prix :</b>
-            &nbsp;{{service?.price}}Ar</p>
-        <div class="d-flex justify-content-center">
+            &nbsp;
+            <span
+                *ngIf="isTodaySpecialOffer"><del>&nbsp;{{service?.price}}Ar</del>&nbsp;{{service?.priceOffer}}Ar</span>
+            <span *ngIf="!isTodaySpecialOffer">{{service?.price}}Ar</span>
 
-
-        </div>
+        <p *ngIf="isTodaySpecialOffer" class="d-flex justify-content-center">
+            <span>
+                <b>Offre spéciale : </b>&nbsp; {{service?.startOffer | date: "d MMM y"}} - {{service?.endOffer |
+                date: "d MMM y"}}
+            </span>
+        </p>
     </div>
 </div>

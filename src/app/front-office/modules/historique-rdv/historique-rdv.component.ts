@@ -16,14 +16,17 @@ export class HistoriqueRdvComponent {
   menuSelected = BREADCRUMBS[4];
   histo: any = []
 
-  constructor(private rdvService: RdvService) { };
+  constructor(private rdvService: RdvService) {
+    this.getHisto();
+  };
 
   ngOnInit() {
-    this.getHisto();
+    console.log("qsssss")
+
   }
 
   getHisto() {
-    this.rdvService.getHistory().subscribe((data: any) => this.histo = data);
+    this.rdvService.getHistory().subscribe((data: any) => { this.histo = data });
   }
 
 }

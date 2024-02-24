@@ -26,13 +26,6 @@ export const frontOfficeRoutes: Route[] = [
                 title: 'Services',
             },
             {
-                path: 'notifications',
-                component: NotificationsComponent,
-                canActivate: [AuthGuardService],
-                title: 'Notifications',
-            },
-
-            {
                 path: 'histo-rdv',
                 component: HistoriqueRdvComponent,
                 canActivate: [AuthGuardService],
