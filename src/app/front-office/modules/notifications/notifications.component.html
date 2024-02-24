@@ -1,9 +1,10 @@
 <div *ngIf="show" class="bar-notif" style="height: 200px; width: 300px;">
     <!-- Element parent avec position relative -->
     <div class="card">
-        <div class="card-body">
+        <div class="card-body" style=" max-height: 75vh;overflow-y: scroll;">
             <h5 class="card-title">Notifications</h5>
-            <div *ngFor="let service of services" class="card border border-0 one-notif">
+            <div *ngFor="let service of services; index as i" class="card border border-0 one-notif"
+                [ngClass]="{'active': activeFirstRow && i === 0 }">
                 <div class="card-body">
                     <span> <b>Offre spéciale:</b> Le prix service {{service.name}} est désormais
                         {{service.priceOffer}}Ar du {{ service.startOffer | date: "d MMM y" }}
@@ -14,7 +15,7 @@
                     </span>
                 </div>
             </div>
-            <div *ngIf="!services.length">
+            <div *ngIf="!services?.length">
                 <p>Aucune notification ajoutée</p>
             </div>
 
@@ -39,8 +40,13 @@
                         <span></span>
                         <del>&nbsp;{{selectedService?.price}}Ar</del>&nbsp;{{selectedService?.priceOffer}}Ar
                     </p>
+                    <p> <span>
+                            <b>Offre spéciale : </b>&nbsp; {{selectedService?.startOffer | date: "d MMM y"}} -
+                            {{selectedService?.endOffer |
+                            date: "d MMM y"}}
+                        </span></p>
                     <div class="d-flex justify-content-center">
-                        <button class="btn btn-outline-primary"
+                        <button data-bs-dismiss="modal" class="btn btn-outline-primary"
                             [routerLink]="'/front-office/prise-rdv/'+selectedService?._id"> Prendre un Rendez-vous
                         </button>
                     </div>

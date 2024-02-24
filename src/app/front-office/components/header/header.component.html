@@ -61,4 +61,5 @@
   </div>
 </header>
 <!-- (document:click)="onClickOutside($event)" -->
-<app-notifications [show]="show" [services]="services"></app-notifications>
+<app-notifications (document:click)="onClickOutside($event)" [show]="show" [services]="services"
+  [activeFirstRow]="activeFirst" (view)="onView()"></app-notifications>

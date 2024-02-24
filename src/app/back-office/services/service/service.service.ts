@@ -12,27 +12,31 @@ export class ServiceService {
   baseUri: string = 'http://localhost:8000/service/';
 
   addService(data: IService) {
-    const response = this.http.post(this.baseUri, data)
-    return response;
+    const observable = this.http.post(this.baseUri, data)
+    return observable;
   }
 
   getServices(filter?: IFilterService) {
     const data = filter ?? {};
     this.isLoading = true;
-    const response = this.http.get<IService[]>(this.baseUri, data).pipe(finalize(() => this.isLoading = false));
-    return response;
+    const observable = this.http.get<IService[]>(this.baseUri, data).pipe(finalize(() => this.isLoading = false));
+    return observable;
   }
 
   updateService(data: IService) {
-    const response = this.http.patch(this.baseUri, data)
-    return response;
+    const observable = this.http.patch(this.baseUri, data)
+    return observable;
   }
 
   getOneService(data: string) {
-    const response = this.http.get<IService>(`${this.baseUri}${data}`);
-    return response;
+    const observable = this.http.get<IService>(`${this.baseUri}one/${data}`);
+    return observable;
   }
 
+  getNotificationOffer() {
+    const observable = this.http.get(`${this.baseUri}notifOffre`);
+    return observable;
+  }
 
 
 

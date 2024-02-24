@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { Observable } from 'rxjs';
 import * as socketIo from 'socket.io-client';
 
@@ -8,8 +8,10 @@ import * as socketIo from 'socket.io-client';
 export class SocketIoService {
   baseUri = "ws://localhost:8000";
   private clientSocket: any;
-  constructor() {
-    // this.clientSocket = socketIo.connect(this.baseUri);
+  constructor(private zone: NgZone) {
+    this.zone.runOutsideAngular(() => {
+      this.clientSocket = socketIo.connect(this.baseUri);
+    })
   }
 
   listen(connection: string): Observable<any> {

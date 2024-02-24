@@ -8,6 +8,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { CustomerServiceService } from '../../services/customer/customer-service.service';
 import { NotificationsComponent } from '../../modules/notifications/notifications.component';
 import { SocketIoService } from '../../../services/socket-io.service';
+import { ServiceService } from '../../../back-office/services/service/service.service';
 
 @Component({
   selector: 'app-header',
@@ -36,47 +37,56 @@ export class HeaderComponent implements OnInit {
   menuActivate: string = 'Services';
   menus = HEADERMENUS;
 
+  activeFirst = false;
+
 
   constructor(
     private customerService: CustomerServiceService,
     private router: Router,
     private socketService: SocketIoService,
     private elementRef: ElementRef,
-    private zone: NgZone
+    private zone: NgZone,
+    private serviceService: ServiceService
   ) {
-    this.zone.run(() => {
-      // this.socketService.listen("logged_in").subscribe((change) => {
-      //   alert(`${change}`);
-      // })
 
-      this.socketService.listen("notifySpecialOffer").subscribe((data) => {
-        console.log('5200155858')
-        this.show = true;
-        this.services = data;
-        this.activeNotif = true;
-        this.socketService.disconnect();
-        this.socketService = new SocketIoService();
-      });
-
-
-    })
   }
 
   ngOnInit(): void {
     this.checkTokenExpiration();
+    this.getNotifications();
+    this.setupSocketListeners();
   }
 
-  // @HostListener('document:click', ['$event.target'])
-  // onClickOutside(event: MouseEvent) {
-  //   if (this.show) {
-  //     const targetElement = event.target as HTMLElement;
-  //     console.log("this.elementRef.nativeElement", this.elementRef.nativeElement)
-  //     if (!this.elementRef.nativeElement.contains(targetElement)) {
-  //       this.show = false;
-  //       this.activeNotif = false;
-  //     }
-  //   }
-  // }
+  private setupSocketListeners() {
+
+    this.socketService.listen("notifySpecialOffer").subscribe((data) => {
+      this.zone.run(() => {
+        this.activeNotif = true;
+        this.show = true;
+        this.services = data;
+        this.activeNotif = true;
+        this.activeFirst = true;
+      });
+    });
+
+    this.socketService.listen("logged_in").subscribe((change) => {
+      alert(`${change}`);
+    })
+
+  }
+
+
+  @HostListener('document:click', ['$event.target'])
+  onClickOutside(event: MouseEvent) {
+    const targetElement = event.target as HTMLElement;
+    if (this.elementRef.nativeElement instanceof Node && targetElement instanceof Node) {
+      if (!this.elementRef.nativeElement.contains(targetElement)) {
+        this.show = false;
+        this.activeNotif = false;
+      }
+
+    }
+  }
 
   onShowNotifications() {
     this.activeNotif = !this.activeNotif;
@@ -102,5 +112,16 @@ export class HeaderComponent implements OnInit {
         this.router.navigate(['/frontoffice']);
       }
     })
+  }
+
+  getNotifications() {
+    this.serviceService.getNotificationOffer().subscribe(data => {
+      this.services = data
+      this.services = data;
+    })
+  }
+
+  onView() {
+    this.activeFirst = false;
   }
 }

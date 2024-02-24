@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IService } from '../../../back-office/interfaces/serviceInterface';
 import { CardServiceComponent } from '../create-rdv/card-service/card-service.component';
 import { RouterLink } from '@angular/router';
@@ -14,10 +14,13 @@ import { RouterLink } from '@angular/router';
 export class NotificationsComponent {
   @Input() show?: boolean;
   @Input() services?: IService[] | any;
+  @Input() activeFirstRow?: boolean;
+  @Output() view = new EventEmitter();
 
   selectedService: any;
 
   onSelectService(data: any) {
     this.selectedService = data;
+    this.view.emit();
   }
 }

@@ -7,7 +7,7 @@ export interface IService {
     description?: string,
     category: string,
     path?: string,
-    oldPrice?: number;
+    priceOffer?: number;
     startOffer?: string;
     endOffer?: string;
 }

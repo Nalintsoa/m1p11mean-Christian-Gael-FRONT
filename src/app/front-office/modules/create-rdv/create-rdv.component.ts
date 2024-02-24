@@ -43,7 +43,8 @@ export class CreateRdvComponent {
 
   addRappel = false;
 
-  todayDate = formatDate(new Date(), 'yyyy-MM-dd', 'en-US');
+  // todayDate = this.
+  todayDate = this.getFormatDate(new Date());
 
   constructor(private serviceService: ServiceService, public rdvService: RdvService, private router: Router, private route: ActivatedRoute) {
     console.log(this.todayDate)
@@ -59,6 +60,9 @@ export class CreateRdvComponent {
     return Object.values(row);
   }
 
+  getFormatDate(date: Date | string) {
+    return formatDate(date, 'yyyy-MM-dd', 'en-US');
+  }
 
   onClickCell = (rowNumber: number, columnNumber: number, item: any) => {
     const duration = Number(this.serviceSelected?.duration);
@@ -82,14 +86,30 @@ export class CreateRdvComponent {
     this.columnToColor = tempColor;
 
     this.onColorCell(rowNumber);
+    let price = this.serviceSelected?.price;
+    let specialOffer = false;
+
+    if (this.serviceSelected?.endOffer && this.serviceSelected?.startOffer) {
+      const isTodayBetweenStartAndEnd =
+        new Date(this.todayDate) <= new Date(this.serviceSelected?.endOffer)
+        &&
+        new Date(this.todayDate) >= new Date(this.serviceSelected?.startOffer);
+      if (isTodayBetweenStartAndEnd) {
+        price = this.serviceSelected?.priceOffer;
+        specialOffer = true;
+      }
+    }
 
     this.dataToSend = {
       ...this.dataToSend,
       service: this.serviceSelected?._id,
+      price,
+      commission: this.serviceSelected?.commission,
       startHour,
       endHour,
       employee: item?._id,
       date: this.filterData.date,
+      specialOffer
     }
 
   }
@@ -133,8 +153,7 @@ export class CreateRdvComponent {
           this.rdvService.isLoading = false;
           this.successMessage = undefined;
           this.router.navigate(['front-office/histo-rdv'])
-        }, 5000);
-
+        }, 3000);
 
       })
     } else {
