@@ -6,7 +6,7 @@ import * as socketIo from 'socket.io-client';
   providedIn: 'root'
 })
 export class SocketIoService {
-  baseUri = "ws://localhost:8000";
+  baseUri = "http://localhost:8000";
   private clientSocket: any;
   constructor(private zone: NgZone) {
     this.zone.runOutsideAngular(() => {

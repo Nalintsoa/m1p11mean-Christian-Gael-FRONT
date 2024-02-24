@@ -21,11 +21,9 @@ export class CardServiceComponent {
 
   showSpecialOffer() {
     if (this.service?.startOffer && this.service?.endOffer) {
-      const { startOffer, endOffer } = this.service
+      const { endOffer } = this.service
       const isTodayBetweenStartAndEnd =
-        new Date() <= new Date(endOffer)
-        &&
-        new Date() >= new Date(startOffer);
+        new Date() <= new Date(endOffer);
 
       return isTodayBetweenStartAndEnd
     }
