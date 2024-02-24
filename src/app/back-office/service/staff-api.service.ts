@@ -47,4 +47,8 @@ export class StaffApiService {
   getStaff(id: any): Observable<any> {
     return this.http.get(`${this.baseUri}/${id}`);
   }
+
+  getStaffBySpeciality(speciality: string): Observable<any> {
+    return this.http.post(`${this.baseUri}/getStaffBySpeciality`, {speciality});
+  }
 }

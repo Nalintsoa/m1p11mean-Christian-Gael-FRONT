@@ -1,0 +1,48 @@
+<div class="bg-white">
+  <app-breadcrumb [menu]="menuSelected"></app-breadcrumb>
+  <div class="sidebar">
+    <div class="sidebar__categories">
+      <div class="input-group mt-3 mb-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Rechercher..."
+          (input)="handleSearchChange($event)"
+          aria-describedby="button-addon2"
+          [value]="searchQuery"
+        />
+        <button
+          class="btn btn-outline-secondary"
+          type="button"
+          id="button-addon2"
+        >
+          <fa-icon [icon]="faSearch"></fa-icon>
+        </button>
+      </div>
+      <p class="mt-3 h5">Filtrer par</p>
+      <div class="mt-3">
+        Spécialité
+        <select
+          class="form-select mt-2"
+          aria-label="Default select example"
+          (change)="handleChangeCategory($event)"
+        >
+          <option *ngFor="let item of categoryItems" [value]="item">
+            {{ item }}
+          </option>
+        </select>
+      </div>
+      <div class="mt-3">
+        Préférence
+        <select
+          class="form-select mt-2"
+          aria-label="Default select example"
+          (change)="handleChangePrefType($event)"
+        >
+          <option value="Tout" [defaultSelected]="true">Tout</option>
+          <option value="Favoris">Favoris uniquement</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>

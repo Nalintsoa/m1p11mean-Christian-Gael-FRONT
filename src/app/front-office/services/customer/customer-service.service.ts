@@ -58,4 +58,12 @@ export class CustomerServiceService {
   addOrRemoveServiceToPreferences(customer: string, service: string): Observable<any>{
     return this.http.post(`${this.baseUri}/addOrRemoveServiceToPreferences`, { customer, service });
   }
+
+  addOrRemoveEmployeeAsFavorite(customer: string, employee?: string): Observable<any>{
+    return this.http.post(`${this.baseUri}/addOrRemoveEmployeeAsFavorite`,  { customer, employee });
+  }
+
+  getFavoriteEmployees(customer: string): Observable<any> {
+    return this.http.get(`${this.baseUri}/getFavoriteEmployees/${customer}`);
+  }
 }

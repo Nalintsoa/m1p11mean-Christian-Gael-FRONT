@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import { IService } from '../../../../../back-office/interfaces/serviceInterface';
 import { RouterLink } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarPlus, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { CustomerServiceService } from '../../../../services/customer/customer-service.service';
 import { AuthApiService } from '../../../../../back-office/service/auth-api.service';
 import { jwtDecode } from 'jwt-decode';
@@ -17,6 +17,7 @@ import { jwtDecode } from 'jwt-decode';
 })
 export class ServiceComponent {
   faHeart = faHeart;
+  faCalendarPlus = faCalendarPlus
   @Input() service?: IService;
 
   preferences: any = [];
