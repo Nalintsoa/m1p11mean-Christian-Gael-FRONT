@@ -1,7 +1,6 @@
 import { Route } from '@angular/router';
 import { ListServiceComponent } from '../modules/list-service/list-service.component';
 import { MainComponent } from '../modules/main/main.component';
-import { NotificationsComponent } from '../modules/notifications/notifications.component';
 import { HistoriqueRdvComponent } from '../modules/historique-rdv/historique-rdv.component';
 import { PreferencesComponent } from '../modules/preferences/preferences.component';
 import { LoginFrontComponent } from '../modules/login-front/login-front.component';

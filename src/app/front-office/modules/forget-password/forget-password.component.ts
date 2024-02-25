@@ -33,26 +33,34 @@ export class ForgetPasswordComponent {
   })
 
   customerEmail = "";
+  firstStepLoading = false;
   onSubmit(){
     this.isLoginFormSubmitted = true;
+    this.firstStepLoading = true;
     if (!this.forgetPasswordForm.valid) {
+      this.firstStepLoading = false;
       return;
     }
     this.customerService.forgetPassword(this.forgetPasswordForm.get('identifier')?.value || "").subscribe({
       next: (res) => {
         this.step = 2;
         this.isLoginFormSubmitted = false;
+        this.firstStepLoading = false;
         this.customerEmail = res.email;
       },
       error: (err) => {
-        console.log(err)
+        console.log(err);
+        this.firstStepLoading = false;
       }
     });
   }
 
+  secondStepLoading = false;
   onSubmitSecondStep(){
+    this.secondStepLoading = true;
     this.customerService.checkTemporaryPassword(this.customerEmail, this.secondStepForm.get('password')?.value || "").subscribe({
       next: (res) => {
+        this.secondStepLoading = false;
         this.step = 3;
       }
     })
