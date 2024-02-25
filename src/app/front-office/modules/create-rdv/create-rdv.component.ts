@@ -9,6 +9,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CardServiceComponent } from './card-service/card-service.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faBell, faBellSlash, faClock, faDumbbell } from '@fortawesome/free-solid-svg-icons';
+import { ConfirmRdvComponent } from './confirm-rdv/confirm-rdv.component';
+import Swal from 'sweetalert2';
+import { CustomerServiceService } from '../../services/customer/customer-service.service';
+import { jwtDecode } from 'jwt-decode';
+import { AuthApiService } from '../../../back-office/service/auth-api.service';
 
 @Component({
   selector: 'app-create-rdv',
@@ -17,7 +22,8 @@ import { faBell, faBellSlash, faClock, faDumbbell } from '@fortawesome/free-soli
     CommonModule,
     BreadcrumbComponent,
     CardServiceComponent,
-    FontAwesomeModule
+    FontAwesomeModule,
+    ConfirmRdvComponent
   ],
   templateUrl: './create-rdv.component.html',
   styleUrl: './create-rdv.component.scss'
@@ -39,15 +45,28 @@ export class CreateRdvComponent {
 
   columnToColor: any = [];
 
-  dataToSend = {};
+  dataToSend: any = {};
 
   addRappel = false;
 
-  // todayDate = this.
   todayDate = this.getFormatDate(new Date());
 
-  constructor(private serviceService: ServiceService, public rdvService: RdvService, private router: Router, private route: ActivatedRoute) {
-    console.log(this.todayDate)
+  idCustomer = '';
+
+
+  customer: any = {};
+
+
+  constructor(
+    private serviceService: ServiceService,
+    public rdvService: RdvService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private customerService: CustomerServiceService,
+    private authService: AuthApiService
+  ) {
+    this.getCustomerId();
+    this.getInfoCustomer();
   }
 
   ngOnInit(): void {
@@ -88,6 +107,7 @@ export class CreateRdvComponent {
     this.onColorCell(rowNumber);
     let price = this.serviceSelected?.price;
     let specialOffer = false;
+    let amountPaid;
 
     if (this.serviceSelected?.endOffer && this.serviceSelected?.startOffer) {
       const isTodayBetweenStartAndEnd =
@@ -100,16 +120,21 @@ export class CreateRdvComponent {
       }
     }
 
+    price && (amountPaid = price / 100 * 30)
+
     this.dataToSend = {
       ...this.dataToSend,
       service: this.serviceSelected?._id,
-      price,
       commission: this.serviceSelected?.commission,
       startHour,
       endHour,
       employee: item?._id,
       date: this.filterData.date,
-      specialOffer
+      specialOffer,
+      price,
+      amountPaid,
+      paimentArray: [{ date: new Date(), amount: amountPaid, motif: 'Confirmation du rendez-vous' }],
+      restSolde: Number(this.customer?.solde) - Number(amountPaid),
     }
 
   }
@@ -141,24 +166,80 @@ export class CreateRdvComponent {
 
   }
 
-  onCreateRdv() {
+  onConfimRdv() {
     if (Object.values(this.dataToSend).length) {
-      this.errorMessage = undefined;
-      this.rdvService.addRdv(this.dataToSend).subscribe((data) => {
 
-        setTimeout(() => {
-          this.filterData = { date: '', category: '' };
-          this.dataToSend = {};
-          this.successMessage = "Rendez-vous créé avec succès";
-          this.rdvService.isLoading = false;
-          this.successMessage = undefined;
-          this.router.navigate(['front-office/histo-rdv'])
-        }, 3000);
-
-      })
-    } else {
+      Swal.fire({
+        title: "Confirmation",
+        text: `Pour pouvoir confirmer votre rendez-vous, 30% (${this.dataToSend?.amountPaid}Ar) du prix du service seraient
+        décompté de votre Crédit actuel`,
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Annuler le rendez-vous",
+        confirmButtonText: "Confirmer"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          if (this.dataToSend?.amountPaid > this.customer?.solde) {
+            Swal.fire({
+              title: "Confirmation",
+              text: "Désolé, vous n'avez pas assez de crédit pour payer",
+              icon: "error"
+            });
+          }
+          else {
+            Swal.showLoading();
+            this.onCreateRdv()
+          }
+        } else {
+          this.onCancelRdv();
+        }
+      });
+    }
+    else {
       this.errorMessage = "Veuillez remplir tous les champs"
     }
+  }
+
+  getResponse(response: boolean) {
+    if (response)
+      this.onCreateRdv();
+    else
+      this.onCancelRdv();
+
+  }
+
+  onCreateRdv() {
+    this.errorMessage = undefined;
+    this.rdvService.addRdv(this.dataToSend).subscribe((data) => {
+      // Swal.close();
+      Swal.fire({
+        title: "Confirmation",
+        text: "Votre rendez-vous a été enregistré avec succès",
+        icon: "success"
+      }).then(result => {
+        if (result.isConfirmed) {
+          this.router.navigate(['front-office/histo-rdv'])
+        }
+      });
+      // this.router.navigate(['front-office/histo-rdv'])
+
+      // setTimeout(() => {
+      //   this.filterData = { date: '', category: '' };
+      //   this.dataToSend = {};
+      //   this.successMessage = "Rendez-vous créé avec succès";
+      //   this.rdvService.isLoading = false;
+      //   this.successMessage = undefined;
+      //   this.router.navigate(['front-office/histo-rdv'])
+      // }, 3000);
+
+    })
+  }
+
+  onCancelRdv() {
+    this.dataToSend = {};
+    this.successMessage = undefined;
+    this.router.navigate(['front-office/services'])
   }
 
   getOneService(id: string) {
@@ -175,5 +256,23 @@ export class CreateRdvComponent {
       rappel: event.target.value
     }
   }
+
+  getInfoCustomer() {
+
+    this.customerService.getCustomer(this.idCustomer).subscribe(data => {
+      this.customer = data;
+    })
+  }
+
+  getCustomerId() {
+    const jwtToken = this.authService.getToken();
+    if (jwtToken) {
+      const decodeToken: any = jwtDecode(jwtToken);
+      if (decodeToken._id) {
+        this.idCustomer = decodeToken._id;
+      }
+    }
+  }
+
 }
 

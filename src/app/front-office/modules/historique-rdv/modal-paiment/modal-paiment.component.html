@@ -1,0 +1,45 @@
+<div class="modal fade" [id]="'paiementRdv'+rdv?._id" tabindex="-1" aria-labelledby="paiementRdv" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Paiement</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body px-5">
+                <form [formGroup]="paimentForm">
+                    <div class="row">
+                        <label class="form-label">Email</label>
+                        <input [value]="customer?.email" [disabled]="true" type="text" class="form-control">
+                    </div>
+                    <div class="row">
+                        <label class="form-label">Numéro téléphone</label>
+                        <input [value]="customer?.phoneNumber" [disabled]="true" type="text" class="form-control">
+                    </div>
+                    <div class="row">
+                        <label class="form-label">Numéro carte crédit</label>
+                        <input [value]="customer?.cardNumber" [disabled]="true" type="text" class="form-control">
+                    </div>
+                    <div class="row">
+                        <label class="form-label">Montant</label>
+                        <input formControlName="amount"
+                            [ngClass]=" submitted&&paimentForm.get('amount')?.errors ? 'form-control is-invalid' : 'form-control'"
+                            type="number" placeholder="En ariary" />
+                        <p *ngIf="submitted && paimentForm.get('amount')?.errors" class="invalid-feedback">
+                            Le montant doit-être un nombre positif
+                        </p>
+                    </div>
+                    <div class="row">
+                        {{customer?.numberPhone}}
+                    </div>
+                </form>
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" #closeModal>Annuler</button>
+                <button type="button" class="btn btn-primary" (click)="onConfirm()">Payer</button>
+            </div>
+        </div>
+    </div>
+</div>

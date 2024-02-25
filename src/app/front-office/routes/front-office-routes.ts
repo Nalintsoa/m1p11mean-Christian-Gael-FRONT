@@ -7,6 +7,7 @@ import { PreferencesComponent } from '../modules/preferences/preferences.compone
 import { LoginFrontComponent } from '../modules/login-front/login-front.component';
 import { CreateRdvComponent } from '../modules/create-rdv/create-rdv.component';
 import { AuthGuardService } from './authGuard';
+import { SoldePayComponent } from '../modules/solde-pay/solde-pay.component';
 
 export const frontOfficeRoutes: Route[] = [
     {
@@ -42,6 +43,12 @@ export const frontOfficeRoutes: Route[] = [
                 canActivate: [AuthGuardService],
                 component: CreateRdvComponent,
                 title: 'Rendez-vous',
+            },
+            {
+                path: 'solde-pay',
+                canActivate: [AuthGuardService],
+                component: SoldePayComponent,
+                title: 'Mon solde',
             },
         ],
     },
