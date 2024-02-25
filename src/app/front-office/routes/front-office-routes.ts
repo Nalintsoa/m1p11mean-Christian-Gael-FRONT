@@ -8,6 +8,7 @@ import { LoginFrontComponent } from '../modules/login-front/login-front.componen
 import { CreateRdvComponent } from '../modules/create-rdv/create-rdv.component';
 import { AuthGuardService } from './authGuard';
 import { SoldePayComponent } from '../modules/solde-pay/solde-pay.component';
+import { ForgetPasswordComponent } from '../modules/forget-password/forget-password.component';
 
 export const frontOfficeRoutes: Route[] = [
     {
@@ -56,4 +57,8 @@ export const frontOfficeRoutes: Route[] = [
         path: 'frontoffice',
         component: LoginFrontComponent,
     },
+    {
+        path: 'forgetPassword',
+        component: ForgetPasswordComponent
+    }
 ];

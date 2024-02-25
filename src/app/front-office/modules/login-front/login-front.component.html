@@ -84,6 +84,13 @@
               >Rejoignez-nous</span
             >
           </p>
+          <p>
+            <a
+              class="text-decoration-underline text-primary cursor-pointer"
+              routerLink="/forgetPassword"
+              >Mot de passe oublié</a
+            >
+          </p>
         </div>
       </div>
 
@@ -307,3 +314,54 @@
   by <span>TOVONALINTSOA Antonny Christian</span><br />
   <span>RASOAMAHENINA Sambatra Gaël</span>
 </div>
+
+<ng-template #content let-modal>
+  <div class="modal-header bg-warning">
+    <div class="modal-title">
+      <b><h5>Rappel</h5></b>
+    </div>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    Nous souhaitons vous rappeler
+    {{
+      rdvToRemind.length > 1
+        ? "vos futurs rendez-vous :"
+        : "votre rendez-vous le :"
+    }}
+    <table class="table mt-3">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Agent</th>
+          <th>Offre choisie</th>
+          <th>A payer</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of rdvToRemind">
+          <td>{{ item.date | date : "dd-MM-yyyy" }} à {{ item.startHour }}H</td>
+          <td>{{ item.employee.name }}</td>
+          <td>{{ item.service.name }}</td>
+          <td>{{ item.price | currency : "MGA" }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="mt-4">
+      <i class="fw-light">
+        Pour plus de détails, voir
+        <a
+          (click)="handleRedirectToHistory()"
+          class="text-primary text-decoration-line"
+          style="cursor: pointer"
+          >historique
+        </a>
+      </i>
+    </p>
+  </div>
+</ng-template>

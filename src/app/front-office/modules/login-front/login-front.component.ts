@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ElementRef, TemplateRef, ViewChild, inject } from '@angular/core';
 import {
   FormBuilder,
   FormsModule,
@@ -9,12 +9,13 @@ import {
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowLeft, faBackspace } from '@fortawesome/free-solid-svg-icons';
 import { CustomerServiceService } from '../../services/customer/customer-service.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-login-front',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, FontAwesomeModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, FontAwesomeModule, RouterModule],
   templateUrl: './login-front.component.html',
   styleUrl: './login-front.component.scss',
 })
@@ -68,6 +69,8 @@ export class LoginFrontComponent {
     password: ['', [Validators.required]],
   });
 
+  rdvToRemind:any[] = [];
+
   isFirstStepRegisterValid = () => {
     return (
       !this.registerForm.get('pseudo')?.hasError('required') &&
@@ -112,6 +115,8 @@ export class LoginFrontComponent {
       this.customerService.customerLogin(data).subscribe({
         next: (res) => {
           this.customerService.saveToken(res.token);
+          console.log(res);
+          this.openAlertModal(res.alertArray || []);
           this.router.navigate(['/front-office']);
           this.isLoginFormSubmitted = true;
         }
@@ -124,7 +129,6 @@ export class LoginFrontComponent {
       if (this.registerForm.get('tempPassword')?.value === this.registerForm.get("password")?.value){
         this.customerService.register(this.registerForm.value).subscribe({
           next: (res) => {
-            console.log(res);
             this.loginForm.reset();
             this.isLoginForm = true;
             this.firstRegisterForm = true;
@@ -136,4 +140,42 @@ export class LoginFrontComponent {
       }
     }
   };
+
+  @ViewChild('content') modal!: ElementRef;
+  private modalService = inject(NgbModal);
+	closeResult = '';
+
+	open(content: TemplateRef<any>) {
+		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false }).result.then(
+			(result) => {
+				this.closeResult = `Closed with: ${result}`;
+			},
+			(reason) => {
+				this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+			},
+		);
+	}
+
+	private getDismissReason(reason: any): string {
+		switch (reason) {
+			case ModalDismissReasons.ESC:
+				return 'by pressing ESC';
+			case ModalDismissReasons.BACKDROP_CLICK:
+				return 'by clicking on a backdrop';
+			default:
+				return `with: ${reason}`;
+		}
+	}
+
+  openAlertModal(alertArray: any[]) {
+    if(alertArray.length > 0) {
+      this.rdvToRemind = alertArray;
+      this.modalService.open(this.modal, { backdrop: 'static', keyboard: false });
+    }
+  }
+
+  handleRedirectToHistory(){
+    this.router.navigate(["/front-office/histo-rdv"]);
+    this.modalService.dismissAll();
+  }
 }

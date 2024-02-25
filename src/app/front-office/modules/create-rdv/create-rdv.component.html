@@ -7,18 +7,32 @@
         <div class="row mb-3 justify-content-between">
           <div class="col-xl-6 col-lg-12">
             <label class="form-label">Choisissez une date</label>
-            <input class="form-control calendar" type="date" name="date" (change)="onCheckDispo($event)"
-              [min]="todayDate" />
+            <input
+              class="form-control calendar"
+              type="date"
+              name="date"
+              (change)="onCheckDispo($event)"
+              [min]="todayDate"
+            />
           </div>
           <div class="col-xl-6 col-lg-12">
             <br *ngIf="!addRappel" />
-            <button class="btn btn-white border mt-2 text-nowrap" *ngIf="!addRappel" (click)="handleAddRappel()">
+            <button
+              class="btn btn-white border mt-2 text-nowrap"
+              *ngIf="!addRappel"
+              (click)="handleAddRappel()"
+            >
               <fa-icon [icon]="faBell" class="me-2" /> Ajouter un rappel
             </button>
             <label class="form-label" *ngIf="addRappel">Rappel</label>
             <div class="d-flex">
-              <input type="datetime-local" class="form-control calendar" name="rappel" *ngIf="addRappel"
-                (change)="handleChangeRappel($event)" />
+              <input
+                type="date"
+                class="form-control calendar"
+                name="rappel"
+                *ngIf="addRappel"
+                (change)="handleChangeRappel($event)"
+              />
             </div>
           </div>
         </div>
@@ -26,8 +40,13 @@
           <app-card-service [service]="serviceSelected"></app-card-service>
         </div>
         <div>
-          <button style="width: 100%" class="btn btn-outline-primary" data-toggle="modal"
-            data-target="#exampleModalCenter" (click)="onConfimRdv()">
+          <button
+            style="width: 100%"
+            class="btn btn-outline-primary"
+            data-toggle="modal"
+            data-target="#exampleModalCenter"
+            (click)="onConfimRdv()"
+          >
             <div>Confirmer votre rendez-vous</div>
             <!-- <div *ngIf="rdvService.isLoading" class="spinner-border" role="status">
               <span class="visually-hidden">Loading...</span>
@@ -36,7 +55,10 @@
           <p *ngIf="errorMessage" [ngClass]="{ 'text-danger': errorMessage }">
             {{ errorMessage }}
           </p>
-          <p *ngIf="successMessage" [ngClass]="{ 'text-danger': successMessage }">
+          <p
+            *ngIf="successMessage"
+            [ngClass]="{ 'text-danger': successMessage }"
+          >
             {{ successMessage }}
           </p>
         </div>
@@ -46,7 +68,9 @@
           <br />
           <div class="row justify-content-end">
             <div class="col align-items-middle text-end">
-              <span class="text-nowrap me-2 align-baseline">Votre sélection</span>
+              <span class="text-nowrap me-2 align-baseline"
+                >Votre sélection</span
+              >
               <button class="btn btn-sm border stripe-1 legend-rect">
                 {{ " " }}
               </button>
@@ -54,7 +78,9 @@
           </div>
           <div class="row justify-content-end">
             <div class="col text-end">
-              <span class="text-nowrap me-2 align-baseline">Heure disponible</span>
+              <span class="text-nowrap me-2 align-baseline"
+                >Heure disponible</span
+              >
               <button class="btn btn-sm border legend-rect">
                 {{ " " }}
               </button>
@@ -85,16 +111,24 @@
             </thead>
             <tbody>
               <tr *ngFor="let employee of formattedArray; index as i0">
-                <td *ngFor="let item of getCells(employee); index as i1" style="padding: 0">
+                <td
+                  *ngFor="let item of getCells(employee); index as i1"
+                  style="padding: 0"
+                >
                   <div *ngIf="i1 === 0">
                     {{ item.firstName }}
                   </div>
                   <div *ngIf="i1 > 0">
-                    <button [disabled]="item?.dispo === false" style="width: 100%; border-width: 0"
-                      class="btn btn-white" [ngClass]="{
+                    <button
+                      [disabled]="item?.dispo === false"
+                      style="width: 100%; border-width: 0"
+                      class="btn btn-white"
+                      [ngClass]="{
                         'stripe-2': item?.dispo === false,
                         'stripe-1': item?.statusTemp === true
-                      }" (click)="onClickCell(i0, i1, item)">
+                      }"
+                      (click)="onClickCell(i0, i1, item)"
+                    >
                       <div style="width: 100%; height: 50px">{{ " " }}</div>
                     </button>
                   </div>
@@ -108,4 +142,7 @@
   </div>
 </div>
 
-<app-confirm-rdv [amount]="dataToSend?.price" (respond)="getResponse($event)"></app-confirm-rdv>
+<app-confirm-rdv
+  [amount]="dataToSend?.price"
+  (respond)="getResponse($event)"
+></app-confirm-rdv>

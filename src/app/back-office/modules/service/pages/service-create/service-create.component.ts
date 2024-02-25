@@ -47,7 +47,7 @@ export class ServiceCreateComponent {
     specialOffer: new FormControl(false),
     startOffer: new FormControl(),
     endOffer: new FormControl(),
-    category: new FormControl('Manucure'),
+    category: new FormControl('', [Validators.required]),
     priceOffer: new FormControl(''),
   });
 
