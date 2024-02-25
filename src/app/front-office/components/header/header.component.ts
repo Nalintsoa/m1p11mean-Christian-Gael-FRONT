@@ -69,9 +69,9 @@ export class HeaderComponent implements OnInit {
       });
     });
 
-    this.socketService.listen("logged_in").subscribe((change) => {
-      alert(`${change}`);
-    })
+    // this.socketService.listen("logged_in").subscribe((change) => {
+    //   alert(`${change}`);
+    // })
 
   }
 

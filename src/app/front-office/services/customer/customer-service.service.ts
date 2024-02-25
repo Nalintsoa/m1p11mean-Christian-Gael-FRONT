@@ -66,4 +66,16 @@ export class CustomerServiceService {
   getFavoriteEmployees(customer: string): Observable<any> {
     return this.http.get(`${this.baseUri}/getFavoriteEmployees/${customer}`);
   }
+
+  forgetPassword(customerEmail: string): Observable<any>{
+    return this.http.post(`${this.baseUri}/forgetPassword`, { customerEmail });
+  }
+
+  checkTemporaryPassword(customerEmail: string, temporaryPassword: string): Observable<any>{
+    return this.http.post(`${this.baseUri}/checkTemporaryPassword`, {customerEmail, temporaryPassword});
+  }
+
+  updateCustomerPassword(customerEmail: string, password: string): Observable<any>{
+    return this.http.post(`${this.baseUri}/updatePassword`, {customerEmail, password});
+  }
 }

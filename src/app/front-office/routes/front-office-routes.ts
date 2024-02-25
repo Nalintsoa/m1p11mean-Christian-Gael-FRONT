@@ -1,13 +1,13 @@
 import { Route } from '@angular/router';
 import { ListServiceComponent } from '../modules/list-service/list-service.component';
 import { MainComponent } from '../modules/main/main.component';
-import { NotificationsComponent } from '../modules/notifications/notifications.component';
 import { HistoriqueRdvComponent } from '../modules/historique-rdv/historique-rdv.component';
 import { PreferencesComponent } from '../modules/preferences/preferences.component';
 import { LoginFrontComponent } from '../modules/login-front/login-front.component';
 import { CreateRdvComponent } from '../modules/create-rdv/create-rdv.component';
 import { AuthGuardService } from './authGuard';
 import { SoldePayComponent } from '../modules/solde-pay/solde-pay.component';
+import { ForgetPasswordComponent } from '../modules/forget-password/forget-password.component';
 
 export const frontOfficeRoutes: Route[] = [
     {
@@ -56,4 +56,8 @@ export const frontOfficeRoutes: Route[] = [
         path: 'frontoffice',
         component: LoginFrontComponent,
     },
+    {
+        path: 'forgetPassword',
+        component: ForgetPasswordComponent
+    }
 ];
