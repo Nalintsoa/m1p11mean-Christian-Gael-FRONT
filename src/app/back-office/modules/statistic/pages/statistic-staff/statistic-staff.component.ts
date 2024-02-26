@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, NgZone, ViewChild } from '@angular/core';
+import { Component, ElementRef, NgZone, ViewChild } from '@angular/core';
 import Chart from 'chart.js/auto';
 import { StatisticService } from '../../../../services/statistic/statistic.service';
 
@@ -10,7 +10,7 @@ import { StatisticService } from '../../../../services/statistic/statistic.servi
   templateUrl: './statistic-staff.component.html',
   styleUrl: './statistic-staff.component.scss'
 })
-export class StatisticStaffComponent implements AfterViewInit {
+export class StatisticStaffComponent {
   @ViewChild("staffGraph") staffGraph?: ElementRef;
 
   data = { type: "date", date: formatDate(new Date(), 'yyyy-MM-dd', 'en-US'), };
@@ -25,10 +25,6 @@ export class StatisticStaffComponent implements AfterViewInit {
 
   ngOnInit() {
     this.getStatStaff();
-  }
-
-  ngAfterViewInit(): void {
-    // this.getStatStaff();
   }
 
   designBarChart(data: number[], labels: string[]) {
@@ -59,9 +55,6 @@ export class StatisticStaffComponent implements AfterViewInit {
 
   onSelect(e: any) {
     const { name, value } = e.target;
-
-
-
     if (name === "type") {
       if (value === "date") {
         const dateValue = this.data.date + "-01";

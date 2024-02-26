@@ -1,0 +1,44 @@
+<div class="row">
+    <div class="card">
+
+        <div class="card-body">
+            <h5 class="card-title mb-3 text-center">Bénéfice</h5>
+            <div class="row d-flex justify-content-start mb-1">
+                <div class="col-3">
+                    <input type="month" (change)="onChange($event)" name="date" [value]="filterData.date"
+                        class="form-control">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <input class="form-control" name="sale" type="number" min="0" placeholder="Salaire"
+                        (change)="onChange($event)">
+                </div>
+                <div class="col-3">
+                    <input class="form-control" name="rent" type="number" min="0" placeholder="Loyer"
+                        (change)="onChange($event)">
+                </div>
+                <div class="col-3">
+                    <input class="form-control" name="piece" type="number" min="0" placeholder="Achat pièce"
+                        (change)="onChange($event)">
+                </div>
+                <div class="col-3">
+                    <input class="form-control" name="other" type="number" min="0" placeholder="Autres"
+                        (change)="onChange($event)">
+                </div>
+
+
+            </div>
+            <div class="row ">
+                <div *ngIf="statService.isLoading" class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+                <canvas #beneficeGraph></canvas>
+            </div>
+        </div>
+
+    </div>
+
+</div>
