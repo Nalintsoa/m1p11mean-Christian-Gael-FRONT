@@ -1,42 +1,28 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import Chart from 'chart.js/auto';
+import { Component } from '@angular/core';
+import { BreadcrumbComponent } from '../../../../common/breadcrumb/breadcrumb.component';
+import { INavigationItem } from '../../../../interfaces/breadCrumbInterfaces';
+import { PATH_BACKOFFICE } from '../../../../routes/back-office-route';
+import { StatisticStaffComponent } from '../statistic-staff/statistic-staff.component';
 
 @Component({
   selector: 'app-statistic-list',
   standalone: true,
-  imports: [],
+  imports: [
+    BreadcrumbComponent,
+    StatisticStaffComponent
+  ],
   templateUrl: './statistic-list.component.html',
   styleUrl: './statistic-list.component.scss'
 })
 export class StatisticListComponent {
-  @ViewChild('CANVAS') elementRef?: ElementRef;
+  pathsArray: INavigationItem[] = [
+    {
+      label: 'Statistiques',
+      path: `${PATH_BACKOFFICE}/statistic`,
+    },
+    {
+      label: 'Liste',
+    },
+  ];
 
-  ngAfterViewInit() {
-    console.log(this.elementRef?.nativeElement)
-    const ctx = this.elementRef?.nativeElement
-    console.log(ctx)
-
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-          label: '# of Votes',
-          data: [12, 19, 3, 5, 2, 3],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    });
-  }
-
-  test(e: any) {
-    console.log(e.target.value)
-  }
 }
