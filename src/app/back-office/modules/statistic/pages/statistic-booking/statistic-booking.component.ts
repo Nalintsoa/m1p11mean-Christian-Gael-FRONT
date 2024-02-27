@@ -1,17 +1,17 @@
 import { formatDate } from '@angular/common';
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { Chart } from 'chart.js';
+import Chart from 'chart.js/auto';
 import { StatisticService } from '../../../../services/statistic/statistic.service';
 
 @Component({
-  selector: 'app-statistic-business',
+  selector: 'app-statistic-booking',
   standalone: true,
   imports: [],
-  templateUrl: './statistic-business.component.html',
-  styleUrl: './statistic-business.component.scss'
+  templateUrl: './statistic-booking.component.html',
+  styleUrl: './statistic-booking.component.scss'
 })
-export class StatisticBusinessComponent {
-  @ViewChild("businessGraph") bookingGraph?: ElementRef;
+export class StatisticBookingComponent {
+  @ViewChild("bookingGraph") bookingGraph?: ElementRef;
 
   data = { type: "date", date: formatDate(new Date(), 'yyyy-MM-dd', 'en-US'), };
 
@@ -24,7 +24,7 @@ export class StatisticBusinessComponent {
   }
 
   ngOnInit() {
-    this.getStatBusiness();
+    this.getStatBooking();
   }
 
   designBarChart(data: number[], labels: string[]) {
@@ -38,7 +38,7 @@ export class StatisticBusinessComponent {
       data: {
         labels,
         datasets: [{
-          label: "Chiffre d'affaire",
+          label: "Nombre de réservation",
           data,
           borderWidth: 1
         }]
@@ -55,7 +55,7 @@ export class StatisticBusinessComponent {
 
   onSelect(e: any) {
     const { name, value } = e.target;
-    if (name === "type2") {
+    if (name === "type1") {
       if (value === "date") {
         const dateValue = this.data.date + "-01";
         this.data = { ...this.data, type: value, date: dateValue }
@@ -69,17 +69,16 @@ export class StatisticBusinessComponent {
 
     const { date, type } = this.data;
     if (date !== "" && type !== "") {
-      this.getStatBusiness();
+      this.getStatBooking();
     }
   }
 
-  getStatBusiness() {
-    this.statService.getStatBusiness(this.data).subscribe((data: any) => {
+  getStatBooking() {
+    this.statService.getStatBooking(this.data).subscribe((data: any) => {
       const { data: chartData, labels } = data;
       console.log(data)
       this.designBarChart(chartData, labels);
     })
 
   }
-
 }

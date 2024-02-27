@@ -3,6 +3,8 @@ import { BreadcrumbComponent } from '../../../../common/breadcrumb/breadcrumb.co
 import { INavigationItem } from '../../../../interfaces/breadCrumbInterfaces';
 import { PATH_BACKOFFICE } from '../../../../routes/back-office-route';
 import { StatisticStaffComponent } from '../statistic-staff/statistic-staff.component';
+import { StatisticBeneficeComponent } from '../statistic-benefice/statistic-benefice.component';
+import { StatisticBookingComponent } from '../statistic-booking/statistic-booking.component';
 import { StatisticBusinessComponent } from '../statistic-business/statistic-business.component';
 
 @Component({
@@ -11,6 +13,8 @@ import { StatisticBusinessComponent } from '../statistic-business/statistic-busi
   imports: [
     BreadcrumbComponent,
     StatisticStaffComponent,
+    StatisticBeneficeComponent,
+    StatisticBookingComponent,
     StatisticBusinessComponent
   ],
   templateUrl: './statistic-list.component.html',

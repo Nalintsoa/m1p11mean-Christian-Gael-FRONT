@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="card">
+
+        <div class="card-body">
+            <h5 class="card-title mb-3 text-center">Bénéfice en fonction des dépenses</h5>
+            <div class="row d-flex justify-content-start mb-2">
+                <div class="col-3">
+                    <input type="month" (change)="onChange($event)" name="date" [value]="filterData.date"
+                        class="form-control">
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-3">
+                    <input class="form-control" name="sale" type="number" min="0" placeholder="Salaire"
+                        (change)="onChange($event)">
+                </div>
+                <div class="col-3">
+                    <input class="form-control" name="rent" type="number" min="0" placeholder="Loyer"
+                        (change)="onChange($event)">
+                </div>
+                <div class="col-3">
+                    <input class="form-control" name="piece" type="number" min="0" placeholder="Achat pièce"
+                        (change)="onChange($event)">
+                </div>
+                <div class="col-3">
+                    <input class="form-control" name="other" type="number" min="0" placeholder="Autres"
+                        (change)="onChange($event)">
+                </div>
+
+
+            </div>
+            <div class="row ">
+                <canvas #beneficeGraph style="max-height: 300px;"></canvas>
+            </div>
+        </div>
+
+    </div>
+
+</div>

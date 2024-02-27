@@ -17,9 +17,22 @@ export class StatisticService {
 
   }
 
-  getStatBusiness(data: any) {
+  getStatBooking(data: any) {
     this.isLoading = true;
+    const observable = this.http.get(`${this.baseUri}/statBooking`, { params: data });
+    return observable;
+
+  }
+
+  getStatBusiness(data: any) {
     const observable = this.http.get(`${this.baseUri}/statBusiness`, { params: data });
+    return observable;
+
+  }
+
+  getStatBenefice(data: any) {
+    this.isLoading = true;
+    const observable = this.http.get(`${this.baseUri}/statBenefice`, { params: data });
     return observable;
 
   }
