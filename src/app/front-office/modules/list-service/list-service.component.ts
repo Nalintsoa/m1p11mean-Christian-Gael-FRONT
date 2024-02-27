@@ -19,6 +19,11 @@ export class ListServiceComponent {
 
   services: IService[] = [];
 
+  searchQuery: string = '';
+  category: string = 'Manucure';
+  defaultPrice = 1000000;
+  price: number = this.defaultPrice;
+
   constructor(private serviceService: ServiceService) { };
 
   ngOnInit(): void {
@@ -27,8 +32,43 @@ export class ListServiceComponent {
 
   getServices() {
     this.services = [];
-    this.serviceService.getServices().subscribe(data => { this.services = data; });
+    this.serviceService.getServices().subscribe(data => {
+
+      if (this.searchQuery !== "" || this.category !== "Tout" || this.price !== this.defaultPrice) {
+        let tempArray = this.queriedList(data);
+        if (this.price !== this.defaultPrice) {
+          tempArray = tempArray.filter((item: any) => {
+            return this.price >= item.price && 5000 <= item.price
+          })
+        }
+        this.services = tempArray
+      } else { this.services = data; }
+
+    });
   };
+
+  onSearch(key: string) {
+    this.searchQuery = key;
+    this.getServices();
+  }
+
+  onChangeCategory(category: string) {
+    this.category = category;
+    this.getServices();
+  }
+
+  onChangePrice(price: number) {
+    this.price = price;
+    this.getServices();
+  }
+
+  queriedList = (list: any) => {
+    const tempArray = list.filter((item: any) => {
+      return Object.values(item).toString().toLowerCase().includes(this.searchQuery.toLowerCase())
+        && item.category === this.category;
+    });
+    return tempArray;
+  }
 
 
 }

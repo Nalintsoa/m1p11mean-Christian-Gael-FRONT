@@ -1,7 +1,7 @@
 <div class="sidebar">
     <div class="sidebar__categories">
         <div class="input-group mt-3 mb-3">
-            <input type="text" class="form-control" placeholder="Rechercher..." (change)="onSearch($event)"
+            <input type="text" class="form-control" placeholder="Rechercher..." (keyup)="onSearch($event)"
                 aria-describedby="button-addon2">
             <button class="btn btn-outline-secondary" type="button" id="button-addon2"><fa-icon
                     [icon]="faSearch"></fa-icon></button>
@@ -10,29 +10,13 @@
             <h4>Categories</h4>
         </div>
         <div class="categories__accordion mb-3">
-            <div class="accordion" id="accordionExample">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingOne">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            Accordion Item #1
-                        </button>
-                    </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
-                        data-bs-parent="#accordionExample">
-                        <div class="accordion-body">
-                            <ul>
-                                <li><a href="#">Coats</a></li>
-                                <li><a href="#">Jackets</a></li>
-                                <li><a href="#">Dresses</a></li>
-                                <li><a href="#">Shirts</a></li>
-                                <li><a href="#">T-shirts</a></li>
-                                <li><a href="#">Jeans</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
+            <div class="" id="accordionExample">
+                <select class="form-select mt-2" aria-label="Default select example"
+                    (change)="onChangeCategory($event)">
+                    <option *ngFor="let item of categoryItems" [value]="item">
+                        {{ item }}
+                    </option>
+                </select>
             </div>
         </div>
         <div class="sidebar__filter">
@@ -40,14 +24,14 @@
                 <h4>Prix</h4>
             </div>
             <div class="filter-range-wrap">
-                <input type="range" class="range-slider" min="0" max="5" id="customRange2">
+                <input type="range" class="range-slider" min="5000" max="100000" [defaultValue]="100000"
+                    id="customRange2" (change)="onChangePrice($event)">
                 <div class="range-slider">
                     <div class="price-input">
-                        <p>Prix: $50 - $100</p>
+                        <p>Prix: 5000Ar - {{price+'Ar'}}</p>
                     </div>
                 </div>
             </div>
-            <button class="btn btn-outline-primary">Filtrer</button>
         </div>
 
     </div>
