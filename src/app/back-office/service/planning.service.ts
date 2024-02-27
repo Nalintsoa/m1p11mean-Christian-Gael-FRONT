@@ -14,4 +14,8 @@ export class PlanningService {
   planningPerMonth(year: string, month: string | number, staff: StringDecoder): Observable<any> {
     return this.http.get(`${this.basUri}/planningPerMonth?year=${year}&month=${month}&staff=${staff}`);
   }
+
+  getTasksDay(date: string) {
+    return this.http.get(`${this.basUri}/taskDay?date=${date}`)
+  }
 }
