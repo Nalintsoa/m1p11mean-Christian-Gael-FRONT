@@ -5,8 +5,17 @@
     <div class="d-flex justify-content-start align-items-middle">
       <h5 class="mb-0 align-self-center">Planning pour le mois de</h5>
       <div class="col-3 ms-3">
-        <select name="" id="" class="form-select" (change)="handleChangeMonth($event)">
-          <option *ngFor="let m of monthList" [value]="m.value" [selected]="m.value === currentMonth">
+        <select
+          name=""
+          id=""
+          class="form-select"
+          (change)="handleChangeMonth($event)"
+        >
+          <option
+            *ngFor="let m of monthList"
+            [value]="m.value"
+            [selected]="m.value === currentMonth"
+          >
             {{ m.label }}
           </option>
         </select>
@@ -25,14 +34,23 @@
       <tbody>
         <tr *ngFor="let date of dates">
           <td class="text-center text-nowrap">
-            <button data-bs-toggle="modal" [attr.data-bs-target]="'#task'+date" class="btn"
-              (click)="getFollowedTask(date)">
-              {{ date | date : "dd-MM-yyyy" }}</button>
+            <button
+              data-bs-toggle="modal"
+              [attr.data-bs-target]="'#task' + date"
+              class="btn"
+              (click)="getFollowedTask(date)"
+            >
+              {{ date | date : "dd-MM-yyyy" }}
+            </button>
           </td>
-          <td *ngFor="let hour of hours" [ngClass]="{ 'stripe-1': getRdvStatus(date, hour) === 'Booked' }" (click)="
+          <td
+            *ngFor="let hour of hours"
+            [ngClass]="{ 'stripe-1': getRdvStatus(date, hour) === 'Booked' }"
+            (click)="
               getRdvStatus(date, hour) === 'Booked' &&
                 getServiceInfo(date, hour)
-            ">
+            "
+          >
             <!-- {{ getRdvStatus(date, hour) }} -->
           </td>
           <app-task [date]="date" [rdvsDay]="rdvsDay"></app-task>
@@ -41,3 +59,88 @@
     </table>
   </div>
 </div>
+<ng-template #infoModal let-modal>
+  <div class="modal-body">
+    <div class="container">
+      <div class="row justify-content-end">
+        <button
+          type="button"
+          class="btn-close text-end"
+          aria-label="Close"
+          (click)="modal.dismiss('Cross click')"
+        ></button>
+      </div>
+      <div class="row justify-content-between">
+        <div class="col-3 mt-2">
+          <div class="row justify-content-center">
+            <div class="circle">
+              <span class="circle__content">
+                <div>{{ modalInformations.date }}</div>
+                <div>{{ modalInformations.month }}</div>
+              </span>
+            </div>
+          </div>
+          <div class="row justify-content-center mt-2">
+            <div class="text-center">
+              {{ modalInformations.startHour }}H à
+              {{ modalInformations.endHour }}H
+            </div>
+          </div>
+        </div>
+        <div class="col-9 mt-2">
+          <b class="row border rounded">
+            <span class="ms-1"> Client</span>
+          </b>
+          <p class="ms-1">
+            <b>Nom :</b>
+            {{ modalInformations.customerName.toString().toUpperCase() }}
+            <br />
+            <b>Adresse mail : </b> {{ modalInformations.customerMail }}<br />
+            <b>Téléphone :</b> {{ modalInformations.customerPhone }}
+          </p>
+          <b class="row border rounded">
+            <span class="ms-1"> Service</span>
+          </b>
+          <p class="ms-1">
+            <b>Nom :</b> {{ modalInformations.serviceName }}<br />
+            <b>Durée :</b> {{ modalInformations.serviceDuration }}
+            {{ +modalInformations.serviceDuration <= 1 ? "Heure" : "Heures"
+            }}<br />
+            <b>Prix :</b>
+            {{
+              (
+                +modalInformations.servicePrice | currency : "MGA" : ""
+              )?.replace(",", " ")
+            }}
+            Ar
+            <br />
+            <b>Montant payé :</b>
+            {{
+              (
+                +modalInformations.serviceAmountPaid | currency : "MGA" : ""
+              )?.replace(",", " ")
+            }}
+            Ar
+          </p>
+        </div>
+      </div>
+      <div class="row justify-content-end">
+        <div class="col text-end">
+          <button
+            type="button"
+            class="btn btn-outline-dark"
+            (click)="sendAlertRdvMail(modalInformations._id)"
+            *ngIf="!mailLoading"
+          >
+            Lancer un rappel
+          </button>
+          <button class="btn" *ngIf="mailLoading">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
