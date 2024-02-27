@@ -7,17 +7,22 @@ import { BreadcrumbComponent } from '../../common/breadcrumb/breadcrumb.componen
 import { INavigationItem } from '../../interfaces/breadCrumbInterfaces';
 import { PATH_BACKOFFICE } from '../../routes/back-office-route';
 import { monthList } from '../../../config/monthList';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { TaskComponent } from '../task/task.component';
 
 @Component({
   selector: 'app-planning',
   standalone: true,
-  imports: [CommonModule, BreadcrumbComponent],
+  imports: [CommonModule, BreadcrumbComponent, FaIconComponent, TaskComponent],
   templateUrl: './planning.component.html',
   styleUrl: './planning.component.scss'
 })
 export class PlanningComponent {
-
-  constructor(private planningService: PlanningService, private authApiService: AuthApiService){
+  faArrowRight = faArrowRight;
+  rdvsDay: any = [];
+  dateSelected: string = '';
+  constructor(private planningService: PlanningService, private authApiService: AuthApiService) {
     this.initializePlanning();
   }
 
@@ -28,7 +33,7 @@ export class PlanningComponent {
     },
   ];
 
-  planningArray:any = [];
+  planningArray: any = [];
   dates: string[] = [];
   hours: number[] = [];
 
@@ -64,7 +69,7 @@ export class PlanningComponent {
     return rdvData ? (rdvData.rdvStatus ? 'Booked' : 'Available') : 'N/A';
   }
 
-  getServiceInfo(date: string, hour: number){
+  getServiceInfo(date: string, hour: number) {
     const rdvData = this.planningArray[date].find((item: any) => item.hour === hour);
     console.log(rdvData);
   }
@@ -90,5 +95,12 @@ export class PlanningComponent {
         })
       }
     }
+  }
+
+  getFollowedTask(date: string) {
+    this.dateSelected = date;
+    this.planningService.getTasksDay(date).subscribe(
+      data => { this.rdvsDay = data }
+    )
   }
 }
