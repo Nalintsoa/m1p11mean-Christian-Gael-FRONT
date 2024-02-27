@@ -38,6 +38,11 @@ export class ServiceService {
     return observable;
   }
 
+  deleteService(data: string) {
+    const observable = this.http.post(`${this.baseUri}/delete`, { _id: data });
+    return observable
+  }
+
 
 
 

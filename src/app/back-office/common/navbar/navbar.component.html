@@ -1,92 +1,61 @@
 <!-- topbar -->
 <nav class="navbar navbar-expand-lg bg-light z- sticky-top" style="z-index: 10">
-  <div class="container-fluid">
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="offcanvas"
-      data-bs-target="#offcanvasExample"
-      aria-controls="offcanvasExample"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand" href="#">M1P11-MEAN</a>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a
-            href="#"
-            class="nav-link hover-underline-animation"
-            data-bs-toggle="offcanvas"
-            href="#offcanvasExample"
-            role="button"
-            aria-controls="offcanvasExample"
-          >
-            <fa-icon [icon]="faBars"></fa-icon>
-            <span class="ms-2">Menu</span>
-          </a>
-        </li>
-      </ul>
-      <button
-        class="d-flex align-items-center border-0 btn hover-underline-animation"
-        (click)="handleLogout()"
-      >
-        <div>
-          <fa-icon [icon]="faUserCircle" [size]="'2x'"></fa-icon>
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
+            aria-controls="offcanvasExample">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#">M1P11-MEAN</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a href="#" class="nav-link hover-underline-animation" data-bs-toggle="offcanvas"
+                        href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                        <fa-icon [icon]="faBars"></fa-icon>
+                        <span class="ms-2">Menu</span>
+                    </a>
+                </li>
+            </ul>
+            <button class="d-flex align-items-center border-0 btn hover-underline-animation" (click)="handleLogout()">
+                <div>
+                    <fa-icon [icon]="faUserCircle" [size]="'2x'"></fa-icon>
+                </div>
+                <div class="ms-2">Mon compte</div>
+            </button>
         </div>
-        <div class="ms-2">Mon compte</div>
-      </button>
     </div>
-  </div>
 </nav>
 <!-- topbar -->
 
 <!-- fix sideNav -->
 <div *ngIf="screenWidth > 980" class="sidenav">
-  <ul class="list-group list-group-flush" style="margin-top: 43px">
-    <li
-      *ngFor="let menuList of managerMenuList.concat(employeeMenuList)"
-      class="list-group-item py-3 border-0 cursor-pointer non-active-sidebar"
-      [routerLink]="menuList.path"
-      routerLinkActive="active-sidebar"
-    >
-      <span>
-        <fa-icon [icon]="menuList.icon"></fa-icon>
-      </span>
-    </li>
-  </ul>
+    <ul class="list-group list-group-flush" style="margin-top: 43px">
+        <li *ngFor="let menuList of menuList" class="list-group-item py-3 border-0 cursor-pointer non-active-sidebar"
+            [routerLink]="menuList.path" routerLinkActive="active-sidebar">
+            <span>
+                <fa-icon [icon]="menuList.icon"></fa-icon>
+            </span>
+        </li>
+    </ul>
 </div>
 <!-- end fix sideNav -->
 
 <!-- offCanvas -->
-<div
-  class="offcanvas offcanvas-start offcanvas-custom"
-  tabindex="-1"
-  id="offcanvasExample"
-  aria-labelledby="offcanvasExampleLabel"
->
-  <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="offcanvasExampleLabel">M1P11-MEAN</h5>
-    <button
-      type="button"
-      class="btn-close"
-      data-bs-dismiss="offcanvas"
-      aria-label="Close"
-    ></button>
-  </div>
-  <div class="offcanvas-body pt-0">
-    <ul class="list-group list-group-flush">
-      <li
-        *ngFor="let menuList of managerMenuList.concat(employeeMenuList)"
-        class="list-group-item py-3 d-flex align-items-center cursor-pointer non-active-sidebar"
-        routerLinkActive="menu-active"
-        [routerLink]="menuList.path"
-        data-bs-dismiss="offcanvas"
-      >
-        <fa-icon [icon]="menuList.icon"></fa-icon>
-        <span class="ms-2">{{ menuList.label }}</span>
-      </li>
-    </ul>
-  </div>
+<div class="offcanvas offcanvas-start offcanvas-custom" tabindex="-1" id="offcanvasExample"
+    aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">M1P11-MEAN</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body pt-0">
+        <ul class="list-group list-group-flush">
+            <li *ngFor="let menuList of menuList"
+                class="list-group-item py-3 d-flex align-items-center cursor-pointer non-active-sidebar"
+                routerLinkActive="menu-active" [routerLink]="menuList.path" data-bs-dismiss="offcanvas">
+                <fa-icon [icon]="menuList.icon"></fa-icon>
+                <span class="ms-2">{{ menuList.label }}</span>
+            </li>
+        </ul>
+    </div>
 </div>
 <!-- offCanvas -->

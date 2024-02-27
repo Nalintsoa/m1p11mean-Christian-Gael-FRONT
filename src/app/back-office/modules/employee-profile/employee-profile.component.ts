@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faKey, faMailBulk, faPenSquare, faPhone, faSave } from '@fortawesome/free-solid-svg-icons';
 import { CookieService } from 'ngx-cookie-service';
@@ -8,6 +8,8 @@ import { StaffApiService } from '../../service/staff-api.service';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IStaff } from '../../model/staff';
 import { CommonModule, formatDate } from '@angular/common';
+import Swal from 'sweetalert2';
+import { UploadService } from '../../services/upload/upload.service';
 
 @Component({
   selector: 'app-employee-profile',
@@ -26,7 +28,13 @@ export class EmployeeProfileComponent {
 
   EMPLOYEE_INFO = {} as IStaff;
 
-  constructor(public fb: FormBuilder,private authApiService: AuthApiService, private staffApiService: StaffApiService){
+
+
+  @ViewChild("btnUpload") btnUpload?: ElementRef;
+
+  imageURL: any;
+  constructor(public fb: FormBuilder, private authApiService: AuthApiService, private staffApiService: StaffApiService,
+    private uploadService: UploadService) {
     this.getInfoEmployee();
   }
 
@@ -42,6 +50,7 @@ export class EmployeeProfileComponent {
     speciality: ['', [Validators.required]],
     id: [''],
     password: [''],
+    path: ['']
   });
 
   validationMessage = {
@@ -83,6 +92,8 @@ export class EmployeeProfileComponent {
     { id: 'item4', label: 'Massothérapie', control: new FormControl(false) },
   ];
 
+  imgPath?: string;
+
   handleChangeHour = (e: any) => {
     const { name, value } = e.target;
     const hours = value.split(":");
@@ -90,7 +101,7 @@ export class EmployeeProfileComponent {
       const startHour = this.staffForm.get('startHour')?.value || "";
       if (startHour !== undefined && startHour !== "") {
         if (+hours[0] <= +startHour.split(":")[0]) {
-          this.staffForm.patchValue({[name]: undefined});
+          this.staffForm.patchValue({ [name]: undefined });
           alert('La date de fin doit être supérieure à la date de début');
           return;
         }
@@ -101,7 +112,7 @@ export class EmployeeProfileComponent {
       const endHour = this.staffForm.get('endHour')?.value || "";
       if (endHour !== undefined && endHour !== "") {
         if (+hours[0] >= +endHour.split(":")[0]) {
-          this.staffForm.patchValue({[name]: undefined});
+          this.staffForm.patchValue({ [name]: undefined });
           alert('La date de fin doit être supérieure à la date de début');
           return
         }
@@ -109,14 +120,33 @@ export class EmployeeProfileComponent {
     }
 
     if (+hours[0] > 17 || +hours[0] < 8) {
-      this.staffForm.patchValue({[name]: undefined});
+      this.staffForm.patchValue({ [name]: undefined });
       alert('Heure d\'ouverture du salon : 08:00 à 17:00');
       return;
     }
     this.staffForm.patchValue({ [name]: `${hours[0]}:00` });
   }
 
-  getInfoEmployee(){
+  handleClickImg() {
+    this.btnUpload?.nativeElement.click();
+  }
+
+  handleUpload(e: any) {
+    console.log(e)
+    const file = e.target?.files[0] ?? null;
+
+    if (file && file.type.startsWith('image/')) {
+      const formData = new FormData()
+      formData.append('file', file);
+      this.uploadService.uploadFile(formData).subscribe((data: any) => {
+        this.staffForm.get('path')?.setValue(data?.path);
+        this.imgPath = `http://localhost:8000/${this.staffForm.get('path')?.value}`
+
+      })
+    }
+  }
+
+  getInfoEmployee() {
     const jwt_token = this.authApiService.getToken();
     if (jwt_token) {
       const decodedToken: any = jwtDecode(jwt_token);
@@ -136,8 +166,11 @@ export class EmployeeProfileComponent {
               speciality: res.speciality,
               startHour: res.startHour,
               id: res._id,
-              password: null
+              password: null,
+              path: res.path || ''
             });
+
+            this.imgPath = `http://localhost:8000/${this.staffForm.get('path')?.value}`
           },
         })
       }
@@ -152,13 +185,14 @@ export class EmployeeProfileComponent {
   //   this.modifyPassword = !this.modifyPassword;
   // }
 
-  handleSubmit(){
+  handleSubmit() {
     this.submitted = true;
-    if(!this.staffForm.valid){
+    if (!this.staffForm.valid) {
       return;
     } else {
       return this.staffApiService.updateStaff(this.staffForm.value).subscribe({
         next: (res) => {
+          Swal.fire("Enregistré", "Modification du profil enregistrée avec succès", "success")
           this.submitted = false;
           this.EMPLOYEE_INFO = res as IStaff
         },
