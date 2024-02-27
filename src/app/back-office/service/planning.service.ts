@@ -18,4 +18,12 @@ export class PlanningService {
   getTasksDay(date: string) {
     return this.http.get(`${this.basUri}/taskDay?date=${date}`)
   }
+
+  getRdvById = (rdv: string): Observable<any> => {
+    return this.http.get(`${this.basUri}&id=${rdv}`);
+  }
+
+  sendAlertRdvMail = (rdv: string): Observable<any> => {
+    return this.http.post(`${this.basUri}sendAlertRdvMail`, {id:rdv});
+  }
 }
