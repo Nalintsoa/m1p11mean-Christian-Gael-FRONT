@@ -1,12 +1,13 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Observable } from 'rxjs';
 import * as socketIo from 'socket.io-client';
+import { API_URL } from '../../config/config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SocketIoService {
-  baseUri = "http://localhost:8000";
+  baseUri = API_URL;
   private clientSocket: any;
   constructor(private zone: NgZone) {
     this.zone.runOutsideAngular(() => {

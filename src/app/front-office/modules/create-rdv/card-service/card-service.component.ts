@@ -1,6 +1,7 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { IService } from '../../../../back-office/interfaces/serviceInterface';
 import { CommonModule } from '@angular/common';
+import { API_URL } from '../../../../../config/config';
 
 @Component({
   selector: 'app-card-service',
@@ -11,6 +12,8 @@ import { CommonModule } from '@angular/common';
 })
 export class CardServiceComponent {
   @Input() service?: IService | any;
+
+  API_URL = API_URL;
 
   isTodaySpecialOffer = false;
 

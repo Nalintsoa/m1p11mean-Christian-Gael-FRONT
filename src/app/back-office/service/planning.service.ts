@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { StringDecoder } from 'string_decoder';
+import { API_URL } from '../../../config/config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlanningService {
-  basUri = "http://localhost:8000/rdv/";
+  basUri = `${API_URL}/rdv/`;
 
   constructor(private http: HttpClient) { }
 
@@ -24,6 +25,6 @@ export class PlanningService {
   }
 
   sendAlertRdvMail = (rdv: string): Observable<any> => {
-    return this.http.post(`${this.basUri}sendAlertRdvMail`, {id:rdv});
+    return this.http.post(`${this.basUri}sendAlertRdvMail`, { id: rdv });
   }
 }

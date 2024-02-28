@@ -28,7 +28,7 @@
         <div class="modal-content">
             <div class="card" style="width: 100%;">
                 <div>
-                    <img style="height: 160px; width: 100%;" [src]="'http://localhost:8000/'+selectedService?.path"
+                    <img style="height: 160px; width: 100%;" [src]="API_URL+'/'+selectedService?.path"
                         class="card-img-top">
                 </div>
                 <div class="card-body">
@@ -40,7 +40,7 @@
                         <span></span>
                         <del>&nbsp;{{selectedService?.price}}Ar</del>&nbsp;{{selectedService?.priceOffer}}Ar
                     </p>
-                    <p> <span>
+                    <p class="d-flex justify-content-center"> <span>
                             <b>Offre spéciale : </b>&nbsp; {{selectedService?.startOffer | date: "d MMM y"}} -
                             {{selectedService?.endOffer |
                             date: "d MMM y"}}

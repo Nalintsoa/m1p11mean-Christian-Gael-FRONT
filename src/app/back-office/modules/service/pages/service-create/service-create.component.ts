@@ -7,6 +7,7 @@ import { EventBlockerDirective } from '../../../../../directives/event-blocker.d
 import { UploadService } from '../../../../services/upload/upload.service';
 import { SocketIoService } from '../../../../../services/socket-io.service';
 import Swal from 'sweetalert2';
+import { API_URL } from '../../../../../../config/config';
 
 @Component({
   selector: 'app-service-create',
@@ -103,7 +104,7 @@ export class ServiceCreateComponent {
         delete dataForm.__v;
         delete dataForm._id;
         this.serviceForm.setValue(dataForm);
-        this.imageURL = `http://localhost:8000/${this.dataToUpdate.path}`
+        this.imageURL = `${API_URL}/${this.dataToUpdate.path}`
       }
     }
   }
