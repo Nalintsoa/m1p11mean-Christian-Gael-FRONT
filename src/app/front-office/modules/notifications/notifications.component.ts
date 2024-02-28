@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IService } from '../../../back-office/interfaces/serviceInterface';
 import { CardServiceComponent } from '../create-rdv/card-service/card-service.component';
 import { RouterLink } from '@angular/router';
+import { API_URL } from '../../../../config/config';
 
 @Component({
   selector: 'app-notifications',
@@ -16,6 +17,8 @@ export class NotificationsComponent {
   @Input() services?: IService[] | any;
   @Input() activeFirstRow?: boolean;
   @Output() view = new EventEmitter();
+
+  API_URL = API_URL;
 
   selectedService: any;
 

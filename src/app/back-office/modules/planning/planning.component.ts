@@ -2,7 +2,7 @@ import { Component, ElementRef, TemplateRef, ViewChild, inject } from '@angular/
 import { PlanningService } from '../../service/planning.service';
 import { AuthApiService } from '../../service/auth-api.service';
 import { jwtDecode } from 'jwt-decode';
-import { CommonModule } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { BreadcrumbComponent } from '../../common/breadcrumb/breadcrumb.component';
 import { INavigationItem } from '../../interfaces/breadCrumbInterfaces';
 import { PATH_BACKOFFICE } from '../../routes/back-office-route';
@@ -48,29 +48,29 @@ export class PlanningComponent {
     startHour: number | string,
     endHour: number | string,
     customerName: number | string,
-    customerMail:  number | string,
-    customerPhone:  number | string,
-    serviceName:  number | string,
-    serviceDuration:  number | string,
-    servicePrice:  number | string,
-    serviceAmountPaid:  number | string,
-    serviceId:  number | string,
+    customerMail: number | string,
+    customerPhone: number | string,
+    serviceName: number | string,
+    serviceDuration: number | string,
+    servicePrice: number | string,
+    serviceAmountPaid: number | string,
+    serviceId: number | string,
     _id: string,
   } = {
-    date: '',
-    month: '',
-    startHour:'',
-    endHour:'',
-    customerName:'',
-    customerMail: '',
-    customerPhone: '',
-    serviceName: '',
-    serviceDuration: '',
-    servicePrice: '',
-    serviceAmountPaid: '',
-    serviceId: '',
-    _id: ''
-  }
+      date: '',
+      month: '',
+      startHour: '',
+      endHour: '',
+      customerName: '',
+      customerMail: '',
+      customerPhone: '',
+      serviceName: '',
+      serviceDuration: '',
+      servicePrice: '',
+      serviceAmountPaid: '',
+      serviceId: '',
+      _id: ''
+    }
 
   initializePlanning() {
     this.getPlanningPerMonth(this.currentYear, this.currentMonth);
@@ -87,26 +87,29 @@ export class PlanningComponent {
   }
 
   getServiceInfo(date: string, hour: number) {
-    const rdvData = this.planningArray[date].find((item: any) => item.hour === hour);
-    this.modalInformations = {
-      date: new Date(rdvData.date).getDate().toLocaleString('en-US', {
-        minimumIntegerDigits: 2,
-        useGrouping: false
-    }),
-      month: this.getMonthAccro(new Date(rdvData.date).getMonth()),
-      customerMail: rdvData.customerMail,
-      customerName: rdvData.customerName,
-      customerPhone: rdvData.customerPhone,
-      endHour: rdvData.endHour,
-      serviceAmountPaid: rdvData.amountPaid,
-      serviceDuration: rdvData.serviceDuration,
-      serviceId: rdvData.serviceId,
-      serviceName: rdvData.serviceName,
-      servicePrice: rdvData.price,
-      startHour: rdvData.startHour,
-      _id: rdvData._id
+    const toDay = formatDate(Date(), 'yyyy-MM-dd', 'en-US');
+    if (date >= toDay) {
+      const rdvData = this.planningArray[date].find((item: any) => item.hour === hour);
+      this.modalInformations = {
+        date: new Date(rdvData.date).getDate().toLocaleString('en-US', {
+          minimumIntegerDigits: 2,
+          useGrouping: false
+        }),
+        month: this.getMonthAccro(new Date(rdvData.date).getMonth()),
+        customerMail: rdvData.customerMail,
+        customerName: rdvData.customerName,
+        customerPhone: rdvData.customerPhone,
+        endHour: rdvData.endHour,
+        serviceAmountPaid: rdvData.amountPaid,
+        serviceDuration: rdvData.serviceDuration,
+        serviceId: rdvData.serviceId,
+        serviceName: rdvData.serviceName,
+        servicePrice: rdvData.price,
+        startHour: rdvData.startHour,
+        _id: rdvData._id
+      }
+      this.modalService.open(this.infoModal, { centered: true });
     }
-    this.modalService.open(this.infoModal, { centered: true });
   }
 
   handleChangeMonth(e: any) {
@@ -141,31 +144,31 @@ export class PlanningComponent {
   @ViewChild('infoModal') infoModal !: ElementRef;
   // modal info futur-planning
   private modalService = inject(NgbModal);
-	closeResult = '';
+  closeResult = '';
 
-	open(content: TemplateRef<any>) {
-		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', centered: true }).result.then(
-			(result) => {
-				this.closeResult = `Closed with: ${result}`;
-			},
-			(reason) => {
-				this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-			},
-		);
-	}
+  open(content: TemplateRef<any>) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', centered: true }).result.then(
+      (result) => {
+        this.closeResult = `Closed with: ${result}`;
+      },
+      (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      },
+    );
+  }
 
-	private getDismissReason(reason: any): string {
-		switch (reason) {
-			case ModalDismissReasons.ESC:
-				return 'by pressing ESC';
-			case ModalDismissReasons.BACKDROP_CLICK:
-				return 'by clicking on a backdrop';
-			default:
-				return `with: ${reason}`;
-		}
-	}
+  private getDismissReason(reason: any): string {
+    switch (reason) {
+      case ModalDismissReasons.ESC:
+        return 'by pressing ESC';
+      case ModalDismissReasons.BACKDROP_CLICK:
+        return 'by clicking on a backdrop';
+      default:
+        return `with: ${reason}`;
+    }
+  }
 
-  getRdvById(rdv: string){
+  getRdvById(rdv: string) {
     this.planningService.getRdvById(rdv).subscribe({
       next: (res) => {
         console.log(res);
@@ -173,12 +176,12 @@ export class PlanningComponent {
     })
   }
 
-  getMonthAccro(month: number){
-    return monthList.find(item => item.value === month+1)?.accro || '';
+  getMonthAccro(month: number) {
+    return monthList.find(item => item.value === month + 1)?.accro || '';
   }
 
   mailLoading = false;
-  sendAlertRdvMail(rdv: string){
+  sendAlertRdvMail(rdv: string) {
     this.mailLoading = true;
     this.planningService.sendAlertRdvMail(rdv).subscribe({
       next: (res) => {

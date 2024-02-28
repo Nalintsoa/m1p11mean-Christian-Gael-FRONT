@@ -10,6 +10,7 @@ import { IStaff } from '../../model/staff';
 import { CommonModule, formatDate } from '@angular/common';
 import Swal from 'sweetalert2';
 import { UploadService } from '../../services/upload/upload.service';
+import { API_URL } from '../../../../config/config';
 
 @Component({
   selector: 'app-employee-profile',
@@ -140,7 +141,7 @@ export class EmployeeProfileComponent {
       formData.append('file', file);
       this.uploadService.uploadFile(formData).subscribe((data: any) => {
         this.staffForm.get('path')?.setValue(data?.path);
-        this.imgPath = `http://localhost:8000/${this.staffForm.get('path')?.value}`
+        this.imgPath = `${API_URL}${this.staffForm.get('path')?.value}`
 
       })
     }
@@ -170,7 +171,7 @@ export class EmployeeProfileComponent {
               path: res.path || ''
             });
 
-            this.imgPath = `http://localhost:8000/${this.staffForm.get('path')?.value}`
+            this.imgPath = `${API_URL}/${this.staffForm.get('path')?.value}`
           },
         })
       }

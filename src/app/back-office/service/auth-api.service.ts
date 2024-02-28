@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
+import { API_URL } from '../../../config/config';
 
 @Injectable({
   providedIn: 'root'
@@ -11,14 +12,14 @@ import { Observable } from 'rxjs';
 export class AuthApiService {
 
   constructor(private http: HttpClient, private cookieService: CookieService, private router: Router) { }
-  baseUri: string = 'http://localhost:8000/auth';
+  baseUri: string = `${API_URL}/auth`;
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
   staffLogin(data: any): Observable<any> {
-    return this.http.post(`${this.baseUri}/staffLogin`, data, {withCredentials: true,  headers: this.headers})
+    return this.http.post(`${this.baseUri}/staffLogin`, data, { withCredentials: true, headers: this.headers })
   }
 
-  private TOKEN_KEY= (this.router.url.includes("backoffice") || this.router.url.includes("back-office")) ? 'jwt_token' : 'client_token' ;
+  private TOKEN_KEY = (this.router.url.includes("backoffice") || this.router.url.includes("back-office")) ? 'jwt_token' : 'client_token';
 
   getToken(): string | any {
     return this.cookieService.get(this.TOKEN_KEY);

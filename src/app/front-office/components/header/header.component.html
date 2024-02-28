@@ -1,7 +1,4 @@
-<header
-  class="header position-sticky border-bottom border-2 sticky-top bg-white"
-  style="z-index: 100"
->
+<header class="header position-sticky border-bottom border-2 sticky-top bg-white" style="z-index: 100">
   <!-- <div class="container-fluid topbar d-none d-lg-block violet-bar">
     <div class="container px-0">
       <div class="row align-items-center">
@@ -49,75 +46,38 @@
         <nav class="header_menu d-flex justify-content-center">
           <ul class="nav">
             <li class="nav-item">
-              <a
-                href=""
-                routerLink="/front-office/home"
-                class="nav-link top-menu-font"
-                routerLinkActive="active"
-                >Accueil</a
-              >
+              <a href="" routerLink="/front-office/home" class="nav-link top-menu-font"
+                routerLinkActive="active">Accueil</a>
             </li>
             <li class="nav-item">
-              <a
-                href=""
-                class="nav-link top-menu-font"
-                routerLink="/front-office/services"
-                routerLinkActive="active"
-                >Services</a
-              >
+              <a href="" class="nav-link top-menu-font" routerLink="/front-office/services"
+                routerLinkActive="active">Services</a>
             </li>
             <li class="nav-item">
-              <a
-                href=""
-                class="nav-link top-menu-font"
-                routerLink="/front-office/preferences"
-                routerLinkActive="active"
-                >Employés</a
-              >
+              <a href="" class="nav-link top-menu-font" routerLink="/front-office/preferences"
+                routerLinkActive="active">Employés</a>
             </li>
             <li class="nav-item">
-              <a
-                routerLink="/front-office/histo-rdv"
-                class="nav-link top-menu-font"
-                routerLinkActive="active"
-                >Mes rendez-vous</a
-              >
+              <a routerLink="/front-office/histo-rdv" class="nav-link top-menu-font" routerLinkActive="active">Mes
+                rendez-vous</a>
             </li>
           </ul>
         </nav>
       </div>
       <div class="col-3">
         <div class="header_right d-flex justify-content-end">
-          <span
-            ><a
-              class="nav-link"
-              [ngClass]="{ active: activeNotif }"
-              (click)="onShowNotifications()"
-              ><fa-icon [icon]="faBell"></fa-icon></a
-          ></span>
-          <span
-            ><a class="nav-link" style="display: block"
-              ><fa-icon [icon]="faHeart"></fa-icon></a
-          ></span>
-          <span
-            ><a
-              class="nav-link"
-              id="dropdownMenuButton1"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              ><fa-icon [icon]="faUserCircle"></fa-icon
-            ></a>
+          <span><a class="nav-link" [ngClass]="{ active: activeNotif }" (click)="onShowNotifications()"><fa-icon
+                [icon]="faBell"></fa-icon></a></span>
+          <!-- <span><a class="nav-link" style="display: block"><fa-icon [icon]="faHeart"></fa-icon></a></span> -->
+          <span><a class="nav-link" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><fa-icon
+                [icon]="faUserCircle"></fa-icon></a>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <li><a class="dropdown-item" href="#">Mon profil</a></li>
+              <!-- <li><a class="dropdown-item" href="#">Mon profil</a></li> -->
               <li>
-                <a class="dropdown-item" routerLink="/front-office/solde-pay"
-                  >Consulter mon solde</a
-                >
+                <a class="dropdown-item" routerLink="/front-office/solde-pay">Consulter mon solde</a>
               </li>
               <li>
-                <a class="dropdown-item" (click)="handleLogout()"
-                  >Se déconnecter</a
-                >
+                <a class="dropdown-item" (click)="handleLogout()">Se déconnecter</a>
               </li>
             </ul>
           </span>
@@ -127,10 +87,5 @@
   </div>
 </header>
 <!-- (document:click)="onClickOutside($event)" -->
-<app-notifications
-  (document:click)="onClickOutside($event)"
-  [show]="show"
-  [services]="services"
-  [activeFirstRow]="activeFirst"
-  (view)="onView()"
-></app-notifications>
+<app-notifications (document:click)="onClickOutside($event)" [show]="show" [services]="services"
+  [activeFirstRow]="activeFirst" (view)="onView()"></app-notifications>

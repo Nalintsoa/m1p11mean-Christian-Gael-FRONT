@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { API_URL } from '../../../../config/config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StatisticService {
 
-  private baseUri = "http://localhost:8000/stats"
+  private baseUri = `${API_URL}/stats`
   constructor(private http: HttpClient) { }
 
   isLoading: boolean = false
