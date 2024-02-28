@@ -122,6 +122,8 @@
           <div class="mb-1">
             <div app-event-blocker (drop)="onDrop($event)" class="img border border-1 border-primary">
               <img *ngIf="imageURL" [src]="imageURL" class="img img-thumbnail" />
+              <div *ngIf="!imageURL" class="d-flex justify-content-center align-items-center">*Glisser et déposer
+                ici l'image à uploader</div>
             </div>
             <input formControlName="path" [ngClass]="
                 submitted && serviceForm.get('path')?.errors

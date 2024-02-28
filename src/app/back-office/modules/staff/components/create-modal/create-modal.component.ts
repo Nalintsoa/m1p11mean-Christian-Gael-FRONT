@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { IStaff } from '../../../../model/staff';
 import { CREATION_MODE, EDIT_MODE } from '../../../../constant/enum';
 import { ModalDismissReasons, NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-create-modal',
@@ -25,7 +26,7 @@ export class CreateModalComponent {
   constructor(
     public fb: FormBuilder,
     private staffService: StaffApiService,
-  ) {}
+  ) { }
 
   @ViewChild('closeModal')
   closeModalButton!: ElementRef;
@@ -81,7 +82,7 @@ export class CreateModalComponent {
       required: 'Veuillez remplir ce champ',
     },
   };
-  
+
   // for the select
   items = [
     { id: 'item1', label: 'Manucure', control: new FormControl(false) },
@@ -121,12 +122,13 @@ export class CreateModalComponent {
 
   handleSubmit = () => {
     this.submitted = true;
-    if (!this.staffForm.valid){
+    if (!this.staffForm.valid) {
       return;
     } else {
       if (this.mode === EDIT_MODE && this.staffForm.get('id')?.value !== '') {
         return this.staffService.updateStaff(this.staffForm.value).subscribe({
           next: (res) => {
+            Swal.fire("Enregistré!", "Personnel mis à jour avec succès", "success");
             this.staffForm.reset();
             this.submitted = false;
             this.closeModal();
@@ -138,6 +140,7 @@ export class CreateModalComponent {
       }
       return this.staffService.createStaff(this.staffForm.value).subscribe({
         next: (res) => {
+          Swal.fire("Enregistré!", "Personnel ajouté avec succès", "success");
           this.staffForm.reset();
           this.submitted = false;
           this.closeModal();
@@ -149,28 +152,28 @@ export class CreateModalComponent {
     }
   }
 
-	closeResult = '';
+  closeResult = '';
   open(content: TemplateRef<any>) {
-		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false }).result.then(
-			(result) => {
-				this.closeResult = `Closed with: ${result}`;
-			},
-			(reason) => {
-				this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-			},
-		);
-	}
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false }).result.then(
+      (result) => {
+        this.closeResult = `Closed with: ${result}`;
+      },
+      (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      },
+    );
+  }
 
   private getDismissReason(reason: any): string {
-		switch (reason) {
-			case ModalDismissReasons.ESC:
-				return 'by pressing ESC';
-			case ModalDismissReasons.BACKDROP_CLICK:
-				return 'by clicking on a backdrop';
-			default:
-				return `with: ${reason}`;
-		}
-	}
+    switch (reason) {
+      case ModalDismissReasons.ESC:
+        return 'by pressing ESC';
+      case ModalDismissReasons.BACKDROP_CLICK:
+        return 'by clicking on a backdrop';
+      default:
+        return `with: ${reason}`;
+    }
+  }
 
   openModal = () => {
     this.mode = CREATION_MODE;

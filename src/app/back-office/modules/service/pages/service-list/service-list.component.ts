@@ -8,6 +8,7 @@ import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { ServiceCreateComponent } from '../service-create/service-create.component';
 import { ServiceService } from '../../../../services/service/service.service';
 import { IService } from '../../../../interfaces/serviceInterface';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-service-list',
@@ -66,5 +67,33 @@ export class ServiceListComponent {
     this.openModal?.nativeElement.click();
   }
 
-  // TODO: Delete service
+  onDelete(service: any) {
+    const _id = service._id
+    if (_id) {
+      Swal.fire({
+        title: "Suppression",
+        text: "Êtes-vous sûre de vouloir supprimer ce service?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Confirmer",
+        cancelButtonText: "Annuler"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.serviceService.deleteService(_id).subscribe({
+            next: (data) => {
+              Swal.fire("Suppression", "Suppression du service avec succès", "success");
+              this.getServices();
+            },
+            error: (res: any) => {
+              Swal.fire("Suppression", `${res?.error?.message}`, "error");
+            }
+          })
+        }
+      });
+
+    }
+
+  }
 }

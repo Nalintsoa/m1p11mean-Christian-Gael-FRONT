@@ -40,7 +40,8 @@
         <td>
           <button class="btn btn-transparent" title="Modifier" (click)="getService(service)"><fa-icon
               [icon]="faPencilAlt"></fa-icon></button>
-          <button class="btn btn-transparent" title="Supprimer"><fa-icon [icon]="faTrashAlt"></fa-icon></button>
+          <button class="btn btn-transparent" title="Supprimer" (click)="onDelete(service)"><fa-icon
+              [icon]="faTrashAlt"></fa-icon></button>
         </td>
       </tr>
     </tbody>

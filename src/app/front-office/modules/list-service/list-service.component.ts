@@ -20,7 +20,7 @@ export class ListServiceComponent {
   services: IService[] = [];
 
   searchQuery: string = '';
-  category: string = 'Manucure';
+  category: string = '';
   defaultPrice = 1000000;
   price: number = this.defaultPrice;
 
@@ -34,15 +34,12 @@ export class ListServiceComponent {
     this.services = [];
     this.serviceService.getServices().subscribe(data => {
 
-      if (this.searchQuery !== "" || this.category !== "Tout" || this.price !== this.defaultPrice) {
-        let tempArray = this.queriedList(data);
-        if (this.price !== this.defaultPrice) {
-          tempArray = tempArray.filter((item: any) => {
-            return this.price >= item.price && 5000 <= item.price
-          })
-        }
+      if (this.searchQuery !== "" || this.category !== "" || this.price !== this.defaultPrice) {
+        const tempArray = this.queriedList(data);
         this.services = tempArray
-      } else { this.services = data; }
+      } else {
+        this.services = data;
+      }
 
     });
   };
@@ -53,7 +50,12 @@ export class ListServiceComponent {
   }
 
   onChangeCategory(category: string) {
-    this.category = category;
+
+    if (category === "Tout")
+      this.category = "";
+    else
+      this.category = category;
+
     this.getServices();
   }
 
@@ -65,7 +67,7 @@ export class ListServiceComponent {
   queriedList = (list: any) => {
     const tempArray = list.filter((item: any) => {
       return Object.values(item).toString().toLowerCase().includes(this.searchQuery.toLowerCase())
-        && item.category === this.category;
+        && item.category.includes(this.category) && this.price >= item.price && 5000 <= item.price;
     });
     return tempArray;
   }

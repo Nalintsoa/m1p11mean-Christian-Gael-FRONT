@@ -6,13 +6,10 @@
           <div class="card card-custom border-0">
             <div class="mt-3">
               <!-- TODO dynamiser la photo de profil -->
-              <img
-                src="assets/back-office/undefined_user.png"
-                alt="User"
-                width="100"
-                height="100"
-                class="user-img"
-              />
+              <input type="file" hidden (change)="handleUpload($event)" #btnUpload>
+              <input type="text" formControlName="path" hidden />
+              <img [src]=" imgPath? imgPath  : 'assets/back-office/undefined_user.png'" alt="User" width="100"
+                height="100" class="user-img" (click)="handleClickImg()" />
             </div>
             <div class="mx-auto mt-2" style="width: 100%">
               <p class="fw-bold text-center mb-0">
@@ -25,55 +22,38 @@
               <div class="row justify-content-center align-items-center">
                 <div class="col-1"><fa-icon [icon]="faPhone" /></div>
                 <div class="col-9">
-                  <input
-                    type="text"
-                    class="form-control me-2"
-                    id="numberPhoneInput"
-                    placeholder="03xxxxxxxx"
-                    formControlName="phoneNumber"
-                  />
-                  <div
-                    *ngIf="
+                  <input type="text" class="form-control me-2" id="numberPhoneInput" placeholder="03xxxxxxxx"
+                    formControlName="phoneNumber" />
+                  <div *ngIf="
                       staffForm.get('phoneNumber')?.hasError('required') &&
                       staffForm.status === 'INVALID' &&
                       (submitted === true ||
                         staffForm.get('phoneNumber')?.touched)
-                    "
-                    class="fw-light text-danger"
-                  >
+                    " class="fw-light text-danger">
                     {{ validationMessage.phoneNumber.required }}
                   </div>
-                  <div
-                    *ngIf="
+                  <div *ngIf="
                       staffForm.get('phoneNumber')?.hasError('pattern') &&
                       staffForm.status === 'INVALID' &&
                       (submitted === true ||
                         staffForm.get('phoneNumber')?.touched)
-                    "
-                    class="fw-light text-danger"
-                  >
+                    " class="fw-light text-danger">
                     {{ validationMessage.phoneNumber.pattern }}
                   </div>
-                  <div
-                    *ngIf="
+                  <div *ngIf="
                       staffForm.get('phoneNumber')?.hasError('minlength') &&
                       staffForm.status === 'INVALID' &&
                       (submitted === true ||
                         staffForm.get('phoneNumber')?.touched)
-                    "
-                    class="fw-light text-danger"
-                  >
+                    " class="fw-light text-danger">
                     {{ validationMessage.phoneNumber.minLength }}
                   </div>
-                  <div
-                    *ngIf="
+                  <div *ngIf="
                       staffForm.get('phoneNumber')?.hasError('maxlength') &&
                       staffForm.status === 'INVALID' &&
                       (submitted === true ||
                         staffForm.get('phoneNumber')?.touched)
-                    "
-                    class="fw-light text-danger"
-                  >
+                    " class="fw-light text-danger">
                     {{ validationMessage.phoneNumber.maxLength }}
                   </div>
                 </div>
@@ -81,40 +61,27 @@
               <div class="row justify-content-center align-items-center mt-2">
                 <div class="col-1"><fa-icon [icon]="faMail" /></div>
                 <div class="col-9">
-                  <input
-                    type="email"
-                    class="form-control me-2"
-                    id="mailInput"
-                    placeholder="exemple@exemple.com"
-                    formControlName="email"
-                  />
-                  <div
-                    *ngIf="
+                  <input type="email" class="form-control me-2" id="mailInput" placeholder="exemple@exemple.com"
+                    formControlName="email" />
+                  <div *ngIf="
                       staffForm.get('email')?.hasError('required') &&
                       staffForm.status === 'INVALID' &&
                       (submitted === true || staffForm.get('email')?.touched)
-                    "
-                    class="fw-light text-danger"
-                  >
+                    " class="fw-light text-danger">
                     {{ validationMessage.email.required }}
                   </div>
-                  <div
-                    *ngIf="
+                  <div *ngIf="
                       staffForm.get('email')?.hasError('email') &&
                       staffForm.status === 'INVALID' &&
                       (submitted === true || staffForm.get('email')?.touched)
-                    "
-                    class="fw-light text-danger"
-                  >
+                    " class="fw-light text-danger">
                     {{ validationMessage.email.email }}
                   </div>
                 </div>
               </div>
 
               <!-- TODO Mot de passe -->
-              <div
-                class="row justify-content-center align-items-center mt-2 mb-3"
-              >
+              <div class="row justify-content-center align-items-center mt-2 mb-3">
                 <div class="col-1"><fa-icon [icon]="faPassword" /></div>
                 <div class="col-9">
                   <button class="form-control btn btn-white me-2 border">
@@ -140,60 +107,36 @@
               <div class="row mt-3">
                 <div class="col-lg-4 col-sm-6">
                   <label for="name" class="form-label">Nom</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="nameInput"
-                    formControlName="name"
-                  />
-                  <div
-                    *ngIf="
+                  <input type="text" class="form-control" id="nameInput" formControlName="name" />
+                  <div *ngIf="
                       staffForm.get('name')?.hasError('required') &&
                       staffForm.status === 'INVALID' &&
                       (submitted === true || staffForm.get('name')?.touched)
-                    "
-                    class="fw-light text-danger"
-                  >
+                    " class="fw-light text-danger">
                     {{ validationMessage.name.required }}
                   </div>
                 </div>
                 <div class="col-lg-4 col-sm-6">
                   <label for="firstNameInput" class="form-label">Prénoms</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="firstNameInput"
-                    formControlName="firstName"
-                  />
+                  <input type="text" class="form-control" id="firstNameInput" formControlName="firstName" />
                 </div>
                 <div class="col-lg-4 col-sm-6">
                   <label for="cinInput" class="form-label">CIN</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="cinInput"
-                    formControlName="cinNumber"
-                  />
-                  <div
-                    *ngIf="
+                  <input type="text" class="form-control" id="cinInput" formControlName="cinNumber" />
+                  <div *ngIf="
                       staffForm.get('cinNumber')?.hasError('required') &&
                       staffForm.status === 'INVALID' &&
                       (submitted === true ||
                         staffForm.get('cinNumber')?.touched)
-                    "
-                    class="fw-light text-danger"
-                  >
+                    " class="fw-light text-danger">
                     {{ validationMessage.cinNumber.required }}
                   </div>
-                  <div
-                    *ngIf="
+                  <div *ngIf="
                       staffForm.get('cinNumber')?.hasError('pattern') &&
                       staffForm.status === 'INVALID' &&
                       (submitted === true ||
                         staffForm.get('cinNumber')?.touched)
-                    "
-                    class="fw-light text-danger"
-                  >
+                    " class="fw-light text-danger">
                     {{ validationMessage.cinNumber.pattern }}
                   </div>
                 </div>
@@ -205,24 +148,14 @@
               </div>
               <div class="row mt-3">
                 <div class="col-lg-4 col-sm-6">
-                  <label for="startInput" class="form-label"
-                    >Début de carrière</label
-                  >
-                  <input
-                    type="date"
-                    class="form-control"
-                    id="startInput"
-                    formControlName="careerStart"
-                  />
-                  <div
-                    *ngIf="
+                  <label for="startInput" class="form-label">Début de carrière</label>
+                  <input type="date" class="form-control" id="startInput" formControlName="careerStart" />
+                  <div *ngIf="
                       staffForm.get('careerStart')?.hasError('required') &&
                       staffForm.status === 'INVALID' &&
                       (submitted === true ||
                         staffForm.get('careerStart')?.touched)
-                    "
-                    class="fw-light text-danger"
-                  >
+                    " class="fw-light text-danger">
                     {{ validationMessage.careerStart.required }}
                   </div>
                 </div>
@@ -233,48 +166,28 @@
                 <h5><b>Disponibilité</b></h5>
                 <div class="row mt-3">
                   <div class="col-lg-4 col-sm-6">
-                    <label for="startHourInput" class="form-label"
-                      >Heure de début</label
-                    >
-                    <input
-                      type="time"
-                      class="form-control"
-                      id="startHourInput"
-                      name="startHour"
-                      formControlName="startHour"
-                      (change)="handleChangeHour($event)"
-                    />
-                    <div
-                      *ngIf="
+                    <label for="startHourInput" class="form-label">Heure de début</label>
+                    <input type="time" class="form-control" id="startHourInput" name="startHour"
+                      formControlName="startHour" (change)="handleChangeHour($event)" />
+                    <div *ngIf="
                         staffForm.get('startHour')?.hasError('required') &&
                         staffForm.status === 'INVALID' &&
                         (submitted === true ||
                           staffForm.get('startHour')?.touched)
-                      "
-                      class="fw-light text-danger"
-                    >
+                      " class="fw-light text-danger">
                       {{ validationMessage.startHour.required }}
                     </div>
                   </div>
                   <div class="col-lg-4 col-sm-6">
                     <label for="endHour" class="form-label">Heure de fin</label>
-                    <input
-                      type="time"
-                      class="form-control"
-                      id="endHour"
-                      formControlName="endHour"
-                      name="endHour"
-                      (change)="handleChangeHour($event)"
-                    />
-                    <div
-                      *ngIf="
+                    <input type="time" class="form-control" id="endHour" formControlName="endHour" name="endHour"
+                      (change)="handleChangeHour($event)" />
+                    <div *ngIf="
                         staffForm.get('endHour')?.hasError('required') &&
                         staffForm.status === 'INVALID' &&
                         (submitted === true ||
                           staffForm.get('endHour')?.touched)
-                      "
-                      class="fw-light text-danger"
-                    >
+                      " class="fw-light text-danger">
                       {{ validationMessage.endHour.required }}
                     </div>
                   </div>
@@ -285,8 +198,7 @@
               <div class="row mt-3 justify-content-end text-end">
                 <div class="col">
                   <button class="btn btn-sm second-btn-class">
-                    <fa-icon [icon]="faSave"></fa-icon
-                    ><span class="ms-2">Enregistrer les modifications</span>
+                    <fa-icon [icon]="faSave"></fa-icon><span class="ms-2">Enregistrer les modifications</span>
                   </button>
                 </div>
               </div>

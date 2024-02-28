@@ -6,6 +6,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { EventBlockerDirective } from '../../../../../directives/event-blocker.directive';
 import { UploadService } from '../../../../services/upload/upload.service';
 import { SocketIoService } from '../../../../../services/socket-io.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-service-create',
@@ -94,13 +95,14 @@ export class ServiceCreateComponent {
 
       } else {
         this._id = this.dataToUpdate._id;
-        delete this.dataToUpdate.__v;
-        delete this.dataToUpdate._id;
         if (!!this.dataToUpdate.startOffer && !!this.dataToUpdate.endOffer) {
           this.dataToUpdate.startOffer = this.datePipe.transform(this.dataToUpdate.startOffer, "yyyy-MM-dd");
           this.dataToUpdate.endOffer = this.datePipe.transform(this.dataToUpdate.endOffer, "yyyy-MM-dd");
         }
-        this.serviceForm.setValue(this.dataToUpdate);
+        const dataForm = { ...this.dataToUpdate };
+        delete dataForm.__v;
+        delete dataForm._id;
+        this.serviceForm.setValue(dataForm);
         this.imageURL = `http://localhost:8000/${this.dataToUpdate.path}`
       }
     }
@@ -122,6 +124,7 @@ export class ServiceCreateComponent {
   onCreate() {
     const data: IService | any = this.serviceForm.value;
     this.serviceService.addService(data).subscribe(() => {
+      Swal.fire("Enregistré!", "Service enregistré avec succès", "success");
       this.refresh();
     });
 
@@ -131,6 +134,7 @@ export class ServiceCreateComponent {
     const data: IService | any = this.serviceForm.value;
     this.zone.run(() =>
       this.serviceService.updateService({ ...data, _id: this._id }).subscribe(() => {
+        Swal.fire("Enregistré!", "Service  mis à jour avec succès", "success");
         this.refresh();
       }));
   }

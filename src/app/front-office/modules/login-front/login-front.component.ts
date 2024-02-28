@@ -11,6 +11,7 @@ import { faArrowLeft, faBackspace } from '@fortawesome/free-solid-svg-icons';
 import { CustomerServiceService } from '../../services/customer/customer-service.service';
 import { Router, RouterModule } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login-front',
@@ -26,7 +27,7 @@ export class LoginFrontComponent {
 
   isLoginFormSubmitted = false;
 
-  constructor(public fb: FormBuilder, private customerService: CustomerServiceService, private router: Router) {}
+  constructor(public fb: FormBuilder, private customerService: CustomerServiceService, private router: Router) { }
 
   registerForm = this.fb.group({
     pseudo: ['', [Validators.required]],
@@ -69,7 +70,7 @@ export class LoginFrontComponent {
     password: ['', [Validators.required]],
   });
 
-  rdvToRemind:any[] = [];
+  rdvToRemind: any[] = [];
 
   isFirstStepRegisterValid = () => {
     return (
@@ -119,6 +120,9 @@ export class LoginFrontComponent {
           this.openAlertModal(res.alertArray || []);
           this.router.navigate(['/front-office']);
           this.isLoginFormSubmitted = true;
+        },
+        error: (err) => {
+          Swal.fire("Echec!", "Mot de passe est incorrect", "error")
         }
       })
     }
@@ -126,7 +130,7 @@ export class LoginFrontComponent {
 
   handleRegisterSubmit = () => {
     if (this.registerForm.valid) {
-      if (this.registerForm.get('tempPassword')?.value === this.registerForm.get("password")?.value){
+      if (this.registerForm.get('tempPassword')?.value === this.registerForm.get("password")?.value) {
         this.customerService.register(this.registerForm.value).subscribe({
           next: (res) => {
             this.loginForm.reset();
@@ -143,38 +147,38 @@ export class LoginFrontComponent {
 
   @ViewChild('content') modal!: ElementRef;
   private modalService = inject(NgbModal);
-	closeResult = '';
+  closeResult = '';
 
-	open(content: TemplateRef<any>) {
-		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false }).result.then(
-			(result) => {
-				this.closeResult = `Closed with: ${result}`;
-			},
-			(reason) => {
-				this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-			},
-		);
-	}
+  open(content: TemplateRef<any>) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false }).result.then(
+      (result) => {
+        this.closeResult = `Closed with: ${result}`;
+      },
+      (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      },
+    );
+  }
 
-	private getDismissReason(reason: any): string {
-		switch (reason) {
-			case ModalDismissReasons.ESC:
-				return 'by pressing ESC';
-			case ModalDismissReasons.BACKDROP_CLICK:
-				return 'by clicking on a backdrop';
-			default:
-				return `with: ${reason}`;
-		}
-	}
+  private getDismissReason(reason: any): string {
+    switch (reason) {
+      case ModalDismissReasons.ESC:
+        return 'by pressing ESC';
+      case ModalDismissReasons.BACKDROP_CLICK:
+        return 'by clicking on a backdrop';
+      default:
+        return `with: ${reason}`;
+    }
+  }
 
   openAlertModal(alertArray: any[]) {
-    if(alertArray.length > 0) {
+    if (alertArray.length > 0) {
       this.rdvToRemind = alertArray;
       this.modalService.open(this.modal, { backdrop: 'static', keyboard: false });
     }
   }
 
-  handleRedirectToHistory(){
+  handleRedirectToHistory() {
     this.router.navigate(["/front-office/histo-rdv"]);
     this.modalService.dismissAll();
   }
