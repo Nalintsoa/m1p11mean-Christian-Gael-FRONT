@@ -36,3 +36,14 @@
   	stroke-width: 10;
 	width: 50px;
 }
+
+$button-color: rgb(250, 162, 146);
+
+.btn-background-color{
+    background-color: $button-color;
+}
+
+.times-font {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: large;
+}

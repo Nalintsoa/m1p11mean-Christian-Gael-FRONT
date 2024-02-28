@@ -174,10 +174,11 @@ export class CreateRdvComponent {
         text: `Pour pouvoir confirmer votre rendez-vous, 30% (${this.dataToSend?.amountPaid}Ar) du prix du service seraient
         décompté de votre Crédit actuel`,
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
+        confirmButtonColor: "#3085d6",
         cancelButtonText: "Annuler le rendez-vous",
-        confirmButtonText: "Confirmer"
+        confirmButtonText: "Confirmer",
+        reverseButtons: true
       }).then((result) => {
         if (result.isConfirmed) {
           if (this.dataToSend?.amountPaid > this.customer?.solde) {

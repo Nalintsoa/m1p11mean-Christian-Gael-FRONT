@@ -6,3 +6,10 @@
 // @import '../../../../assets/front-office/css/owl.carousel.min.css';
 // @import '../../../../assets/front-office/css/slicknav.min.css';
 // @import '../../../../assets/front-office/css/style.css';
+#container {
+    width: 100vw;
+    height: 100%;
+    min-height: 89vh;
+    background-image: url('../../../../assets/front-office/background2.jpg');
+    background-size: cover;
+}

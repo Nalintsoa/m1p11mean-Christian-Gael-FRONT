@@ -1,94 +1,135 @@
-<app-breadcrumb [menu]="menu"></app-breadcrumb>
-<section class="section">
+<div id="container">
+  <app-breadcrumb [menu]="menu"></app-breadcrumb>
+  <section class="section">
     <div class="container">
-        <div class="row mt-5 d-flex justify-content-center">
-            <div class="col-5">
-                <div class="card" style="background-color: #F0F0F0;">
-                    <div class="card-body py-2 px-3">
-                        <form [formGroup]="customerForm">
-                            <div class="d-flex justify-content-center mb-3">
-                                <img class="rounded rounded-circle float-start"
-                                    src="assets/back-office/undefined_user.png" alt="User" width="100" height="100" />
-                            </div>
-                            <div class="row align-items-center mb-3">
-                                <div class="col-1"><fa-icon [icon]="faUser" /></div>
-                                <div class="col-5 ps-0">
-                                    <input type="text" class="form-control me-2" placeholder="Pseudo"
-                                        formControlName="pseudo" />
-                                </div>
-                                <div class="col-1"><fa-icon [icon]="faMapMarker" /></div>
-                                <div class="col-5 ps-0">
-                                    <input type="text" class="form-control me-2" d="" placeholder=""
-                                        formControlName="address" />
-                                </div>
-                            </div>
-                            <div class="row align-items-center mb-3">
-                                <div class="col-1"><fa-icon [icon]="faPhone" /></div>
-                                <div class="col-5 ps-0">
-                                    <input type="text" class="form-control me-2" placeholder="03xxxxxxxx"
-                                        formControlName="phoneNumber" />
-                                </div>
-                                <div class="col-1"><fa-icon [icon]="faEnvelope" /></div>
-                                <div class="col-5 ps-0">
-                                    <input type="text" class="form-control me-2" placeholder=""
-                                        formControlName="email" />
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+      <div class="row mt-5 d-flex justify-content-center">
+        <div class="col-lg-5 col-sm-10 mb-3">
+          <div class="card info-card">
+            <div class="card-body py-2 px-3">
+              <form [formGroup]="customerForm">
+                <div class="d-flex justify-content-center mb-3">
+                  <img
+                    class="rounded rounded-circle float-start"
+                    src="assets/back-office/undefined_user.png"
+                    alt="User"
+                    width="100"
+                    height="100"
+                  />
                 </div>
+                <div class="row align-items-center">
+                  <div class="col-lg-6">
+                    <div class="d-flex">
+                      <fa-icon [icon]="faUser" class="align-self-center" />
+                      <input
+                        type="text"
+                        class="form-control ms-2 mb-2"
+                        placeholder="Pseudo"
+                        formControlName="pseudo"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6">
+                    <div class="d-flex">
+                      <fa-icon [icon]="faMapMarker" class="align-self-center" />
+                      <input
+                        type="text"
+                        class="form-control ms-2 mb-2"
+                        d=""
+                        placeholder=""
+                        formControlName="address"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="row align-items-center mb-1">
+                  <div class="col-lg-6">
+                    <div class="d-flex">
+                      <fa-icon [icon]="faPhone" class="align-self-center" />
+                      <input
+                        type="text"
+                        class="form-control ms-2 mb-2"
+                        placeholder="03xxxxxxxx"
+                        formControlName="phoneNumber"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6">
+                    <div class="d-flex">
+                      <fa-icon [icon]="faEnvelope" class="align-self-center" />
+                      <input
+                        type="text"
+                        class="form-control ms-2 mb-2"
+                        placeholder=""
+                        formControlName="email"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </form>
             </div>
-            <div class="col-4">
-                <div class="mb-3">
-                    <div class="card" style="background-color: #E0A3B1;">
-                        <div class="card-body px-5 py-4" style="color: white;">
-                            <div class="row mb-3">
-                                <div class="d-flex justify-content-end">
-                                    CREDIT CARD
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <div class="col-3">
-                                    <img src="../../../../assets/img/golden.jpg" style="width: 50px; height: 35px; "
-                                        alt="">
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <div class="col-3" *ngFor="let part of cardNumber"
-                                    style="font-family: roboto; size: 20px">{{part}}</div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <div class="col-6">
-                                    {{customerForm.get("pseudo")?.value | uppercase}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div class="card" style="background-color: #F0F0F0;">
-                        <div class="card-body px-5 py-3">
-                            <div class="mb-2">
-                                <span style="font-weight: bold; font-size: 20px;">Mon solde</span>
-                            </div>
-                            <div class="mb-1">
-                                <span style="font-weight: bold; font-size: 30px;">
-                                    {{solde | number: '1.0-0' }} Ar
-                                </span>
-                            </div>
-                            <div class="mb-1">
-                                <span style="font-weight: 300; font-size: 20px;">
-                                    Disponible
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+          </div>
         </div>
+        <div class="col-lg-4 col-sm-8">
+          <div class="mb-3">
+            <div class="card credit-card">
+              <div class="card-body px-5 py-4" style="color: white">
+                <div class="row mb-3">
+                  <div class="d-flex justify-content-end">CREDIT CARD</div>
+                </div>
+
+                <div class="row mb-3">
+                  <div class="col-3">
+                    <img
+                      src="../../../../assets/img/golden.jpg"
+                      style="width: 50px; height: 35px"
+                      alt=""
+                    />
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <div
+                    class="col-3 text-nowrap"
+                    *ngFor="let part of cardNumber"
+                    style="font-family: roboto; size: 20px"
+                  >
+                    {{ part }}
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <div class="col-6">
+                    {{ customerForm.get("pseudo")?.value | uppercase }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="card card-total">
+              <div class="card-body px-5 py-3">
+                <div class="mb-2">
+                  <span style="font-weight: bold; font-size: 20px"
+                    >Mon solde</span
+                  >
+                </div>
+                <div class="mb-1">
+                  <span style="font-weight: bold; font-size: 30px">
+                    {{ solde | number : "1.0-0" }} Ar
+                  </span>
+                </div>
+                <div class="mb-1">
+                  <span style="font-weight: 300; font-size: 20px">
+                    Disponible
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</section>
+  </section>
+</div>

@@ -1,6 +1,11 @@
+$pink-weird: #ff7cb6;
 .row-histo {
     width: 100%;
+    border-style: solid;
+    border-width: 1px;
     border-radius: 10px;
+    border-color: #ff7cb6;
+    background-color: #fee2f0;
 }
 
 .date {

@@ -36,3 +36,15 @@
   	stroke-width: 10;
 	width: 50px;
 }
+
+.card {
+    border-color: #ff7cb6;
+    background-color: #fee2f0;
+}
+
+$button-color: #ff7cb6;
+
+.btn-background-color{
+    background-color: $button-color;
+    color: white;
+}

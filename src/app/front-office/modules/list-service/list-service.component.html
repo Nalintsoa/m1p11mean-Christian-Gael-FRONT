@@ -1,31 +1,47 @@
-<app-breadcrumb [menu]="menuSelected"></app-breadcrumb>
-<section class="section">
+<div id="container">
+  <app-breadcrumb [menu]="menuSelected"></app-breadcrumb>
+  <section class="section">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-3 col-md-3">
-                <app-filter (searchEmitter)="onSearch($event)" (categoryEmitter)="onChangeCategory($event)"
-                    (priceEmitter)="onChangePrice($event)"></app-filter>
-            </div>
-            <div class="col-lg-9 col-md-9">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-4 pt-3" *ngFor="let serice of services ">
-                            <app-service [service]="serice"></app-service>
-                        </div>
-
-                    </div>
-                    <div class="row" *ngIf="services.length === 9">
-                        <div class="d-flex py-3 justify-content-center">
-                            <div class="rounded-circle page-number border border-white px-2">1
-                            </div>
-                            <div class=" rounded-circle page-number  border border-white px-2">2
-                            </div>
-                            <div class=" rounded-circle  page-number border border-white px-2">3
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="row justify-content-center">
+        <div class="col-lg-3 col-md-3">
+          <app-filter
+            (searchEmitter)="onSearch($event)"
+            (categoryEmitter)="onChangeCategory($event)"
+            (priceEmitter)="onChangePrice($event)"
+          ></app-filter>
         </div>
+        <div class="col-lg-9 col-md-9">
+          <div class="container-fluid">
+            <div class="row">
+              <div
+                class="col-sm-12 col-md-6 col-xxl-4 pt-3"
+                *ngFor="let serice of services"
+              >
+                <app-service [service]="serice"></app-service>
+              </div>
+            </div>
+            <div class="row" *ngIf="services.length === 9">
+              <div class="d-flex py-3 justify-content-center">
+                <div
+                  class="rounded-circle page-number border border-white px-2"
+                >
+                  1
+                </div>
+                <div
+                  class="rounded-circle page-number border border-white px-2"
+                >
+                  2
+                </div>
+                <div
+                  class="rounded-circle page-number border border-white px-2"
+                >
+                  3
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</section>
+  </section>
+</div>
