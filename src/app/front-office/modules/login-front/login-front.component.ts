@@ -12,6 +12,7 @@ import { CustomerServiceService } from '../../services/customer/customer-service
 import { Router, RouterModule } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
+import { AuthApiService } from '../../../back-office/service/auth-api.service';
 
 @Component({
   selector: 'app-login-front',
@@ -27,7 +28,7 @@ export class LoginFrontComponent {
 
   isLoginFormSubmitted = false;
 
-  constructor(public fb: FormBuilder, private customerService: CustomerServiceService, private router: Router) { }
+  constructor(public fb: FormBuilder, private customerService: CustomerServiceService, private router: Router, private authService: AuthApiService) { }
 
   registerForm = this.fb.group({
     pseudo: ['', [Validators.required]],
@@ -116,6 +117,7 @@ export class LoginFrontComponent {
       this.customerService.customerLogin(data).subscribe({
         next: (res) => {
           this.customerService.saveToken(res.token);
+          this.authService.setToken(res.token);
           console.log(res);
           this.openAlertModal(res.alertArray || []);
           this.router.navigate(['/front-office']);

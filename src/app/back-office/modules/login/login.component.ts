@@ -32,7 +32,7 @@ export class LoginComponent {
       this.authService.staffLogin(this.loginForm.value).subscribe({
         next: (res) => {
           this.authService.saveToken(res.token);
-
+          this.authService.setToken(res.token);
           if (res.staff.role === "employee") {
             this.router.navigate(['/back-office/profile']);
           } else {

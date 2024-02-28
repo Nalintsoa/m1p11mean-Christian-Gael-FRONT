@@ -24,6 +24,10 @@ export class AuthApiService {
     return this.cookieService.get(this.TOKEN_KEY);
   }
 
+  setToken(token: string) {
+    this.cookieService.set(this.TOKEN_KEY, token, {expires: 2} )
+  }
+
   isTokenExpired(): boolean {
     const token = this.getToken();
 
