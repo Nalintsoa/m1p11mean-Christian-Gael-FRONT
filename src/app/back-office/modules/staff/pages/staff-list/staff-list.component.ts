@@ -20,9 +20,7 @@ export class StaffListComponent {
   searchQuery = "";
   arrayData: any = [];
   listToShow: any = [];
-  dataCount = this.arrayData.length;
-  currentPage = 1;
-  perPage = 5;
+  dataCount = this.listToShow.length;
 
   modalMode = CREATION_MODE;
   modalData: any = {};
@@ -65,61 +63,37 @@ export class StaffListComponent {
 
   getAllStaffs(){
     this.staffApiService.getStaffList().subscribe((data) => {
-     const result: any = data;
-     this.listToShow = data;
+      this.listToShow = data;
+      this.dataCount = this.listToShow.length
     this.loadData();
     })    
   };
 
   // ACTION ON THE TABLE
   handleSearchChange = () => {
-    this.currentPage = 1;
-    this.data = this.queriedList();
+    this.staffApiService.getStaffList().subscribe({
+      next: (res: any) => {
+        const tempArray = res.filter((item: any) => {
+          return Object.values(item).toString().toLowerCase().includes(this.searchQuery.toLowerCase());
+        }); 
+        this.listToShow = tempArray; 
+        this.dataCount = this.listToShow.length  
+      }
+    })    
   }
 
-  handlePerPage = () => {
-    this.currentPage = 1;
-    this.queriedList();
-  }
-
-  queriedList = () => {
+  queriedList = async () => {
     const tempArray = this.listToShow.filter((item: any) => {
       return Object.values(item).toString().toLowerCase().includes(this.searchQuery.toLowerCase());
     });
-    this.dataCount = this.arrayData.length;
-    return tempArray;
   }
 
   data = this.queriedList();
-  totalPages = 0;
   
   loadData() {
     this.data = this.queriedList();
-    this.totalPages = Math.floor(this.data.length / this.perPage);
   }
 
-  getPaginatedData() {
-    const startIndex = (this.currentPage - 1) * this.perPage;
-    return this.data.slice(startIndex, startIndex + this.perPage);
-  }
-
-  onPageChange(page: number) {
-    if (page >= 1 && page <= this.totalPages) {
-      this.currentPage = page;
-    }
-  }
-
-  onNext() {
-    if (this.currentPage < this.totalPages) {
-      this.currentPage++;
-    }
-  }
-
-  onPrevious() {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-    }
-  }
   // END OF ACTION ON THE TABLE
 
   handleClickRow = (row: any) => {

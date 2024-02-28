@@ -6,7 +6,7 @@ import { jwtDecode } from 'jwt-decode';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuardService {
+export class AuthGuardManagerService {
   constructor(
     private router: Router,
     private cookieService: CookieService
@@ -18,7 +18,7 @@ export class AuthGuardService {
     if (token) {
       const decodedToken: any = jwtDecode(token);
       const isExpired = decodedToken.exp * 1000 < Date.now();
-      if (isExpired || (!isExpired && decodedToken.role !== "employee")) {
+      if (isExpired || (!isExpired && decodedToken.role !== "manager")) {
         this.router.navigate(['/backoffice']);
         return false;
       }
@@ -30,4 +30,3 @@ export class AuthGuardService {
     return true;
   }
 }
-
