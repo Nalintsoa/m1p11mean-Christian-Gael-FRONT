@@ -122,9 +122,20 @@ export class CreateModalComponent {
 
   handleSubmit = () => {
     this.submitted = true;
+    const startHourValue = this.staffForm.get('startHour')?.value || '';
+    const endHourValue = this.staffForm.get('endHour')?.value || '';
     if (!this.staffForm.valid) {
       return;
-    } else {
+    } else if (+startHourValue.split(":")[0] >= +endHourValue.split(":")[0]){
+      Swal.fire("Horaire", "L'heure de début doit être inférieure à l'heure de fin", "error");
+      return;
+    } else if (+startHourValue.split(":")[0] < 8){
+      Swal.fire("Horaire", "L'heure de début doit être supérieure à 08 heures", "error");
+      return;
+    } else if (+endHourValue.split(":")[0] > 17) {
+      Swal.fire("Horaire", "L'heure de fin doit être inférieure à 17 heures", "error");
+      return;
+    }else {
       if (this.mode === EDIT_MODE && this.staffForm.get('id')?.value !== '') {
         return this.staffService.updateStaff(this.staffForm.value).subscribe({
           next: (res) => {
