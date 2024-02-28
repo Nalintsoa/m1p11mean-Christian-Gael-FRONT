@@ -32,7 +32,7 @@ export class LoginComponent {
       this.authService.staffLogin(this.loginForm.value).subscribe({
         next: (res) => {
           this.authService.saveToken(res.token);
-          this.router.navigate(['/back-office']);
+          this.router.navigate(['/back-office/profile']);
         },
         error: (res) => {
           Swal.fire("Echec", "Mot de passe incorrect", "error");
