@@ -8,12 +8,12 @@ import { PlanningComponent } from '../modules/planning/planning.component';
 import { TaskComponent } from '../modules/task/task.component';
 import { LoginComponent } from '../modules/login/login.component';
 import { AuthGuardService } from './authGuard';
+import { AuthGuardManagerService } from './authGuardManager';
 
 export const backOfficeRoutes: Route[] = [
   {
     path: 'back-office',
     component: HomePageComponent,
-    canActivate: [AuthGuardService],
     children: [
       {
         path: '',
@@ -24,19 +24,19 @@ export const backOfficeRoutes: Route[] = [
         path: 'staff',
         component: StaffListComponent,
         title: 'Personnel',
-        canActivate: [AuthGuardService]
+        canActivate: [AuthGuardManagerService]
       },
       {
         path: 'service',
         component: ServiceListComponent,
         title: 'Service',
-        canActivate: [AuthGuardService]
+        canActivate: [AuthGuardManagerService]
       },
       {
         path: 'statistic',
         component: StatisticListComponent,
         title: 'Statistique',
-        canActivate: [AuthGuardService]
+        canActivate: [AuthGuardManagerService]
       },
       {
         path: 'profile',

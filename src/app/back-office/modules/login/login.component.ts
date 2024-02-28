@@ -32,7 +32,12 @@ export class LoginComponent {
       this.authService.staffLogin(this.loginForm.value).subscribe({
         next: (res) => {
           this.authService.saveToken(res.token);
-          this.router.navigate(['/back-office/profile']);
+
+          if (res.staff.role === "employee") {
+            this.router.navigate(['/back-office/profile']);
+          } else {
+            this.router.navigate(['/back-office/staff']);
+          }
         },
         error: (res) => {
           Swal.fire("Echec", "Mot de passe incorrect", "error");
