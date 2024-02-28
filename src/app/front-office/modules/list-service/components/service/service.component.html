@@ -7,7 +7,12 @@
     />
   </div>
   <div class="card-body">
-    <h5 class="text-center mt-1">{{ service?.name }}</h5>
+    <h5
+      class="text-center mt-1 fw-bold"
+      style="font-family: 'Times New Roman', Times, serif"
+    >
+      {{ service?.name }}
+    </h5>
     <p class="d-flex justify-content-center">
       <b>Catégorie : </b>&nbsp;{{ service?.category }}
     </p>
@@ -20,7 +25,7 @@
       title="Prendre un Rendez-vous"
     >
       <a
-        class="btn btn-outline-secondary"
+        class="btn bg-white text-dark shadow-sm"
         [routerLink]="'/front-office/prise-rdv/' + service?._id"
       >
         <!-- Prendre un Rendez-vous -->
@@ -28,7 +33,7 @@
       </a>
       <div
         (click)="addOrRemoveServiceToPreferences(service?._id)"
-        class="ms-2 btn btn-outline-secondary"
+        class="ms-2 btn bg-white text-dark shadow-sm"
       >
         <fa-icon
           [icon]="faHeart"

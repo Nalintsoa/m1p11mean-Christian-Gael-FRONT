@@ -20,7 +20,7 @@ export class ListServiceComponent {
   services: IService[] = [];
 
   searchQuery: string = '';
-  category: string = '';
+  category: string = 'Tout';
   defaultPrice = 1000000;
   price: number = this.defaultPrice;
 

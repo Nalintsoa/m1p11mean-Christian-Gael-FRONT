@@ -8,6 +8,7 @@ import { CreateRdvComponent } from '../modules/create-rdv/create-rdv.component';
 import { AuthGuardService } from './authGuard';
 import { SoldePayComponent } from '../modules/solde-pay/solde-pay.component';
 import { ForgetPasswordComponent } from '../modules/forget-password/forget-password.component';
+import { HomeComponent } from '../modules/home/home.component';
 
 export const frontOfficeRoutes: Route[] = [
     {
@@ -17,7 +18,7 @@ export const frontOfficeRoutes: Route[] = [
         children: [
             {
                 path: '',
-                redirectTo: 'services',
+                redirectTo: 'home',
                 pathMatch: 'full',
             },
             {
@@ -49,6 +50,12 @@ export const frontOfficeRoutes: Route[] = [
                 canActivate: [AuthGuardService],
                 component: SoldePayComponent,
                 title: 'Mon solde',
+            },
+            {
+                path: 'home',
+                canActivate: [AuthGuardService],
+                component: HomeComponent,
+                title: 'Accueil',
             },
         ],
     },
