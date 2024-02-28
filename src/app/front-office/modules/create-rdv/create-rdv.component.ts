@@ -120,7 +120,7 @@ export class CreateRdvComponent {
       }
     }
 
-    price && (amountPaid = price / 100 * 30)
+    price && (amountPaid = (price / 100 * 30).toFixed(2))
 
     this.dataToSend = {
       ...this.dataToSend,
@@ -141,7 +141,7 @@ export class CreateRdvComponent {
 
   onColorCell(row: number) {
     for (let j = 0; j < this.columnToColor.length; j++) {
-      this.formattedArray[this.columnToColor[j].row][this.columnToColor[j].column + 7] = { ...this.formattedArray[row][this.columnToColor[j] + 7], statusTemp: true }
+      this.formattedArray[this.columnToColor[j].row][this.columnToColor[j].column + 7] = { ...this.formattedArray[row][this.columnToColor[j].column + 7], statusTemp: true }
     }
   }
 
