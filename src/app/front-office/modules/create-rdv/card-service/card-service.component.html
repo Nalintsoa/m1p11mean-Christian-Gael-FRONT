@@ -1,6 +1,6 @@
 <div class="card" style="width: 100%;">
     <div>
-        <img style="height: 160px; width: 100%;" [src]="'http://localhost:8000/'+service?.path" class="card-img-top">
+        <img style="height: 160px; width: 100%;" [src]="API_URL+'/'+service?.path" class="card-img-top">
     </div>
     <div class="card-body">
         <h5 class="text-center mt-1">{{service?.name}}</h5>

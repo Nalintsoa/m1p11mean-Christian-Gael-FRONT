@@ -1,18 +1,19 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject, tap } from 'rxjs';
+import { API_URL } from '../../../config/config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StaffApiService {
   constructor(private http: HttpClient) { }
-  baseUri: string = 'http://localhost:8000/staff';
+  baseUri: string = `${API_URL}/staff`;
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
   private _refreshRequired = new Subject<void>();
 
-  get RefreshRequired(){
+  get RefreshRequired() {
     return this._refreshRequired;
   }
 
@@ -49,6 +50,6 @@ export class StaffApiService {
   }
 
   getStaffBySpeciality(speciality: string): Observable<any> {
-    return this.http.post(`${this.baseUri}/getStaffBySpeciality`, {speciality});
+    return this.http.post(`${this.baseUri}/getStaffBySpeciality`, { speciality });
   }
 }

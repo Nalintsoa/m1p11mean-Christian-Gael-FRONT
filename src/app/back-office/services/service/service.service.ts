@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IFilterService, IService } from '../../interfaces/serviceInterface';
 import { finalize } from 'rxjs';
+import { API_URL } from '../../../../config/config';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { finalize } from 'rxjs';
 export class ServiceService {
   isLoading = false;
   constructor(private http: HttpClient) { }
-  baseUri: string = 'http://localhost:8000/service/';
+  baseUri: string = `${API_URL}/service/`;
 
   addService(data: IService) {
     const observable = this.http.post(this.baseUri, data)

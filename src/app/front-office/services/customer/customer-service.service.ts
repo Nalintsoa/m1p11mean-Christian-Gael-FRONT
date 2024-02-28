@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
+import { API_URL } from '../../../../config/config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerServiceService {
   constructor(private http: HttpClient, private cookieService: CookieService) { }
-  baseUri: string = 'http://localhost:8000/customer';
+  baseUri: string = `${API_URL}/customer`;
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
   TOKEN_KEY = "client_token";
@@ -19,7 +20,7 @@ export class CustomerServiceService {
   }
 
   customerLogin(data: any): Observable<any> {
-    return this.http.post(`${this.baseUri}/login`, data, {withCredentials: true, headers: this.headers});
+    return this.http.post(`${this.baseUri}/login`, data, { withCredentials: true, headers: this.headers });
   }
 
   getCustomer(id: string): Observable<any> {
@@ -55,27 +56,27 @@ export class CustomerServiceService {
     return this.http.post(`${this.baseUri}/logout`, {}, { withCredentials: true, headers: this.headers });
   }
 
-  addOrRemoveServiceToPreferences(customer: string, service: string): Observable<any>{
+  addOrRemoveServiceToPreferences(customer: string, service: string): Observable<any> {
     return this.http.post(`${this.baseUri}/addOrRemoveServiceToPreferences`, { customer, service });
   }
 
-  addOrRemoveEmployeeAsFavorite(customer: string, employee?: string): Observable<any>{
-    return this.http.post(`${this.baseUri}/addOrRemoveEmployeeAsFavorite`,  { customer, employee });
+  addOrRemoveEmployeeAsFavorite(customer: string, employee?: string): Observable<any> {
+    return this.http.post(`${this.baseUri}/addOrRemoveEmployeeAsFavorite`, { customer, employee });
   }
 
   getFavoriteEmployees(customer: string): Observable<any> {
     return this.http.get(`${this.baseUri}/getFavoriteEmployees/${customer}`);
   }
 
-  forgetPassword(customerEmail: string): Observable<any>{
+  forgetPassword(customerEmail: string): Observable<any> {
     return this.http.post(`${this.baseUri}/forgetPassword`, { customerEmail });
   }
 
-  checkTemporaryPassword(customerEmail: string, temporaryPassword: string): Observable<any>{
-    return this.http.post(`${this.baseUri}/checkTemporaryPassword`, {customerEmail, temporaryPassword});
+  checkTemporaryPassword(customerEmail: string, temporaryPassword: string): Observable<any> {
+    return this.http.post(`${this.baseUri}/checkTemporaryPassword`, { customerEmail, temporaryPassword });
   }
 
-  updateCustomerPassword(customerEmail: string, password: string): Observable<any>{
-    return this.http.post(`${this.baseUri}/updatePassword`, {customerEmail, password});
+  updateCustomerPassword(customerEmail: string, password: string): Observable<any> {
+    return this.http.post(`${this.baseUri}/updatePassword`, { customerEmail, password });
   }
 }

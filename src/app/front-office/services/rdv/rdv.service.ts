@@ -1,13 +1,14 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject, tap } from 'rxjs';
+import { API_URL } from '../../../../config/config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RdvService {
 
-  basUri = "http://localhost:8000/rdv/";
+  basUri = `${API_URL}/rdv/`;
   isLoading = false;
 
   private _refreshRequired = new Subject<void>();
