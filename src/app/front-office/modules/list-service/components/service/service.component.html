@@ -1,16 +1,9 @@
 <div class="card" style="width: 18rem">
   <div>
-    <img
-      style="height: 160px; width: 100%"
-      [src]="'http://localhost:8000/' + service?.path"
-      class="card-img-top"
-    />
+    <img style="height: 160px; width: 100%" [src]="API_URL+'/' + service?.path" class="card-img-top" />
   </div>
   <div class="card-body">
-    <h5
-      class="text-center mt-1 fw-bold"
-      style="font-family: 'Times New Roman', Times, serif"
-    >
+    <h5 class="text-center mt-1 fw-bold" style="font-family: 'Times New Roman', Times, serif">
       {{ service?.name }}
     </h5>
     <p class="d-flex justify-content-center">
@@ -20,30 +13,16 @@
       <b>Durée : </b>&nbsp;{{ service?.duration }}h
       <b> &nbsp; Prix :</b> &nbsp;{{ service?.price }}Ar
     </p>
-    <div
-      class="d-flex justify-content-center align-middle"
-      title="Prendre un Rendez-vous"
-    >
-      <a
-        class="btn bg-white text-dark shadow-sm"
-        [routerLink]="'/front-office/prise-rdv/' + service?._id"
-      >
+    <div class="d-flex justify-content-center align-middle" title="Prendre un Rendez-vous">
+      <a class="btn bg-white text-dark shadow-sm" [routerLink]="'/front-office/prise-rdv/' + service?._id">
         <!-- Prendre un Rendez-vous -->
         <fa-icon [icon]="faCalendarPlus" />
       </a>
-      <div
-        (click)="addOrRemoveServiceToPreferences(service?._id)"
-        class="ms-2 btn bg-white text-dark shadow-sm"
-      >
-        <fa-icon
-          [icon]="faHeart"
-          class="cursor-pointer"
-          title="Ajouter comme favori"
-          [ngClass]="{
+      <div (click)="addOrRemoveServiceToPreferences(service?._id)" class="ms-2 btn bg-white text-dark shadow-sm">
+        <fa-icon [icon]="faHeart" class="cursor-pointer" title="Ajouter comme favori" [ngClass]="{
             'icon-red': preferences.includes(service?._id),
             'icon-uncolored': !preferences.includes(service?._id)
-          }"
-        />
+          }" />
       </div>
     </div>
   </div>

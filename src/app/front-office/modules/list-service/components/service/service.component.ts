@@ -7,6 +7,7 @@ import { faCalendarPlus, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { CustomerServiceService } from '../../../../services/customer/customer-service.service';
 import { AuthApiService } from '../../../../../back-office/service/auth-api.service';
 import { jwtDecode } from 'jwt-decode';
+import { API_URL } from '../../../../../../config/config';
 
 @Component({
   selector: 'app-service',
@@ -20,9 +21,11 @@ export class ServiceComponent {
   faCalendarPlus = faCalendarPlus
   @Input() service?: IService;
 
+  API_URL = API_URL;
+
   preferences: any = [];
   idCustomer: string = '';
-  constructor(private customerService: CustomerServiceService, private authService: AuthApiService){
+  constructor(private customerService: CustomerServiceService, private authService: AuthApiService) {
     this.getCustomerId();
     this.getCustomerInformations();
   }
@@ -40,11 +43,11 @@ export class ServiceComponent {
     }
   }
 
-  addOrRemoveServiceToPreferences(serviceId?: string ){
+  addOrRemoveServiceToPreferences(serviceId?: string) {
     const jwtToken = this.authService.getToken();
     if (jwtToken) {
       const decodeToken: any = jwtDecode(jwtToken);
-      if(decodeToken._id && serviceId) {
+      if (decodeToken._id && serviceId) {
         const idCustomer = decodeToken._id;
         this.customerService.addOrRemoveServiceToPreferences(idCustomer, serviceId).subscribe({
           next: (res) => {
@@ -55,11 +58,11 @@ export class ServiceComponent {
     }
   }
 
-  getCustomerId(){
+  getCustomerId() {
     const jwtToken = this.authService.getToken();
     if (jwtToken) {
       const decodeToken: any = jwtDecode(jwtToken);
-      if(decodeToken._id) {
+      if (decodeToken._id) {
         this.idCustomer = decodeToken._id;
       }
     }
