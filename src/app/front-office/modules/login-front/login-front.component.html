@@ -2,9 +2,9 @@
   <div class="container-fluid">
     <div class="row main-content bg-success text-center">
       <div class="col-md-4 text-center company__info">
-        <span class="company__logo"
-          ><h2><span class="fa fa-android"></span></h2
-        ></span>
+        <span class="company__logo">
+          <h2><span class="fa fa-android"></span></h2>
+        </span>
         <h4 class="company_title">M1P11-MEAN</h4>
       </div>
       <div class="col-md-8 col-xs-12 col-sm-12 login_form">
@@ -13,106 +13,73 @@
             <h2>Bonjour</h2>
           </div>
           <div class="row">
-            <form
-              (ngSubmit)="handleLoginSubmit()"
-              [formGroup]="loginForm"
-              class="form-group"
-            >
+            <form (ngSubmit)="handleLoginSubmit()" [formGroup]="loginForm" class="form-group">
               <div class="row">
-                <input
-                  type="text"
-                  name="identifier"
-                  id="identifier"
-                  class="form__input"
-                  placeholder="Adresse mail"
-                  formControlName="identifier"
-                />
-                <div
-                  *ngIf="
+                <input type="text" name="identifier" id="identifier" class="form__input" placeholder="Adresse mail"
+                  formControlName="identifier" />
+                <div *ngIf="
                     loginForm.get('identifier')?.hasError('required') &&
                     loginForm.status === 'INVALID' &&
                     (isLoginFormSubmitted === true ||
                       loginForm.get('identifier')?.touched)
-                  "
-                  class="fw-light text-danger"
-                >
+                  " class="fw-light text-danger">
                   {{ "Veuillez remplir ce champ" }}
                 </div>
-                <div
-                  *ngIf="
+                <div *ngIf="
                     loginForm.get('identifier')?.hasError('email') &&
                     loginForm.status === 'INVALID' &&
                     (isLoginFormSubmitted === true ||
                       loginForm.get('identifier')?.touched)
-                  "
-                  class="fw-light text-danger"
-                >
+                  " class="fw-light text-danger">
                   {{ "Adresse mail invalide" }}
                 </div>
               </div>
               <div class="row">
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  class="form__input"
-                  placeholder="Mot de passe"
-                  formControlName="password"
-                />
-                <div
-                  *ngIf="
+                <input type="password" name="password" id="password" class="form__input" placeholder="Mot de passe"
+                  formControlName="password" />
+                <div *ngIf="
                     loginForm.get('password')?.hasError('required') &&
                     loginForm.status === 'INVALID' &&
                     (isLoginFormSubmitted === true ||
                       loginForm.get('password')?.touched)
-                  "
-                  class="fw-light text-danger"
-                >
+                  " class="fw-light text-danger">
                   {{ "Veuillez remplir ce champ" }}
                 </div>
               </div>
-              <div class="row justify-content-center">
-                <input type="submit" value="Se connecter" class="btn" />
+              <div class="row justify-content-center" type="submit">
+                <button class="btn">
+                  <div class="d-flex justify-content-center align-items-center">
+                    <div *ngIf="isLoading" class="spinner-border" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <div *ngIf="!isLoading">"Se connecter" </div>
+                  </div>
+                </button>
+
               </div>
             </form>
           </div>
           <div class="row">
             <p>
               Vous n'avez pas de compte?
-              <span
-                class="text-decoration-underline text-primary cursor-pointer"
-                (click)="toggleLoginOrRegister()"
-                >Rejoignez-nous</span
-              >
+              <span class="text-decoration-underline text-primary cursor-pointer"
+                (click)="toggleLoginOrRegister()">Rejoignez-nous</span>
             </p>
             <p>
-              <a
-                class="text-decoration-underline text-primary cursor-pointer"
-                routerLink="/forgetPassword"
-                >Mot de passe oublié</a
-              >
+              <a class="text-decoration-underline text-primary cursor-pointer" routerLink="/forgetPassword">Mot de passe
+                oublié</a>
             </p>
           </div>
         </div>
 
         <div *ngIf="!isLoginForm" class="container-fluid">
           <div class="row">
-            <form
-              (ngSubmit)="handleRegisterSubmit()"
-              [formGroup]="registerForm"
-              class="form-group"
-            >
+            <form (ngSubmit)="handleRegisterSubmit()" [formGroup]="registerForm" class="form-group">
               <div class="row mt-5" *ngIf="firstRegisterForm">
                 <h2>Bienvenu(e)</h2>
               </div>
-              <div
-                class="row mt-3 justify-content-end"
-                *ngIf="!firstRegisterForm"
-              >
-                <div
-                  class="col text-end cursor-pointer text-colored"
-                  (click)="handleClickReturn()"
-                >
+              <div class="row mt-3 justify-content-end" *ngIf="!firstRegisterForm">
+                <div class="col text-end cursor-pointer text-colored" (click)="handleClickReturn()">
                   <fa-icon [icon]="faBack" /> Retour
                 </div>
               </div>
@@ -120,177 +87,104 @@
                 <h2>On y est presque !</h2>
               </div>
               <div class="row" *ngIf="firstRegisterForm">
-                <input
-                  type="text"
-                  name="pseudo"
-                  id="pseudo"
-                  class="form__input"
-                  placeholder="Nom d'utilisateur"
-                  formControlName="pseudo"
-                />
-                <div
-                  *ngIf="
+                <input type="text" name="pseudo" id="pseudo" class="form__input" placeholder="Nom d'utilisateur"
+                  formControlName="pseudo" />
+                <div *ngIf="
                     registerForm.get('pseudo')?.hasError('required') &&
                     registerForm.status === 'INVALID' &&
                     registerForm.get('pseudo')?.touched
-                  "
-                  class="fw-light text-danger"
-                >
+                  " class="fw-light text-danger">
                   {{ validationMessage.pseudo.required }}
                 </div>
               </div>
               <div class="row" *ngIf="firstRegisterForm">
-                <input
-                  type="text"
-                  name="email"
-                  id="email"
-                  class="form__input"
-                  placeholder="Adresse mail"
-                  formControlName="email"
-                />
-                <div
-                  *ngIf="
+                <input type="text" name="email" id="email" class="form__input" placeholder="Adresse mail"
+                  formControlName="email" />
+                <div *ngIf="
                     registerForm.get('email')?.hasError('required') &&
                     registerForm.status === 'INVALID' &&
                     registerForm.get('email')?.touched
-                  "
-                  class="fw-light text-danger"
-                >
+                  " class="fw-light text-danger">
                   {{ validationMessage.email.required }}
                 </div>
-                <div
-                  *ngIf="
+                <div *ngIf="
                     registerForm.get('email')?.hasError('email') &&
                     registerForm.status === 'INVALID' &&
                     registerForm.get('email')?.touched
-                  "
-                  class="fw-light text-danger"
-                >
+                  " class="fw-light text-danger">
                   {{ validationMessage.email.email }}
                 </div>
               </div>
               <div class="row" *ngIf="firstRegisterForm">
-                <input
-                  type="text"
-                  name="address"
-                  id="address"
-                  class="form__input"
-                  placeholder="Adresse"
-                  formControlName="address"
-                />
-                <div
-                  *ngIf="
+                <input type="text" name="address" id="address" class="form__input" placeholder="Adresse"
+                  formControlName="address" />
+                <div *ngIf="
                     registerForm.get('address')?.hasError('required') &&
                     registerForm.status === 'INVALID' &&
                     registerForm.get('address')?.touched
-                  "
-                  class="fw-light text-danger"
-                >
+                  " class="fw-light text-danger">
                   {{ validationMessage.address.required }}
                 </div>
               </div>
               <div class="row" *ngIf="firstRegisterForm">
-                <input
-                  type="text"
-                  name="phoneNumber"
-                  id="phoneNumber"
-                  class="form__input"
-                  placeholder="Téléphone"
-                  formControlName="phoneNumber"
-                />
-                <div
-                  *ngIf="
+                <input type="text" name="phoneNumber" id="phoneNumber" class="form__input" placeholder="Téléphone"
+                  formControlName="phoneNumber" />
+                <div *ngIf="
                     registerForm.get('phoneNumber')?.hasError('required') &&
                     registerForm.status === 'INVALID' &&
                     registerForm.get('phoneNumber')?.touched
-                  "
-                  class="fw-light text-danger"
-                >
+                  " class="fw-light text-danger">
                   {{ validationMessage.phoneNumber.required }}
                 </div>
-                <div
-                  *ngIf="
+                <div *ngIf="
                     registerForm.get('phoneNumber')?.hasError('pattern') &&
                     registerForm.status === 'INVALID' &&
                     registerForm.get('phoneNumber')?.touched
-                  "
-                  class="fw-light text-danger"
-                >
+                  " class="fw-light text-danger">
                   {{ validationMessage.phoneNumber.pattern }}
                 </div>
-                <div
-                  *ngIf="
+                <div *ngIf="
                     registerForm.get('phoneNumber')?.hasError('minlength') &&
                     registerForm.status === 'INVALID' &&
                     registerForm.get('phoneNumber')?.touched
-                  "
-                  class="fw-light text-danger"
-                >
+                  " class="fw-light text-danger">
                   {{ validationMessage.phoneNumber.minLength }}
                 </div>
-                <div
-                  *ngIf="
+                <div *ngIf="
                     registerForm.get('phoneNumber')?.hasError('maxlength') &&
                     registerForm.status === 'INVALID' &&
                     registerForm.get('phoneNumber')?.touched
-                  "
-                  class="fw-light text-danger"
-                >
+                  " class="fw-light text-danger">
                   {{ validationMessage.phoneNumber.maxLength }}
                 </div>
               </div>
               <div class="row" *ngIf="!firstRegisterForm">
-                <input
-                  type="password"
-                  name="tempPassword"
-                  id="tempPassword"
-                  class="form__input"
-                  placeholder="Mot de passe"
-                  formControlName="tempPassword"
-                />
+                <input type="password" name="tempPassword" id="tempPassword" class="form__input"
+                  placeholder="Mot de passe" formControlName="tempPassword" />
               </div>
               <div class="row" *ngIf="!firstRegisterForm">
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  class="form__input"
-                  placeholder="Mot de passe"
-                  formControlName="password"
-                />
-                <div
-                  *ngIf="
+                <input type="password" name="password" id="password" class="form__input" placeholder="Mot de passe"
+                  formControlName="password" />
+                <div *ngIf="
                     registerForm.get('tempPassword')?.touched &&
                     registerForm.get('password')?.touched &&
                     registerForm.get('tempPassword')?.value !==
                       registerForm.get('password')?.value
-                  "
-                  class="fw-light text-danger"
-                >
+                  " class="fw-light text-danger">
                   Mots de passe non identiques
                 </div>
               </div>
               <div class="row justify-content-center">
-                <button
-                  class="btn"
-                  type="button"
-                  (click)="handleClickContinue()"
-                  *ngIf="firstRegisterForm"
-                  [disabled]="!isFirstStepRegisterValid()"
-                >
+                <button class="btn" type="button" (click)="handleClickContinue()" *ngIf="firstRegisterForm"
+                  [disabled]="!isFirstStepRegisterValid()">
                   {{ "Continuer" }}
                 </button>
-                <button
-                  type="submit"
-                  class="btn"
-                  *ngIf="!firstRegisterForm"
-                  [disabled]="
+                <button type="submit" class="btn" *ngIf="!firstRegisterForm" [disabled]="
                     registerForm.get('tempPassword')?.value === '' ||
                     registerForm.get('password')?.value === '' ||
                     registerForm.get('tempPassword')?.value !==
                       registerForm.get('password')?.value
-                  "
-                >
+                  ">
                   S'enregister
                 </button>
               </div>
@@ -299,11 +193,8 @@
           <div class="row">
             <p>
               Vous avez-déjà un compte?
-              <span
-                class="text-decoration-underline text-primary cursor-pointer"
-                (click)="toggleLoginOrRegister()"
-                >Connectez-vous</span
-              >
+              <span class="text-decoration-underline text-primary cursor-pointer"
+                (click)="toggleLoginOrRegister()">Connectez-vous</span>
             </p>
           </div>
         </div>
@@ -320,21 +211,18 @@
 <ng-template #content let-modal>
   <div class="modal-header bg-warning">
     <div class="modal-title">
-      <b><h5>Rappel</h5></b>
+      <b>
+        <h5>Rappel</h5>
+      </b>
     </div>
-    <button
-      type="button"
-      class="btn-close"
-      aria-label="Close"
-      (click)="modal.dismiss('Cross click')"
-    ></button>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
   </div>
   <div class="modal-body">
     Nous souhaitons vous rappeler
     {{
-      rdvToRemind.length > 1
-        ? "vos futurs rendez-vous :"
-        : "votre rendez-vous le :"
+    rdvToRemind.length > 1
+    ? "vos futurs rendez-vous :"
+    : "votre rendez-vous le :"
     }}
     <table class="table mt-3">
       <thead>
@@ -357,11 +245,8 @@
     <p class="mt-4">
       <i class="fw-light">
         Pour plus de détails, voir
-        <a
-          (click)="handleRedirectToHistory()"
-          class="text-primary text-decoration-line"
-          style="cursor: pointer"
-          >historique
+        <a (click)="handleRedirectToHistory()" class="text-primary text-decoration-line"
+          style="cursor: pointer">historique
         </a>
       </i>
     </p>

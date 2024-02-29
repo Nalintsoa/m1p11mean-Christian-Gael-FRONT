@@ -4,62 +4,43 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-3 col-md-3 mt-2" *ngIf="screenWidth >= 1200">
-          <app-employee-filter
-            (categoryEmitter)="handleChangeCategory($event)"
-            (prefTypeEmitter)="handleChangePrefType($event)"
-            (searchEmitter)="handleSearchChange($event)"
-            [searchQuery]="searchQuery"
-            style="position: fixed"
-          ></app-employee-filter>
+          <app-employee-filter (categoryEmitter)="handleChangeCategory($event)"
+            (prefTypeEmitter)="handleChangePrefType($event)" (searchEmitter)="handleSearchChange($event)"
+            [searchQuery]="searchQuery" style="position: fixed"></app-employee-filter>
         </div>
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-9 col-md-9 mt-5">
           <div class="container-fluid">
             <div class="row">
               <div class="col-sm-12 col-md-12 col-lg-10 text-end">
-                <span class="times-font"
-                  ><b>{{ staffs.length }} {{ " " }}</b
-                  >Employés</span
-                >
-                <fa-icon
-                  *ngIf="screenWidth < 1200"
-                  [icon]="faSlidersH"
-                  class="ms-3"
-                  (click)="open(content)"
-                />
+                <span class="times-font"><b>{{ staffs.length }} {{ " " }}</b>Employés</span>
+                <fa-icon *ngIf="screenWidth < 1200" [icon]="faSlidersH" class="ms-3" (click)="open(content)" />
               </div>
             </div>
-            <div
-              class="row align-items-center col-10 bg-light mt-3"
-              style="height: 200px"
-              *ngIf="staffs.length === 0"
-            >
+            <div *ngIf="isLoading" class=" row mt-5 d-flex justify-content-center align-items-bottom">
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+            <div *ngIf="staffs.length === 0 && !isLoading" class="row align-items-center col-10 bg-light mt-3"
+              style="height: 200px">
               <div class="col-10 text-center">
                 <div>Aucun élément à afficher</div>
               </div>
             </div>
-            <div class="row">
-              <div
-                class="col-sm-12 col-md-6 col-lg-5"
-                *ngFor="let staff of staffs"
-              >
+            <div *ngIf="!isLoading" class="row">
+              <div class="col-sm-12 col-md-6 col-lg-5" *ngFor="let staff of staffs">
                 <app-employee-card [staff]="staff"></app-employee-card>
               </div>
             </div>
             <div class="row" *ngIf="services.length === 9">
               <div class="d-flex py-3 justify-content-center">
-                <div
-                  class="rounded-circle page-number border border-white px-2"
-                >
+                <div class="rounded-circle page-number border border-white px-2">
                   1
                 </div>
-                <div
-                  class="rounded-circle page-number border border-white px-2"
-                >
+                <div class="rounded-circle page-number border border-white px-2">
                   2
                 </div>
-                <div
-                  class="rounded-circle page-number border border-white px-2"
-                >
+                <div class="rounded-circle page-number border border-white px-2">
                   3
                 </div>
               </div>
@@ -73,17 +54,9 @@
 
 <ng-template #content let-modal>
   <div class="modal-body">
-    <button
-      type="button"
-      class="btn-close"
-      aria-label="Close"
-      (click)="modal.dismiss('Cross click')"
-    ></button>
-    <app-employee-filter
-      (categoryEmitter)="handleChangeCategory($event)"
-      (prefTypeEmitter)="handleChangePrefType($event)"
-      (searchEmitter)="handleSearchChange($event)"
-      [searchQuery]="searchQuery"
-    ></app-employee-filter>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    <app-employee-filter (categoryEmitter)="handleChangeCategory($event)"
+      (prefTypeEmitter)="handleChangePrefType($event)" (searchEmitter)="handleSearchChange($event)"
+      [searchQuery]="searchQuery"></app-employee-filter>
   </div>
 </ng-template>

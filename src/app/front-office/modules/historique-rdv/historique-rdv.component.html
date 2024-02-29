@@ -3,6 +3,11 @@
     <div class="container pt-3">
         <div class="container-fluid">
             <div class="mt-1">
+                <div *ngIf="isLoading" class=" row mt-5 d-flex justify-content-center align-items-bottom">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
                 <app-one-row *ngFor="let rdv of histo" [rdv]="rdv" [customer]="customer"
                     (refresh)="getHisto()"></app-one-row>
 

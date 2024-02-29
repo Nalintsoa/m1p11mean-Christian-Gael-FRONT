@@ -28,6 +28,8 @@ export class LoginFrontComponent {
 
   isLoginFormSubmitted = false;
 
+  isLoading = false;
+
   constructor(public fb: FormBuilder, private customerService: CustomerServiceService, private router: Router, private authService: AuthApiService) { }
 
   registerForm = this.fb.group({
@@ -110,6 +112,7 @@ export class LoginFrontComponent {
   handleLoginSubmit = () => {
     this.isLoginFormSubmitted = true;
     if (this.loginForm.valid) {
+      this.isLoading = true;
       const data = {
         email: this.loginForm.get('identifier')?.value,
         password: this.loginForm.get('password')?.value
@@ -122,9 +125,11 @@ export class LoginFrontComponent {
           this.openAlertModal(res.alertArray || []);
           this.router.navigate(['/front-office']);
           this.isLoginFormSubmitted = true;
+          this.isLoading = false;
         },
         error: (err) => {
-          Swal.fire("Echec!", "Mot de passe est incorrect", "error")
+          Swal.fire("Echec!", "Mot de passe est incorrect", "error");
+          this.isLoading = false;
         }
       })
     }
