@@ -79,10 +79,7 @@ export class NavbarComponent implements OnInit {
   }
 
   handleLogout = () => {
-    this.authService.logout().subscribe({
-      next: (res) => {
-        this.router.navigate(['/backoffice']);
-      }
-    });
+    this.authService.logout();
+    this.router.navigate(['/backoffice']);
   }
 }

@@ -40,9 +40,10 @@ export class AuthApiService {
     return true;
   }
 
-  logout(): Observable<any> {
-    this.signOut()
-    return this.http.post(`${this.baseUri}/staffLogout`, {}, { withCredentials: true, headers: this.headers });
+  logout() {
+    this.signOut();
+    this.cookieService.delete(this.TOKEN_KEY);
+    // return this.http.post(`${this.baseUri}/staffLogout`, {}, { withCredentials: true, headers: this.headers });
   }
 
   signOut(): void {
