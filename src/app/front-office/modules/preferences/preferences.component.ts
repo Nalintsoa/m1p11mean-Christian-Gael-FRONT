@@ -26,6 +26,7 @@ export class PreferencesComponent {
   speciality = "Tout";
   prefType = "Tout";
   searchQuery = "";
+  isLoading = false;
 
   screenWidth = window.innerWidth || 0;
 
@@ -38,7 +39,7 @@ export class PreferencesComponent {
   faSlidersH = faSlidersH;
 
   services: IService[] = [{
-    category:"category",
+    category: "category",
     commission: 1000,
     duration: '2',
     name: 'test',
@@ -54,7 +55,7 @@ export class PreferencesComponent {
     this.getStaffBySpeciality();
   }
 
-  onResize(event:any){
+  onResize(event: any) {
     console.log(event.target.innerWidth);
     this.screenWidth = event.target.innerWidth;
   }
@@ -71,11 +72,12 @@ export class PreferencesComponent {
   }
 
   getStaffBySpeciality() {
+    this.isLoading = true;
     this.staffService.getStaffBySpeciality(this.speciality).subscribe({
       next: (res) => {
         let tempArray = [];
         if (this.prefType === "Favoris") {
-          tempArray = res.filter((item: IStaff) => this.favoriteEmployees.includes(item._id || ""));  
+          tempArray = res.filter((item: IStaff) => this.favoriteEmployees.includes(item._id || ""));
         } else {
           tempArray = res;
         }
@@ -85,7 +87,10 @@ export class PreferencesComponent {
         } else {
           this.staffs = tempArray;
         }
+
+        this.isLoading = false;
       }
+
     })
   }
 
@@ -94,10 +99,12 @@ export class PreferencesComponent {
     if (jwt_token) {
       const decodedToken: any = jwtDecode(jwt_token);
       if (decodedToken._id) {
+        this.isLoading = true;
         this.customerService.getFavoriteEmployees(decodedToken._id).subscribe({
           next: (res) => {
             this.favoriteEmployees = res.favoriteEmployees;
             console.log('fav', this.favoriteEmployees);
+            this.isLoading = false;
           }
         })
       }
@@ -120,27 +127,27 @@ export class PreferencesComponent {
   }
 
   private modalService = inject(NgbModal);
-	closeResult = '';
+  closeResult = '';
 
-	open(content: TemplateRef<any>) {
-		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
-			(result) => {
-				this.closeResult = `Closed with: ${result}`;
-			},
-			(reason) => {
-				this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-			},
-		);
-	}
+  open(content: TemplateRef<any>) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+      (result) => {
+        this.closeResult = `Closed with: ${result}`;
+      },
+      (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      },
+    );
+  }
 
-	private getDismissReason(reason: any): string {
-		switch (reason) {
-			case ModalDismissReasons.ESC:
-				return 'by pressing ESC';
-			case ModalDismissReasons.BACKDROP_CLICK:
-				return 'by clicking on a backdrop';
-			default:
-				return `with: ${reason}`;
-		}
-	}
+  private getDismissReason(reason: any): string {
+    switch (reason) {
+      case ModalDismissReasons.ESC:
+        return 'by pressing ESC';
+      case ModalDismissReasons.BACKDROP_CLICK:
+        return 'by clicking on a backdrop';
+      default:
+        return `with: ${reason}`;
+    }
+  }
 }

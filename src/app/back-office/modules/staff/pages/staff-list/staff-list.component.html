@@ -4,10 +4,7 @@
       <app-breadcrumb [pathsArray]="pathsArray"></app-breadcrumb>
     </div>
     <div>
-      <app-create-modal
-        [data]="modalData"
-        [mode]="modalMode"
-      ></app-create-modal>
+      <app-create-modal [data]="modalData" [mode]="modalMode"></app-create-modal>
     </div>
   </div>
 
@@ -18,11 +15,7 @@
         <div class="d-flex justify-content-end align-items-center">
           <div class="me-2 text-nowrap">Rechercher :</div>
           <div>
-            <input
-              class="form-control"
-              [(ngModel)]="searchQuery"
-              (input)="handleSearchChange()"
-            />
+            <input class="form-control" [(ngModel)]="searchQuery" (input)="handleSearchChange()" />
           </div>
         </div>
       </div>
@@ -45,11 +38,15 @@
         </tr>
       </thead>
       <tbody>
-        <tr
-          *ngFor="let user of listToShow"
-          class="cursor-pointer"
-          (click)="handleClickRow(user)"
-        >
+        <tr *ngIf="isLoading">
+          <td colspan="8" class="text-center">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </td>
+          <td></td>
+        </tr>
+        <tr *ngFor="let user of listToShow" class="cursor-pointer" (click)="handleClickRow(user)">
           <td>{{ user.name }}</td>
           <td>{{ user.firstName }}</td>
           <td>{{ user.email }}</td>

@@ -58,7 +58,7 @@ export class ServiceListComponent {
 
   getServices() {
     this.services = [];
-    this.serviceService.getServices().subscribe(data => { this.services = data; this.mode = "create" });
+    this.serviceService.getServices().subscribe(data => { this.mode = "create"; this.services = data; });
   };
 
   getService(data: IService) {

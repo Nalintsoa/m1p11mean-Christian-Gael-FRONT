@@ -19,6 +19,8 @@ export class ListServiceComponent {
 
   services: IService[] = [];
 
+  isLoading = false;
+
   searchQuery: string = '';
   category: string = '';
   defaultPrice = 1000000;
@@ -31,6 +33,7 @@ export class ListServiceComponent {
   }
 
   getServices() {
+    this.isLoading = true;
     this.services = [];
     this.serviceService.getServices().subscribe(data => {
 
@@ -40,6 +43,8 @@ export class ListServiceComponent {
       } else {
         this.services = data;
       }
+
+      this.isLoading = false;
 
     });
   };

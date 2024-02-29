@@ -1,6 +1,6 @@
 <div class="modal fade" [id]="'task'+date" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel">Suivi des taches du {{date | date: "dd-MM-yyyy"}}</h5>
@@ -15,6 +15,7 @@
                             <th>Service</th>
                             <th>Prix</th>
                             <th>Commission</th>
+                            <th>Pourcentage</th>
 
                         </thead>
                         <tbody>
@@ -26,6 +27,7 @@
                                 <td>{{rdv?.service?.name}}</td>
                                 <td>{{rdv?.price+'Ar'}}</td>
                                 <td>{{rdv?.service?.commission+'Ar'}}</td>
+                                <td>{{getPercent(rdv?.service?.commission,rdv?.price)+"%" || '' }}</td>
                             </tr>
                         </tbody>
 

@@ -27,6 +27,7 @@ export class StaffListComponent {
 
   @ViewChild(CreateModalComponent)
   private modalComponent!: CreateModalComponent;
+  isLoading = false;
 
   arrayColumns = [
     {
@@ -53,7 +54,7 @@ export class StaffListComponent {
     }
   ];
 
-  constructor(private staffApiService: StaffApiService){
+  constructor(private staffApiService: StaffApiService) {
     this.getAllStaffs();
 
     this.staffApiService.RefreshRequired.subscribe(result => {
@@ -61,12 +62,14 @@ export class StaffListComponent {
     })
   }
 
-  getAllStaffs(){
+  getAllStaffs() {
+    this.isLoading = true;
     this.staffApiService.getStaffList().subscribe((data) => {
+      this.isLoading = false;
       this.listToShow = data;
       this.dataCount = this.listToShow.length
-    this.loadData();
-    })    
+      this.loadData();
+    })
   };
 
   // ACTION ON THE TABLE
@@ -75,11 +78,11 @@ export class StaffListComponent {
       next: (res: any) => {
         const tempArray = res.filter((item: any) => {
           return Object.values(item).toString().toLowerCase().includes(this.searchQuery.toLowerCase());
-        }); 
-        this.listToShow = tempArray; 
-        this.dataCount = this.listToShow.length  
+        });
+        this.listToShow = tempArray;
+        this.dataCount = this.listToShow.length
       }
-    })    
+    })
   }
 
   queriedList = async () => {
@@ -89,7 +92,7 @@ export class StaffListComponent {
   }
 
   data = this.queriedList();
-  
+
   loadData() {
     this.data = this.queriedList();
   }
@@ -99,7 +102,7 @@ export class StaffListComponent {
   handleClickRow = (row: any) => {
     this.modalData = row;
     this.modalMode = EDIT_MODE;
-    
+
     this.modalComponent.openModal();
     this.modalComponent.mode = EDIT_MODE;
     this.modalComponent.changePassword = false;
